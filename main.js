@@ -6,7 +6,7 @@ window.onload = function () {
 	canvas.height = 200;
 
 	// Set up game objects
-	var hero = { speed: 150 };
+	var ship = { speed: 150 };
 	var canyon = {
 		startGap: 100
 	, gapSize: 80
@@ -26,10 +26,10 @@ window.onload = function () {
 		delete keysHeldDown[e.keyCode];
 	}, false);
 
+	// Set ship and canyon positions
 	var reset = function () {
-		// Put hero in starting position
-		hero.x = canvas.width / 2;
-		hero.y = canvas.height - 10;
+		ship.x = canvas.width / 2;
+		ship.y = canvas.height - 10;
 
 		var canyonUpperYBound = 10;
 		var canyonLowerYBound = 100;
@@ -42,6 +42,7 @@ window.onload = function () {
 		canyon.yPosition = Math.floor(canyonLowerYBound - (Math.random() * (canyonLowerYBound - canyonUpperYBound)));
 	}
 
+	// Draw the canyon
 	var drawCanyon = function () {
 		ctx.beginPath();
 		ctx.moveTo(0, canyon.yPosition);
@@ -53,38 +54,37 @@ window.onload = function () {
 		ctx.stroke();
 	};
 
-	// Draw the hero
-	var drawHero = function(){
+	// Draw the ship
+	var drawShip = function(){
 		ctx.beginPath();
-		ctx.moveTo(hero.x, hero.y);
-		ctx.lineTo(hero.x + 20, hero.y);
-		ctx.lineTo(hero.x + 10, hero.y - 20);
+		ctx.moveTo(ship.x, ship.y);
+		ctx.lineTo(ship.x + 20, ship.y);
+		ctx.lineTo(ship.x + 10, ship.y - 20);
 		ctx.fill();
 	};
 
 	var collision = function () {
-		return (hero.x <= canyon.startGap || hero.x >= (canyon.startGap + canyon.gapSize))
-			&& (hero.y <= (canyon.yPosition + 10) && hero.y >= (canyon.yPosition - 10))
+		return (ship.x <= canyon.startGap || ship.x >= (canyon.startGap + canyon.gapSize))
+			&& (ship.y <= (canyon.yPosition + 10) && ship.y >= (canyon.yPosition - 10))
 	}
 
 	var success = function () {
-		return hero.y <= 5;
+		return ship.y <= 5;
 	}
 
-	// Update position of hero object
-	var update = function (modifier) {
-		if (38 in keysHeldDown) { // Player holding up
-			hero.y -= hero.speed * modifier;
-		}
-		if (40 in keysHeldDown) { // Player holding down
-			hero.y += hero.speed * modifier;
-		}
-		if (37 in keysHeldDown) { // Player holding left
-			hero.x -= hero.speed * modifier;
-		}
-		if (39 in keysHeldDown) { // Player holding right
-			hero.x += hero.speed * modifier;
-		}
+	// Update position of ship object, check for end states
+	var updateState = function (elapsedTime) {
+		// Player holding up
+		if (38 in keysHeldDown) { ship.y -= ship.speed * elapsedTime; }
+		
+		// Player holding down
+		if (40 in keysHeldDown) { ship.y += ship.speed * elapsedTime; }
+		
+		// Player holding left
+		if (37 in keysHeldDown) { ship.x -= ship.speed * elapsedTime; }
+		
+		// Player holding right
+		if (39 in keysHeldDown) { ship.x += ship.speed * elapsedTime; }
 
 		// Check for potential end states
 		if ( collision() ) {
@@ -101,15 +101,16 @@ window.onload = function () {
 		var now = Date.now();
 		var delta = now - then;
 
-		update(delta / 1000);
+		updateState(delta / 1000);
+
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
-		drawHero();
+		drawShip();
 		drawCanyon();
 
 		then = now;
 	};
 
-	// Run loop
+	// Start game, run game loop
 	reset();
 	setInterval(mainLoop, 1); // Execute as fast as possible	
 }
