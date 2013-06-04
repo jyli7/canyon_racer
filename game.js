@@ -12,7 +12,7 @@ Game.prototype.inSafeZone = function () {
 	return false;
 }
 
-Game.prototype.successOccured = function () {
+Game.prototype.successoccurred = function () {
 	// return this.ship.y <= 5;
 }
 
@@ -23,7 +23,7 @@ Game.prototype.update = function (delta) {
 	if ( !this.inSafeZone() ) {
 		console.log('collision!');
 		this.init();
-	} else if ( this.successOccured() ) {
+	} else if ( this.successoccurred() ) {
 		console.log('you won!');
 		this.init();
 	}
@@ -45,20 +45,41 @@ Game.prototype.init = function () {
 }
 
 Game.prototype.initSafeZones = function () {
-	this.safeZones = []
-	// Create base safeZone
-	this.safeZones.push(new SafeZone(0, 150, canvas.width, canvas.height - 150));
+	this.safeZones = [];
+	
+	// For the base safe zone
+	var baseWidth = canvas.width;
+	var baseHeight = canvas.height / 8;
+	var baseX = 0;
+	var baseY = canvas.height - baseHeight;
 
-	// Create other safe zones
-	this.safeZones.push(new SafeZone(0, 0, this.ship.width * 3, canvas.height));	
+	// For the other safe zones
+	var standardWidth = this.ship.width * 10;
+	var standardHeight = canvas.height / 2;
+	var standardX = canvas.width / 2 - standardWidth / 2.
+	
+	// Create base safeZone
+	this.safeZones.push(new SafeZone(baseX, baseY, baseWidth, baseHeight));
+
+	// Starting from the top of the baseSafeZone, create other safeZones
+	var x = standardX;
+	var width = standardWidth;
+	var height = standardHeight;
+
+	for (var y = baseY; y >= -1000; y -= standardHeight * 0.3) {
+		x = x + Math.floor(Math.random() * 20 - 10);
+		width = width + Math.floor(Math.random() * 40 - 30);
+		height = height + Math.floor(Math.random() * 40 - 30);
+		this.safeZones.push(new SafeZone(x, y, width, height));
+	}
 }
 
 window.onload = function () {
 	// Set up canvas
 	var canvas = document.getElementById('canvas');
 	var ctx = canvas.getContext('2d'); 
-	canvas.width = 400;
-	canvas.height = 200;
+	canvas.width = 800;
+	canvas.height = 600;
 
 	var game = new Game();
 	game.init();
