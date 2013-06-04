@@ -1,10 +1,7 @@
-// Returns the right multiple, given the volatility factor,
-// e.g. give it 0.3, and it returns a number between 0.7 and 1.3
-var volatilityMultiple = function (volatility) {
-	return 1 + (Math.random() * volatility * 2 - volatility);
-}
-
-var Game = function () {};
+var Game = function (ctx, scrollDistance) {
+	this.ctx = ctx;
+	this.scrollDistance = 2;
+};
 
 Game.prototype.inSafeZone = function () {
 	for (var i = 0; i < this.safeZones.length; i ++) {
@@ -38,9 +35,8 @@ Game.prototype.draw = function (ctx) {
 	var that = this;
 	this.ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-	var yTranslateDistance = 0.6;
-	this.ctx.translate(0, yTranslateDistance);
-	this.ctx.translatedDistance -= yTranslateDistance;
+	this.ctx.translate(0, this.scrollDistance);
+	this.ctx.translatedDistance += this.scrollDistance;
 	this.canyon.draw(this.ctx);
 	this.safeZones.forEach (function (zone) {
 		zone.draw(that.ctx);
@@ -51,6 +47,7 @@ Game.prototype.draw = function (ctx) {
 Game.prototype.init = function () {
 	// Bring canvas back to original position
 	this.ctx.translate(0, -this.ctx.translatedDistance);
+	this.ctx.translatedDistance = 0;
 	translatedY = 0;
 	this.ship = new Ship(canvas.width / 2, canvas.height - 10, 200);
 	this.canyon = new Canyon();
@@ -85,7 +82,7 @@ Game.prototype.initSafeZones = function () {
 	heightVolatility = 0.02;
 
 	// Set the x, y, width, height for lots of canyons
-	for (var y = baseY; y >= -5000; y -= 3) {
+	for (var y = baseY; y >= -2000; y -= 3) {
 		x = x * volatilityMultiple(xVolatility);
 		width = width * volatilityMultiple(widthVolatility);
 		height = height * volatilityMultiple(heightVolatility);
@@ -99,12 +96,10 @@ window.onload = function () {
 	var ctx = canvas.getContext('2d');
 	canvas.width = 800;
 	canvas.height = 600;
-	ctx.save();
 
 	var game = new Game();
 	game.ctx = ctx;
-	game.init();
-	game.ctx.translatedDistance = 0;
+	game.init(ctx);
 
 	// Run game loop
 	var then = Date.now();
