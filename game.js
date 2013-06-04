@@ -14,11 +14,10 @@ Game.prototype.inSafeZone = function () {
 		  return true;	
 		}
 	}
-	
 	return false;
 }
 
-Game.prototype.successoccurred = function () {
+Game.prototype.successOccurred = function () {
 	// return this.ship.y <= 5;
 }
 
@@ -29,22 +28,30 @@ Game.prototype.update = function (delta) {
 	if ( !this.inSafeZone() ) {
 		console.log('collision!');
 		this.init();
-	} else if ( this.successoccurred() ) {
+	} else if ( this.successOccurred() ) {
 		console.log('you won!');
 		this.init();
 	}
 };
 
 Game.prototype.draw = function (ctx) {
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	this.canyon.draw(ctx);
+	var that = this;
+	this.ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+	var yTranslateDistance = 0.6;
+	this.ctx.translate(0, yTranslateDistance);
+	this.ctx.translatedDistance -= yTranslateDistance;
+	this.canyon.draw(this.ctx);
 	this.safeZones.forEach (function (zone) {
-		zone.draw(ctx);
+		zone.draw(that.ctx);
 	});
-	this.ship.draw(ctx);
+	this.ship.draw(this.ctx);
 }
 
 Game.prototype.init = function () {
+	// Bring canvas back to original position
+	this.ctx.translate(0, -this.ctx.translatedDistance);
+	translatedY = 0;
 	this.ship = new Ship(canvas.width / 2, canvas.height - 10, 200);
 	this.canyon = new Canyon();
 	this.initSafeZones();
@@ -55,7 +62,7 @@ Game.prototype.initSafeZones = function () {
 	
 	// For the base safe zone
 	var baseWidth = canvas.width;
-	var baseHeight = canvas.height / 8;
+	var baseHeight = canvas.height / 4;
 	var baseX = 0;
 	var baseY = canvas.height - baseHeight;
 
@@ -78,7 +85,7 @@ Game.prototype.initSafeZones = function () {
 	heightVolatility = 0.02;
 
 	// Set the x, y, width, height for lots of canyons
-	for (var y = baseY; y >= -1000; y -= 3) {
+	for (var y = baseY; y >= -5000; y -= 3) {
 		x = x * volatilityMultiple(xVolatility);
 		width = width * volatilityMultiple(widthVolatility);
 		height = height * volatilityMultiple(heightVolatility);
@@ -89,12 +96,15 @@ Game.prototype.initSafeZones = function () {
 window.onload = function () {
 	// Set up canvas
 	var canvas = document.getElementById('canvas');
-	var ctx = canvas.getContext('2d'); 
+	var ctx = canvas.getContext('2d');
 	canvas.width = 800;
 	canvas.height = 600;
+	ctx.save();
 
 	var game = new Game();
+	game.ctx = ctx;
 	game.init();
+	game.ctx.translatedDistance = 0;
 
 	// Run game loop
 	var then = Date.now();
