@@ -1,15 +1,18 @@
 var Ship = function (x, y, speed) {
 	this.x = x;
 	this.y = y;
+	this.width = 20;
+	this.height = 20;
 	this.speed = speed;
 	this.userInput = new UserInput();
 }
 
 Ship.prototype.draw = function (ctx) {
+	ctx.fillStyle = "rgb(0, 0, 0)";
 	ctx.beginPath();
 	ctx.moveTo(this.x, this.y);
-	ctx.lineTo(this.x + 20, this.y);
-	ctx.lineTo(this.x + 10, this.y - 20);
+	ctx.lineTo(this.x + this.width, this.y);
+	ctx.lineTo(this.x + (this.width / 2), this.y - this.height);
 	ctx.fill();
 }
 

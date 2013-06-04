@@ -1,22 +1,26 @@
 var Game = function () {};
 
-Game.prototype.collisionOccured = function () {
-	return (this.ship.x <= this.canyon.startGap || 
-					this.ship.x >= (this.canyon.startGap + this.canyon.gapSize)) &&
-				 (this.ship.y <= (this.canyon.yPosition + 10) 
-					&& 
-					this.ship.y >= (this.canyon.yPosition - 10))
+Game.prototype.inSafeZone = function () {
+	for (var i = 0; i < this.safeZones.length; i ++) {
+		var zone = this.safeZones[i];
+		if (this.ship.x >= zone.xLeft && this.ship.x <= zone.xRight
+		  && this.ship.y >= zone.yTop && this.ship.y <= zone.yBottom) {
+		  return true;	
+		}
+	}
+	
+	return false;
 }
 
 Game.prototype.successOccured = function () {
-	return this.ship.y <= 5;
+	// return this.ship.y <= 5;
 }
 
 Game.prototype.update = function (delta) {
 	this.ship.update(delta);
 	this.canyon.update(delta);
 
-	if ( this.collisionOccured() ) {
+	if ( !this.inSafeZone() ) {
 		console.log('collision!');
 		this.init();
 	} else if ( this.successOccured() ) {
@@ -27,13 +31,26 @@ Game.prototype.update = function (delta) {
 
 Game.prototype.draw = function (ctx) {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	this.ship.draw(ctx);
 	this.canyon.draw(ctx);
+	this.safeZones.forEach (function (zone) {
+		zone.draw(ctx);
+	});
+	this.ship.draw(ctx);
 }
 
 Game.prototype.init = function () {
-	this.ship = new Ship(canvas.width / 2, canvas.height - 10, 150);;
+	this.ship = new Ship(canvas.width / 2, canvas.height - 10, 200);
 	this.canyon = new Canyon();
+	this.initSafeZones();
+}
+
+Game.prototype.initSafeZones = function () {
+	this.safeZones = []
+	// Create base safeZone
+	this.safeZones.push(new SafeZone(0, 150, canvas.width, canvas.height - 150));
+
+	// Create other safe zones
+	this.safeZones.push(new SafeZone(0, 0, this.ship.width * 3, canvas.height));	
 }
 
 window.onload = function () {
