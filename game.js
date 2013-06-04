@@ -74,14 +74,14 @@ Game.prototype.initSafeZones = function () {
 
 	xVolatility = 0.1;
 	yVolatility = 0.05;
-	widthVolatility = 0.05;
-	heightVolatility = 0.05;
+	widthVolatility = 0.02;
+	heightVolatility = 0.02;
 
-	for (var y = baseY; y >= -1000; y -= 5) {
+	// Set the x, y, width, height for lots of canyons
+	for (var y = baseY; y >= -1000; y -= 3) {
 		x = x * volatilityMultiple(xVolatility);
-		width = width * volatilityMultiple(yVolatility);
+		width = width * volatilityMultiple(widthVolatility);
 		height = height * volatilityMultiple(heightVolatility);
-		debugger;
 		this.safeZones.push(new SafeZone(x, y, width, height));
 	}
 }
