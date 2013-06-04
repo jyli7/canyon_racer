@@ -1,3 +1,9 @@
+// Returns the right multiple, given the volatility factor,
+// e.g. give it 0.3, and it returns a number between 0.7 and 1.3
+var volatilityMultiple = function (volatility) {
+	return 1 + (Math.random() * volatility * 2 - volatility);
+}
+
 var Game = function () {};
 
 Game.prototype.inSafeZone = function () {
@@ -54,8 +60,8 @@ Game.prototype.initSafeZones = function () {
 	var baseY = canvas.height - baseHeight;
 
 	// For the other safe zones
-	var standardWidth = this.ship.width * 10;
-	var standardHeight = canvas.height / 2;
+	var standardWidth = this.ship.width * 5;
+	var standardHeight = canvas.height / 6;
 	var standardX = canvas.width / 2 - standardWidth / 2.
 	
 	// Create base safeZone
@@ -66,10 +72,16 @@ Game.prototype.initSafeZones = function () {
 	var width = standardWidth;
 	var height = standardHeight;
 
-	for (var y = baseY; y >= -1000; y -= standardHeight * 0.3) {
-		x = x + Math.floor(Math.random() * 20 - 10);
-		width = width + Math.floor(Math.random() * 40 - 30);
-		height = height + Math.floor(Math.random() * 40 - 30);
+	xVolatility = 0.1;
+	yVolatility = 0.05;
+	widthVolatility = 0.05;
+	heightVolatility = 0.05;
+
+	for (var y = baseY; y >= -1000; y -= 5) {
+		x = x * volatilityMultiple(xVolatility);
+		width = width * volatilityMultiple(yVolatility);
+		height = height * volatilityMultiple(heightVolatility);
+		debugger;
 		this.safeZones.push(new SafeZone(x, y, width, height));
 	}
 }
