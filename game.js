@@ -14,9 +14,8 @@ Game.prototype.inSafeZone = function () {
 	return false;
 }
 
-Game.prototype.inVictoryZone = function () {
-	if (this.ship.x >= this.victoryZone.xLeft && this.ship.x <= this.victoryZone.xRight
-	  && this.ship.y >= this.victoryZone.yTop && this.ship.y <= this.victoryZone.yBottom) {
+Game.prototype.beyondVictoryLine = function () {
+	if (this.ship.y <= this.victoryZone.yBottom) {
 	  return true;	
 	} else {
 		return false;
@@ -27,18 +26,17 @@ Game.prototype.update = function (delta) {
 	this.ship.update(delta);
 	this.canyon.update(delta);
 
-	if ( !this.inSafeZone() ) {
+	if ( this.beyondVictoryLine() ) {
+		this.initWinState();
+	} else if ( !this.inSafeZone() ) {
 		console.log('collision!');
-		this.init();
-	} else if ( this.inVictoryZone() ) {
-		console.log('you won!');
 		this.init();
 	}
 };
 
 Game.prototype.draw = function (ctx) {
 	var that = this;
-	this.ctx.clearRect(0, this.ctx.translatedDistance, canvas.width, canvas.height);
+	this.ctx.clearRect(0, -this.ctx.translatedDistance, canvas.width, canvas.height);
 
 	this.ctx.translate(0, this.scrollSpeed);
 	this.ctx.translatedDistance += this.scrollSpeed;
@@ -47,8 +45,8 @@ Game.prototype.draw = function (ctx) {
 	this.safeZones.forEach (function (zone) {
 		zone.draw(that.ctx);
 	});
-	this.ship.draw(this.ctx);
 	this.victoryZone.draw(this.ctx);
+	this.ship.draw(this.ctx);
 }
 
 Game.prototype.init = function () {
@@ -59,6 +57,10 @@ Game.prototype.init = function () {
 	this.canyon = new Canyon();
 	this.initSafeZones();
 	this.victoryZone = new VictoryZone(-1 * (this.canyon.length + canvas.height * 0.4));
+}
+
+Game.prototype.initWinState = function () {
+
 }
 
 // Setup base safe zone, somewhat randomly generate other safe zones
