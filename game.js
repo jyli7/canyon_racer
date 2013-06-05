@@ -39,10 +39,10 @@ Game.prototype.update = function (delta) {
 
 Game.prototype.draw = function (ctx) {
 	var that = this;
-	this.ctx.clearRect(0, -this.ctx.translatedDistance, canvas.width, canvas.height);
+	this.ctx.clearRect(0, -this.translatedDistance, canvas.width, canvas.height);
 
 	this.ctx.translate(0, this.scrollSpeed);
-	this.ctx.translatedDistance += this.scrollSpeed;
+	this.translatedDistance += this.scrollSpeed;
 
 	this.canyon.draw(this.ctx);
 	this.safeZones.forEach (function (zone) {
@@ -55,12 +55,24 @@ Game.prototype.draw = function (ctx) {
 Game.prototype.init = function () {
 	// Bring canvas back to original position
 	this.state = "alive";
-	this.ctx.translate(0, -this.ctx.translatedDistance);
-	this.ctx.translatedDistance = 0;
+	debugger;
+	this.ctx.translate(0, -this.translatedDistance);
+	this.translatedDistance = 0;
 	this.ship = new Ship();
 	this.canyon = new Canyon();
 	this.initSafeZones();
 	this.victoryZone = new VictoryZone(-1 * (this.canyon.length + canvas.height * 0.4));
+}
+
+Game.prototype.refreshOnEnter = function () {
+	var that = this;
+	var startGameOnEnter = function (e) {
+		if (e.keyCode == 13) {
+			that.refresh();
+			removeEventListener("keydown", startGameOnEnter);
+		}
+	}
+	this.listener = addEventListener("keydown", startGameOnEnter);
 }
 
 Game.prototype.enterVictoryState = function () {
@@ -68,13 +80,7 @@ Game.prototype.enterVictoryState = function () {
 		document.getElementById('primary-message').innerHTML = "You won!";
 		document.getElementById('secondary-message').innerHTML = "Press 'Enter' to play again";
 		this.state = "victory";
-		var startGameOnEnter = function (e) {
-			if (e.keyCode == 13) {
-				that.refresh();
-				removeEventListener("keydown", startGameOnEnter);
-			}
-		}
-		this.listener = addEventListener("keydown", startGameOnEnter);
+		this.refreshOnEnter();
 	}
 }
 
@@ -84,13 +90,7 @@ Game.prototype.enterLoseState = function () {
 		document.getElementById('primary-message').innerHTML = "You crashed!";
 		document.getElementById('secondary-message').innerHTML = "Press 'Enter' to play again";
 		this.state = "loss";
-		var startGameOnEnter = function (e) {
-			if (e.keyCode == 13) {
-				that.refresh();
-				removeEventListener("keydown", startGameOnEnter);
-			}
-		}
-		this.listener = addEventListener("keydown", startGameOnEnter);
+		this.refreshOnEnter();
 	}
 }
 
