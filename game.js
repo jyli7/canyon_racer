@@ -27,10 +27,10 @@ Game.prototype.update = function (delta) {
 	this.canyon.update(delta);
 
 	if ( this.beyondVictoryLine() ) {
-		this.initWinState();
+		this.initVictoryState();
 	} else if ( !this.inSafeZone() ) {
 		console.log('collision!');
-		this.init();
+		this.initLoseState();
 	}
 };
 
@@ -59,9 +59,26 @@ Game.prototype.init = function () {
 	this.victoryZone = new VictoryZone(-1 * (this.canyon.length + canvas.height * 0.4));
 }
 
-Game.prototype.initWinState = function () {
-	var victoryMessage = document.getElementById('victory-msg');
-	victoryMessage.innerHTML = "You won!";
+Game.prototype.initVictoryState = function () {
+	document.getElementById('primary-message').innerHTML = "You won!";
+}
+
+Game.prototype.initLoseState = function () {
+	var that = this;
+	document.getElementById('primary-message').innerHTML = "You crashed!";
+	document.getElementById('secondary-message').innerHTML = "Press 'Enter' to play again";
+	var listener = addEventListener("keydown", function (e) {
+		if (e.keyCode == 13) {
+			that.refresh();
+			removeEventListener("keydown", listener);
+		}
+	});
+}
+
+Game.prototype.refresh = function () {
+	document.getElementById('primary-message').innerHTML = "";
+	document.getElementById('secondary-message').innerHTML = "";
+	this.init();
 }
 
 // Setup base safe zone, somewhat randomly generate other safe zones
@@ -103,9 +120,11 @@ Game.prototype.initSafeZones = function () {
 
 window.onload = function () {
 	// Run game loop when user hits enter
+	var gameBegun = false;
 	addEventListener("keydown", function (e) {
-		if (e.keyCode == 13) {
+		if (e.keyCode == 13 && !gameBegun) {
 			startGame();
+			gameBegun = true;
 		}
 	}, false);
 }
