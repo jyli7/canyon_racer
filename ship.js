@@ -3,7 +3,7 @@ var Ship = function () {
 	this.y = canvas.height - 10;
 	this.width = 20;
 	this.height = 20;
-	this.speed = 250;
+	this.speed = 300;
 	this.userInput = new UserInput();
 };
 
