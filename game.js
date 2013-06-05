@@ -1,6 +1,6 @@
 var Game = function (ctx, scrollDistance) {
 	this.ctx = ctx;
-	this.scrollDistance = 2;
+	this.scrollDistance = 10;
 };
 
 Game.prototype.inSafeZone = function () {
@@ -15,6 +15,8 @@ Game.prototype.inSafeZone = function () {
 }
 
 Game.prototype.successOccurred = function () {
+	return false;
+	// return (this.ctx.translatedDistance > 1000);
 	// return this.ship.y <= 5;
 }
 
@@ -27,21 +29,23 @@ Game.prototype.update = function (delta) {
 		this.init();
 	} else if ( this.successOccurred() ) {
 		console.log('you won!');
-		this.init();
+		// this.init();
 	}
 };
 
 Game.prototype.draw = function (ctx) {
 	var that = this;
-	this.ctx.clearRect(0, 0, canvas.width, canvas.height);
+	this.ctx.clearRect(0, this.ctx.translatedDistance, canvas.width, canvas.height);
 
 	this.ctx.translate(0, this.scrollDistance);
 	this.ctx.translatedDistance += this.scrollDistance;
+
 	this.canyon.draw(this.ctx);
 	this.safeZones.forEach (function (zone) {
 		zone.draw(that.ctx);
 	});
 	this.ship.draw(this.ctx);
+	this.victoryZone.draw(this.ctx);
 }
 
 Game.prototype.init = function () {
@@ -52,8 +56,10 @@ Game.prototype.init = function () {
 	this.ship = new Ship();
 	this.canyon = new Canyon();
 	this.initSafeZones();
+	this.victoryZone = new VictoryZone();
 }
 
+// Setup base safe zone, somewhat randomly generate other safe zones
 Game.prototype.initSafeZones = function () {
 	this.safeZones = [];
 	
@@ -82,7 +88,7 @@ Game.prototype.initSafeZones = function () {
 	heightVolatility = 0.02;
 
 	// Set the x, y, width, height for lots of canyons
-	for (var y = baseY; y >= -2000; y -= 3) {
+	for (var y = baseY; y >= -400; y -= 3) {
 		x = x * volatilityMultiple(xVolatility);
 		width = width * volatilityMultiple(widthVolatility);
 		height = height * volatilityMultiple(heightVolatility);
@@ -116,6 +122,7 @@ var startGame = function () {
 	game.draw(ctx);
 
 	// Start the countdown, 3...2...1
+	// TO DO: THIS IS MESSY!!!!
 	var count = 3;
 	var countdown = setInterval(function () {
 		// At end of countdown, stop the countdown and start the game loop
@@ -129,7 +136,7 @@ var startGame = function () {
 			
 			// Start the game loop	
 			var then = Date.now();
-			setInterval(function () {
+			game.loop = setInterval(function () {
 				var now = Date.now();
 				var delta = (now - then) / 1000;
 				
@@ -139,5 +146,5 @@ var startGame = function () {
 				then = now;
 			}, 10); // Execute as fast as possible
 		}
-	}, 750);
+	}, 50);
 }
