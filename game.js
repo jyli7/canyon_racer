@@ -112,17 +112,32 @@ var startGame = function () {
 	// Init the game
 	var game = new Game();
 	game.ctx = ctx;
-	game.init(ctx)
+	game.init(ctx);
+	game.draw(ctx);
 
-	// Start the game loop
-	var then = Date.now();
-	setInterval(function () {
-		var now = Date.now();
-		var delta = (now - then) / 1000;
-		
-		game.update(delta);
-		game.draw(ctx);
+	// Start the countdown, 3...2...1
+	var count = 3;
+	var countdown = setInterval(function () {
+		// At end of countdown, stop the countdown and start the game loop
+		var countdownElement = document.getElementById('countdown');
+		if (count > 0) {
+			countdownElement.innerHTML = count;
+			count--;
+		} else {
+			clearInterval(countdown);
+			countdownElement.innerHTML = "";
+			
+			// Start the game loop	
+			var then = Date.now();
+			setInterval(function () {
+				var now = Date.now();
+				var delta = (now - then) / 1000;
+				
+				game.update(delta);
+				game.draw(ctx);
 
-		then = now;
-	}, 10); // Execute as fast as possible	
+				then = now;
+			}, 10); // Execute as fast as possible
+		}
+	}, 750);
 }

@@ -29,6 +29,15 @@ canvas {
 	text-align: center;
 }
 
+#countdown {
+	text-align: center;
+	position: absolute;
+	top: 40%;
+	left: 50%;
+	font-size: 40px;
+	color: red;
+}
+
 #start-screen span {
 	position: absolute;
 	top: 40%;
