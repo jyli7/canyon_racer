@@ -60,7 +60,8 @@ Game.prototype.init = function () {
 }
 
 Game.prototype.initWinState = function () {
-
+	var victoryMessage = document.getElementById('victory-msg');
+	victoryMessage.innerHTML = "You won!";
 }
 
 // Setup base safe zone, somewhat randomly generate other safe zones
