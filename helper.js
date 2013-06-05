@@ -3,3 +3,4 @@
 var volatilityMultiple = function (volatility) {
 	return 1 + (Math.random() * volatility * 2 - volatility);
 }
+

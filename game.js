@@ -1,7 +1,7 @@
 var Game = function (ctx, scrollSpeed) {
 	this.ctx = ctx;
 	this.scrollSpeed = 2;
-	this.possibleStates = ["lose", "alive", "victory"];
+	this.possibleStates = ["loss", "alive", "victory"];
 	this.state = "";
 };
 
@@ -31,9 +31,9 @@ Game.prototype.update = function (delta) {
 	this.canyon.update(delta);
 
 	if ( this.beyondVictoryLine() ) {
-		this.initVictoryState();
+		this.enterVictoryState();
 	} else if ( !this.inSafeZone() ) {
-		this.initLoseState();
+		this.enterLoseState();
 	}
 };
 
@@ -63,35 +63,43 @@ Game.prototype.init = function () {
 	this.victoryZone = new VictoryZone(-1 * (this.canyon.length + canvas.height * 0.4));
 }
 
-Game.prototype.initVictoryState = function () {
-	document.getElementById('primary-message').innerHTML = "You won!";
-	document.getElementById('secondary-message').innerHTML = "Press 'Enter' to play again";
-	this.state = "victory";
-	var listener = addEventListener("keydown", function (e) {
-		if (e.keyCode == 13) {
-			that.refresh();
-			removeEventListener("keydown", listener);
+Game.prototype.enterVictoryState = function () {
+	if (this.state !== "victory") {
+		document.getElementById('primary-message').innerHTML = "You won!";
+		document.getElementById('secondary-message').innerHTML = "Press 'Enter' to play again";
+		this.state = "victory";
+		var startGameOnEnter = function (e) {
+			if (e.keyCode == 13) {
+				that.refresh();
+				removeEventListener("keydown", startGameOnEnter);
+			}
 		}
-	});
+		this.listener = addEventListener("keydown", startGameOnEnter);
+	}
 }
 
-Game.prototype.initLoseState = function () {
-	var that = this;
-	document.getElementById('primary-message').innerHTML = "You crashed!";
-	document.getElementById('secondary-message').innerHTML = "Press 'Enter' to play again";
-	this.state = "loss";
-	var listener = addEventListener("keydown", function (e) {
-		if (e.keyCode == 13) {
-			that.refresh();
-			removeEventListener("keydown", listener);
+Game.prototype.enterLoseState = function () {
+	if (this.state !== "loss") {
+		var that = this;
+		document.getElementById('primary-message').innerHTML = "You crashed!";
+		document.getElementById('secondary-message').innerHTML = "Press 'Enter' to play again";
+		this.state = "loss";
+		var startGameOnEnter = function (e) {
+			if (e.keyCode == 13) {
+				that.refresh();
+				removeEventListener("keydown", startGameOnEnter);
+			}
 		}
-	});
+		this.listener = addEventListener("keydown", startGameOnEnter);
+	}
 }
 
 Game.prototype.refresh = function () {
 	document.getElementById('primary-message').innerHTML = "";
 	document.getElementById('secondary-message').innerHTML = "";
-	this.init();
+	console.log('refresh');
+	clearInterval(this.loop);
+	startGame();
 }
 
 // Setup base safe zone, somewhat randomly generate other safe zones
@@ -131,20 +139,11 @@ Game.prototype.initSafeZones = function () {
 	}
 }
 
-window.onload = function () {
-	// Run game loop when user hits enter
-	var gameBegun = false;
-	addEventListener("keydown", function (e) {
-		if (e.keyCode == 13 && !gameBegun) {
-			startGame();
-			gameBegun = true;
-		}
-	}, false);
-}
-
 var startGame = function () {
 	// Hide the start screen
 	document.getElementById('start-screen').className = 'hidden';
+	document.getElementById('primary-message').innerHTML = "";
+	document.getElementById('secondary-message').innerHTML = "";
 
 	// Set up the canvas
 	var canvas = document.getElementById('canvas');
@@ -183,5 +182,5 @@ var startGame = function () {
 				then = now;
 			}, 10); // Execute as fast as possible
 		}
-	}, 50);
+	}, 500);
 }
