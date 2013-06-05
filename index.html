@@ -3,14 +3,19 @@
 <head>
 	<meta charset="UTF-8" />
 	<title>Testing Ground</title>
-	<script src="helper.js"></script>
-	<script src="user_input.js"></script>
-	<script src="ship.js"></script>
-	<script src="canyon.js"></script>
-	<script src="safe_zone.js"></script>
-	<script src="victory_zone.js"></script>
-	<script src="game.js"></script>
-	<script src="on_load.js"></script>
+	<script src="head.min.js"></script>
+	<script>
+	head.js("helper.js"
+		  , "user_input.js"
+		  , "ship.js"
+		  , "canyon.js"
+		  , "safe_zone.js"
+		  , "victory_zone.js"
+		  , "game.js"
+		  , "on_load.js", function () {
+		  	console.log("all js loaded");
+		  })
+	</script>
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>

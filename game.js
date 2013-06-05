@@ -107,7 +107,7 @@ Game.prototype.initSafeZones = function () {
 	
 	// For the base safe zone
 	var baseWidth = canvas.width;
-	var baseHeight = canvas.height / 4;
+	var baseHeight = canvas.height / 2;
 	var baseX = 0;
 	var baseY = canvas.height - baseHeight;
 
