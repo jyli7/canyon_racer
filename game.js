@@ -49,7 +49,7 @@ Game.prototype.init = function () {
 	this.ctx.translate(0, -this.ctx.translatedDistance);
 	this.ctx.translatedDistance = 0;
 	translatedY = 0;
-	this.ship = new Ship(canvas.width / 2, canvas.height - 10, 200);
+	this.ship = new Ship();
 	this.canyon = new Canyon();
 	this.initSafeZones();
 }
@@ -91,17 +91,30 @@ Game.prototype.initSafeZones = function () {
 }
 
 window.onload = function () {
-	// Set up canvas
+	// Run game loop when user hits enter
+	addEventListener("keydown", function (e) {
+		if (e.keyCode == 13) {
+			startGame();
+		}
+	}, false);
+}
+
+var startGame = function () {
+	// Hide the start screen
+	document.getElementById('start-screen').className = 'hidden';
+
+	// Set up the canvas
 	var canvas = document.getElementById('canvas');
 	var ctx = canvas.getContext('2d');
 	canvas.width = 800;
 	canvas.height = 600;
 
+	// Init the game
 	var game = new Game();
 	game.ctx = ctx;
-	game.init(ctx);
+	game.init(ctx)
 
-	// Run game loop
+	// Start the game loop
 	var then = Date.now();
 	setInterval(function () {
 		var now = Date.now();

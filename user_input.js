@@ -12,7 +12,7 @@
 			delete keysHeldDown[e.keyCode];
 		}, false);
 
-		this.keyPressed = function (key) {
+		this.keyIsHeld = function (key) {
 			return key in keysHeldDown;
 		};
 	}
