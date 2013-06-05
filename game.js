@@ -55,7 +55,6 @@ Game.prototype.draw = function (ctx) {
 Game.prototype.init = function () {
 	// Bring canvas back to original position
 	this.state = "alive";
-	debugger;
 	this.ctx.translate(0, -this.translatedDistance);
 	this.translatedDistance = 0;
 	this.ship = new Ship();
@@ -125,13 +124,24 @@ Game.prototype.initSafeZones = function () {
 	var width = standardWidth;
 	var height = standardHeight;
 
+	// Minima and maxima
+	var minimumWidth = this.ship.width * 2;
+	var maximumWidth = this.ship.width * 6;
+	var minimumX = 0;
+	var maximumX = canvas.width - maximumWidth;
+
 	xVolatility = 0.1;
 	yVolatility = 0.05;
-	widthVolatility = 0.05;
+	widthVolatility = 0.03;
 	heightVolatility = 0.02;
 
 	// Set the x, y, width, height for lots of canyons
 	for (var y = baseY; y >= -this.canyon.length; y -= 3) {
+		// Ad hoc fixes
+		if (x <= minimumX) { x += 50; }
+		if (x >= maximumX) { x -= 50; }
+		if (width <= minimumWidth || width >= maximumWidth) { width = standardWidth };
+
 		x = x * volatilityMultiple(xVolatility);
 		width = width * volatilityMultiple(widthVolatility);
 		height = height * volatilityMultiple(heightVolatility);

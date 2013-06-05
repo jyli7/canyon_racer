@@ -1,5 +1,5 @@
 var Canyon = function () {
-	this.length = 500;
+	this.length = 2000;
 };
 
 Canyon.prototype.draw = function (ctx) {
