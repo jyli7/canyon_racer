@@ -1,6 +1,7 @@
 var Game = function (ctx, scrollSpeed) {
 	this.ctx = ctx;
 	this.scrollSpeed = 2;
+	this.possibleStates = ["lose", "alive", "victory"];
 	this.state = "";
 };
 
@@ -53,7 +54,7 @@ Game.prototype.draw = function (ctx) {
 
 Game.prototype.init = function () {
 	// Bring canvas back to original position
-	this.state = "running";
+	this.state = "alive";
 	this.ctx.translate(0, -this.ctx.translatedDistance);
 	this.ctx.translatedDistance = 0;
 	this.ship = new Ship();
@@ -64,7 +65,14 @@ Game.prototype.init = function () {
 
 Game.prototype.initVictoryState = function () {
 	document.getElementById('primary-message').innerHTML = "You won!";
+	document.getElementById('secondary-message').innerHTML = "Press 'Enter' to play again";
 	this.state = "victory";
+	var listener = addEventListener("keydown", function (e) {
+		if (e.keyCode == 13) {
+			that.refresh();
+			removeEventListener("keydown", listener);
+		}
+	});
 }
 
 Game.prototype.initLoseState = function () {
@@ -97,7 +105,7 @@ Game.prototype.initSafeZones = function () {
 	var baseY = canvas.height - baseHeight;
 
 	// For the other safe zones
-	var standardWidth = this.ship.width * 5;
+	var standardWidth = this.ship.width * 3;
 	var standardHeight = canvas.height / 6;
 	var standardX = canvas.width / 2 - standardWidth / 2.
 	
@@ -111,7 +119,7 @@ Game.prototype.initSafeZones = function () {
 
 	xVolatility = 0.1;
 	yVolatility = 0.05;
-	widthVolatility = 0.02;
+	widthVolatility = 0.05;
 	heightVolatility = 0.02;
 
 	// Set the x, y, width, height for lots of canyons

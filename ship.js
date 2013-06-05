@@ -3,7 +3,7 @@ var Ship = function () {
 	this.y = canvas.height - 10;
 	this.width = 20;
 	this.height = 20;
-	this.speed = 300;
+	this.maxSpeed = 400;
 	this.userInput = new UserInput();
 };
 
@@ -18,14 +18,14 @@ Ship.prototype.draw = function (ctx) {
 
 Ship.prototype.update = function (elapsedTime) {
 	// Player holding up
-	if (this.userInput.keyIsHeld(38)) { this.y -= this.speed * elapsedTime; }
+	if (this.userInput.keyIsHeld(38)) { this.y -= this.maxSpeed * elapsedTime; }
 	
 	// Player holding down
-	if (this.userInput.keyIsHeld(40)) { this.y += this.speed * elapsedTime; }
+	if (this.userInput.keyIsHeld(40)) { this.y += this.maxSpeed * elapsedTime; }
 	
 	// Player holding left
-	if (this.userInput.keyIsHeld(37)) { this.x -= this.speed * elapsedTime; }
+	if (this.userInput.keyIsHeld(37)) { this.x -= this.maxSpeed * elapsedTime; }
 	
 	// Player holding right
-	if (this.userInput.keyIsHeld(39)) { this.x += this.speed * elapsedTime; }
+	if (this.userInput.keyIsHeld(39)) { this.x += this.maxSpeed * elapsedTime; }
 };
