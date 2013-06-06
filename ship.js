@@ -3,7 +3,7 @@ var Ship = function () {
 	this.y = canvas.height - 10;
 	this.width = 20;
 	this.height = 20;
-	this.baseSpeed = 175;
+	this.baseSpeed = 250;
 	this.extraSpeed = 200;
 	this.userInput = new UserInput();
 };
@@ -18,18 +18,20 @@ Ship.prototype.draw = function (ctx) {
 };
 
 Ship.prototype.update = function (elapsedTime) {
-	// Make the ship go forward some amount, automatically
-	this.y -= this.baseSpeed * elapsedTime;
+	if (!this.crashed) {
+		// Make the ship go forward some amount, automatically
+		this.y -= this.baseSpeed * elapsedTime;
 
-	// Player holding up
-	if (this.userInput.keyIsHeld(38)) { this.y -= this.extraSpeed * elapsedTime; }
-	
-	// Player holding down
-	if (this.userInput.keyIsHeld(40)) { this.y += this.extraSpeed * elapsedTime; }
-	
-	// Player holding left
-	if (this.userInput.keyIsHeld(37)) { this.x -= this.extraSpeed * elapsedTime; }
-	
-	// Player holding right
-	if (this.userInput.keyIsHeld(39)) { this.x += this.extraSpeed * elapsedTime; }
+		// Player holding up
+		if (this.userInput.keyIsHeld(38)) { this.y -= this.extraSpeed * elapsedTime; }
+		
+		// Player holding down
+		if (this.userInput.keyIsHeld(40)) { this.y += this.extraSpeed * elapsedTime; }
+		
+		// Player holding left
+		if (this.userInput.keyIsHeld(37)) { this.x -= this.extraSpeed * elapsedTime; }
+		
+		// Player holding right
+		if (this.userInput.keyIsHeld(39)) { this.x += this.extraSpeed * elapsedTime; }
+	}
 };

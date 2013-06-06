@@ -25,10 +25,9 @@ Game.prototype.beyondVictoryLine = function () {
 }
 
 Game.prototype.update = function (delta) {
-	if (this.state !== "loss") {
-		this.ship.update(delta);
-	}
-	this.canyon.update(delta);
+	this.entities.forEach (function (entity) {
+		entity.update(delta);
+	});
 
 	if ( this.beyondVictoryLine() ) {
 		this.enterVictoryState();
@@ -44,12 +43,9 @@ Game.prototype.draw = function (ctx) {
 	this.ctx.translate(0, this.scrollSpeed);
 	this.translatedDistance += this.scrollSpeed;
 
-	this.canyon.draw(this.ctx);
-	this.safeZones.forEach (function (zone) {
-		zone.draw(that.ctx);
+	this.entities.forEach (function (entity) {
+		entity.draw(that.ctx);
 	});
-	this.victoryZone.draw(this.ctx);
-	this.ship.draw(this.ctx);
 }
 
 Game.prototype.init = function () {
@@ -61,6 +57,9 @@ Game.prototype.init = function () {
 	this.canyon = new Canyon();
 	this.initSafeZones();
 	this.victoryZone = new VictoryZone(-1 * (this.canyon.length + canvas.height * 0.4));
+
+	// TO DO: Figure out why I need this particular order.
+	this.entities = [this.canyon, this.victoryZone].concat(this.safeZones).concat(this.ship);
 }
 
 Game.prototype.refreshOnEnter = function () {
@@ -88,6 +87,7 @@ Game.prototype.enterLoseState = function () {
 		var that = this;
 		document.getElementById('primary-message').innerHTML = "You crashed!";
 		document.getElementById('secondary-message').innerHTML = "Press 'Enter' to play again";
+		this.ship.crashed = true;
 		this.state = "loss";
 		this.refreshOnEnter();
 	}
@@ -130,13 +130,28 @@ Game.prototype.initSafeZones = function () {
 	var minimumX = 0;
 	var maximumX = canvas.width - maximumWidth;
 
-	xVolatility = 0.1;
+	xVolatility = 0.08;
 	yVolatility = 0.05;
 	widthVolatility = 0.03;
 	heightVolatility = 0.02;
 
+	var phaseOneReached = false;
+	var phaseTwoReached = false;
+
 	// Set the x, y, width, height for lots of canyons
 	for (var y = baseY; y >= -this.canyon.length; y -= 3) {
+		if (y <= -this.canyon.length * 0.5 && !phaseTwoReached) { 
+			maximumWidth *= 0.8;
+			standardWidth *= 0.8;
+			xVolatility *= 1.1;
+			phaseTwoReached = true;
+		} else if (y <= -this.canyon.length * 0.3 && !phaseOneReached) {
+			maximumWidth = maximumWidth * 0.9;
+			standardWidth = standardWidth * 0.9;
+			xVolatility *= 1.1;
+			phaseOneReached = true;
+		}
+
 		// Ad hoc fixes
 		if (x <= minimumX) { x += 50; }
 		if (x >= maximumX) { x -= 50; }
