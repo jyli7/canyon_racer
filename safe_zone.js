@@ -1,4 +1,5 @@
-var SafeZone = function (xLeft, yTop, width, height) {
+var SafeZone = function (game, xLeft, yTop, width, height) {
+	this.game = game;
 	this.width = width;
 	this.height = height;
 	this.xLeft = xLeft;

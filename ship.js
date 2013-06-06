@@ -1,4 +1,5 @@
-var Ship = function () {
+var Ship = function (game) {
+	this.game = game;
 	this.x = canvas.width / 2;
 	this.y = canvas.height - 10;
 	this.width = 20;
@@ -19,7 +20,7 @@ Ship.prototype.draw = function (ctx) {
 };
 
 Ship.prototype.update = function (elapsedTime) {
-	if (!this.crashed) {
+	if (this.game.currentState === 'playing') {
 		// Make the ship go forward some amount, automatically
 		this.y -= this.baseSpeed * elapsedTime;
 

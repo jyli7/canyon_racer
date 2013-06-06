@@ -7,10 +7,11 @@ var Game = function (ctx, scrollSpeed) {
 	this.countdownDisplay = 3;
 	this.states = {
 		countdown: function () {
+			var countdownElement = document.getElementById('countdown');
 			if (that.countdownDisplay < 0) {
 				countdownElement.innerHTML = "";
 				return 'playing';
-			} else if (that.countdownCount % 120 === 0) {
+			} else if (that.countdownCount % 80 === 0) {
 				if (that.countdownDisplay !== 0) { countdownElement.innerHTML = that.countdownDisplay; }
 				that.countdownDisplay -= 1;
 			}
@@ -49,13 +50,6 @@ var Game = function (ctx, scrollSpeed) {
 		}
 	};
 };
-
-var countdownInitiated = false;
-var countdownFinished = false;
-
-var countdownCount = 0;
-var countdownDisplay = 3;
-var countdownElement = document.getElementById('countdown');
 
 Game.prototype.inSafeZone = function () {
 	for (var i = 0; i < this.safeZones.length; i ++) {
@@ -99,10 +93,10 @@ Game.prototype.init = function () {
 	// Bring canvas back to original position
 	this.ctx.translate(0, -this.translatedDistance);
 	this.translatedDistance = 0;
-	this.ship = new Ship();
-	this.canyon = new Canyon();
+	this.ship = new Ship(this);
+	this.canyon = new Canyon(this);
 	this.initSafeZones();
-	this.victoryZone = new VictoryZone(-1 * (this.canyon.length + canvas.height * 0.4));
+	this.victoryZone = new VictoryZone(this, -1 * (this.canyon.length + canvas.height * 0.4));
 
 	// TO DO: Figure out why I need this particular order.
 	this.entities = [this.canyon, this.victoryZone].concat(this.safeZones).concat(this.ship);
@@ -142,7 +136,7 @@ Game.prototype.initSafeZones = function () {
 	var standardX = canvas.width / 2 - standardWidth / 2.
 	
 	// Create base safeZone
-	this.safeZones.push(new SafeZone(baseX, baseY, baseWidth, baseHeight));
+	this.safeZones.push(new SafeZone(this, baseX, baseY, baseWidth, baseHeight));
 
 	// Starting from the top of the baseSafeZone, create other safeZones
 	var x = standardX;
@@ -185,7 +179,7 @@ Game.prototype.initSafeZones = function () {
 		x = x * volatilityMultiple(xVolatility);
 		width = width * volatilityMultiple(widthVolatility);
 		height = height * volatilityMultiple(heightVolatility);
-		this.safeZones.push(new SafeZone(x, y, width, height));
+		this.safeZones.push(new SafeZone(this, x, y, width, height));
 	}
 }
 
@@ -208,12 +202,10 @@ var startGame = function () {
 	game.draw(ctx);
 
 	var then = Date.now();
-	console.log(game.currentState);
 
+	// MAIN GAME LOOP
 	game.loop = setInterval(function () {
-		// consider passing in game
-		var stateFunction = game.states[game.currentState];
-		var nextState = stateFunction.call(game);
+		var nextState = game.states[game.currentState].call(game);
 
 		if (nextState !== undefined) {
 			game.currentState = nextState;

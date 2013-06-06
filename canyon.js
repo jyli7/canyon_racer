@@ -1,4 +1,5 @@
-var Canyon = function () {
+var Canyon = function (game) {
+	this.game = game;
 	this.length = 2000;
 };
 
