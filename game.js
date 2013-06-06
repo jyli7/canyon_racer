@@ -1,6 +1,6 @@
 var Game = function (ctx, scrollSpeed) {
 	this.ctx = ctx;
-	this.scrollSpeed = 2;
+	this.scrollSpeed = 2.2;
 	this.states = {
 		loss: 'loss'
 	, alive: 'alive'

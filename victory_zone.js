@@ -1,4 +1,3 @@
-// Ship constructor
 var VictoryZone = function (yTop) {
 	this.width = canvas.width;
 	this.height = canvas.height;
