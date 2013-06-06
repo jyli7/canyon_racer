@@ -1,8 +1,13 @@
 var Game = function (ctx, scrollSpeed) {
 	this.ctx = ctx;
 	this.scrollSpeed = 2;
-	this.possibleStates = ["loss", "alive", "victory"];
-	this.state = "";
+	this.states = {
+		loss: 'loss'
+	, alive: 'alive'
+	, victory: 'victory'
+	, notStarted: 'notStarted'
+	};
+	this.currentState = this.states.notStarted;
 };
 
 Game.prototype.inSafeZone = function () {
@@ -50,7 +55,7 @@ Game.prototype.draw = function (ctx) {
 
 Game.prototype.init = function () {
 	// Bring canvas back to original position
-	this.state = "alive";
+	this.currentState = this.states.alive;
 	this.ctx.translate(0, -this.translatedDistance);
 	this.translatedDistance = 0;
 	this.ship = new Ship();
@@ -74,21 +79,21 @@ Game.prototype.refreshOnEnter = function () {
 }
 
 Game.prototype.enterVictoryState = function () {
-	if (this.state !== "victory") {
+	if (this.currentState !== this.states.victory) {
 		document.getElementById('primary-message').innerHTML = "You won!";
 		document.getElementById('secondary-message').innerHTML = "Press 'Enter' to play again";
-		this.state = "victory";
+		this.currentState = this.states.victory;
 		this.refreshOnEnter();
 	}
 }
 
 Game.prototype.enterLoseState = function () {
-	if (this.state !== "loss") {
+	if (this.currentState !== this.states.loss) {
 		var that = this;
 		document.getElementById('primary-message').innerHTML = "You crashed!";
 		document.getElementById('secondary-message').innerHTML = "Press 'Enter' to play again";
 		this.ship.crashed = true;
-		this.state = "loss";
+		this.currentState = this.states.loss;
 		this.refreshOnEnter();
 	}
 }

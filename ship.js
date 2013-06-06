@@ -6,6 +6,7 @@ var Ship = function () {
 	this.baseSpeed = 250;
 	this.extraSpeed = 200;
 	this.userInput = new UserInput();
+	this.crashed = false;
 };
 
 Ship.prototype.draw = function (ctx) {
