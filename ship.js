@@ -3,8 +3,8 @@ var Ship = function () {
 	this.y = canvas.height - 10;
 	this.width = 20;
 	this.height = 20;
-	this.baseSpeed = 275;
-	this.extraSpeed = 200;
+	this.baseSpeed = 200;
+	this.extraSpeed = 150;
 	this.userInput = new UserInput();
 	this.crashed = false;
 };

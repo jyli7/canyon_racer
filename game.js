@@ -1,14 +1,61 @@
 var Game = function (ctx, scrollSpeed) {
+	var that = this;
 	this.ctx = ctx;
 	this.scrollSpeed = 2.2;
+	this.currentState = 'countdown';
+	this.countdownCount = 0;
+	this.countdownDisplay = 3;
 	this.states = {
-		loss: 'loss'
-	, alive: 'alive'
-	, victory: 'victory'
-	, notStarted: 'notStarted'
+		countdown: function () {
+			if (that.countdownDisplay < 0) {
+				countdownElement.innerHTML = "";
+				return 'playing';
+			} else if (that.countdownCount % 120 === 0) {
+				if (that.countdownDisplay !== 0) { countdownElement.innerHTML = that.countdownDisplay; }
+				that.countdownDisplay -= 1;
+			}
+			that.countdownCount += 1;
+		}
+
+	, playing: function () {
+			this.update(this.loopTimeElapsed);
+			this.draw(ctx);
+
+			if ( this.beyondVictoryLine() ) {
+				return 'victory';
+			} else if ( !this.inSafeZone() ) {
+				return 'loss';
+			}
+		}
+
+	, victory: function () {
+			document.getElementById('primary-message').innerHTML = "You won!";
+			document.getElementById('secondary-message').innerHTML = "Press 'Enter' to play again";
+			this.refreshOnEnter();
+			this.currentState = 'gameOver';
+		}
+	
+	, loss: function () {
+			document.getElementById('primary-message').innerHTML = "You crashed!";
+			document.getElementById('secondary-message').innerHTML = "Press 'Enter' to play again";
+			this.ship.crashed = true;
+			this.refreshOnEnter();
+			this.currentState = 'gameOver';
+		}
+
+	, gameOver: function () {
+			this.update(this.loopTimeElapsed);
+			this.draw(ctx);
+		}
 	};
-	this.currentState = this.states.notStarted;
 };
+
+var countdownInitiated = false;
+var countdownFinished = false;
+
+var countdownCount = 0;
+var countdownDisplay = 3;
+var countdownElement = document.getElementById('countdown');
 
 Game.prototype.inSafeZone = function () {
 	for (var i = 0; i < this.safeZones.length; i ++) {
@@ -33,13 +80,8 @@ Game.prototype.update = function (delta) {
 	this.entities.forEach (function (entity) {
 		entity.update(delta);
 	});
-
-	if ( this.beyondVictoryLine() ) {
-		this.enterVictoryState();
-	} else if ( !this.inSafeZone() ) {
-		this.enterLoseState();
-	}
 };
+
 
 Game.prototype.draw = function (ctx) {
 	var that = this;
@@ -55,7 +97,6 @@ Game.prototype.draw = function (ctx) {
 
 Game.prototype.init = function () {
 	// Bring canvas back to original position
-	this.currentState = this.states.alive;
 	this.ctx.translate(0, -this.translatedDistance);
 	this.translatedDistance = 0;
 	this.ship = new Ship();
@@ -72,36 +113,15 @@ Game.prototype.refreshOnEnter = function () {
 	var startGameOnEnter = function (e) {
 		if (e.keyCode == 13) {
 			that.refresh();
-			removeEventListener("keydown", startGameOnEnter);
+			removeEventListener("keypress", startGameOnEnter);
 		}
 	}
-	this.listener = addEventListener("keydown", startGameOnEnter);
-}
-
-Game.prototype.enterVictoryState = function () {
-	if (this.currentState !== this.states.victory) {
-		document.getElementById('primary-message').innerHTML = "You won!";
-		document.getElementById('secondary-message').innerHTML = "Press 'Enter' to play again";
-		this.currentState = this.states.victory;
-		this.refreshOnEnter();
-	}
-}
-
-Game.prototype.enterLoseState = function () {
-	if (this.currentState !== this.states.loss) {
-		var that = this;
-		document.getElementById('primary-message').innerHTML = "You crashed!";
-		document.getElementById('secondary-message').innerHTML = "Press 'Enter' to play again";
-		this.ship.crashed = true;
-		this.currentState = this.states.loss;
-		this.refreshOnEnter();
-	}
+	this.listener = addEventListener("keypress", startGameOnEnter);
 }
 
 Game.prototype.refresh = function () {
 	document.getElementById('primary-message').innerHTML = "";
 	document.getElementById('secondary-message').innerHTML = "";
-	console.log('refresh');
 	clearInterval(this.loop);
 	startGame();
 }
@@ -143,7 +163,7 @@ Game.prototype.initSafeZones = function () {
 	var phaseOneReached = false;
 	var phaseTwoReached = false;
 
-	// Set the x, y, width, height for lots of canyons
+	// Set the x, y, width, height for lots of safeZones
 	for (var y = baseY; y >= -this.canyon.length; y -= 3) {
 		if (y <= -this.canyon.length * 0.5 && !phaseTwoReached) { 
 			maximumWidth *= 0.8;
@@ -187,30 +207,21 @@ var startGame = function () {
 	game.init(ctx);
 	game.draw(ctx);
 
-	// Start the countdown, 3...2...1
-	// TO DO: THIS IS MESSY!!!!
-	var count = 3;
-	var countdown = setInterval(function () {
-		// At end of countdown, stop the countdown and start the game loop
-		var countdownElement = document.getElementById('countdown');
-		if (count > 0) {
-			countdownElement.innerHTML = count;
-			count--;
-		} else {
-			clearInterval(countdown);
-			countdownElement.innerHTML = "";
-			
-			// Start the game loop	
-			var then = Date.now();
-			game.loop = setInterval(function () {
-				var now = Date.now();
-				var delta = (now - then) / 1000;
-				
-				game.update(delta);
-				game.draw(ctx);
+	var then = Date.now();
+	console.log(game.currentState);
 
-				then = now;
-			}, 10); // Execute as fast as possible
+	game.loop = setInterval(function () {
+		// consider passing in game
+		var stateFunction = game.states[game.currentState];
+		var nextState = stateFunction.call(game);
+
+		if (nextState !== undefined) {
+			game.currentState = nextState;
 		}
-	}, 500);
+		
+		var now = Date.now();
+		game.loopTimeElapsed = (now - then) / 1000;
+		then = now;
+		
+	}, 10); // Execute as fast as possible
 }
