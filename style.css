@@ -31,22 +31,28 @@ canvas {
 	text-align: center;
 }
 
-.primary-message {
-	text-align: center;
-	position: absolute;
-	top: 40%;
-	left: 40%;
-	font-size: 40px;
+.primary-message, .secondary-message {
+	font-family: 'Roboto Slab', serif;
 	color: red;
 }
 
+.primary-message {
+	font-size: 50px;
+}
+
 .secondary-message {
+	font-size: 30px;
+	margin-top: 5px;
+}
+
+#countdown {
 	text-align: center;
 	position: absolute;
-	top: 50%;
-	left: 40%;
-	font-size: 40px;
-	color: red;	
+	top: 40%;
+	left: 48%;
+	font-size: 75px;
+	font-family: 'Roboto Slab', serif;
+	color: red;
 }
 
 .title {
@@ -54,8 +60,6 @@ canvas {
 	font-style: italic;
 	letter-spacing: 25px;
 	font-size: 50px;
-	top: 30%;
-	left: 30%;
 }
 
 .subtitle {
@@ -68,6 +72,6 @@ canvas {
 
 .message-container {
 	position: absolute;
-	top: 40%;
+	top: 38%;
 	left: 28%;
 }
