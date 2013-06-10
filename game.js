@@ -95,7 +95,8 @@ Game.prototype.init = function () {
 	this.translatedDistance = 0;
 	this.ship = new Ship(this);
 	this.canyon = new Canyon(this);
-	this.initSafeZones();
+	this.safeZoneManager = new SafeZoneManager(this);
+	this.safeZoneManager.init(this.ctx);
 	this.victoryZone = new VictoryZone(this, -1 * (this.canyon.length + canvas.height * 0.4));
 
 	// TO DO: Figure out why I need this particular order.

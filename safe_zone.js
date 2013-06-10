@@ -9,8 +9,17 @@ var SafeZone = function (game, xLeft, yTop, width, height) {
 };
 
 SafeZone.prototype.draw = function (ctx) {
-	ctx.fillStyle = "rgb(255,255,255)";
-	ctx.fillRect(this.xLeft, this.yTop, this.width, this.height);
+	// Draw only those SafeZones that are in advance of the ship
+	
+		var threshold = -1 * this.game.translatedDistance;
+		var bottomLine = threshold + canvas.height;
+		var topLine = threshold - canvas.height;
+
+		if (this.yTop < bottomLine && this.yTop > topLine ) {
+			ctx.fillStyle = "rgb(255,255,255)";
+			ctx.fillRect(this.xLeft, this.yTop, this.width, this.height);
+		}
+	
 };
 
 SafeZone.prototype.update = function () {};
