@@ -1,65 +1,92 @@
 var SafeZoneManager = function (game) {
 	this.game = game;
-};
-
-SafeZoneManager.prototype.init = function (ctx) {
-	this.game.safeZones = [];
+	this.currentPhase = 0;
 	
-	// For the base safe zone
-	var baseWidth = canvas.width;
-	var baseHeight = canvas.height / 2;
-	var baseX = 0;
-	var baseY = canvas.height - baseHeight;
-	
-	// Create base safeZone
-	this.game.safeZones.push(new SafeZone(this.game, baseX, baseY, baseWidth, baseHeight));
+	this.baseWidth = canvas.width;
+	this.baseHeight = canvas.height / 2;
+	this.baseX = 0;
+	this.baseY = canvas.height - this.baseHeight;
 
-	// For the other safe zones
-	var standardWidth = this.game.ship.width * 3;
-	var standardHeight = canvas.height / 6;
-	var standardX = canvas.width / 2 - standardWidth / 2.
+	this.meanWidth = this.game.ship.width * 3;
+	this.meanHeight = canvas.height / 6;
+	this.meanX = canvas.width / 2 - this.meanWidth / 2;
 
-	// Starting from the top of the baseSafeZone, create other safeZones
-	var x = standardX;
-	var width = standardWidth;
-	var height = standardHeight;
+	this.maxWidth = this.game.ship.width * 5;
+	this.minWidth = this.game.ship.width * 2;
 
-	// Minima and maxima
-	var minimumWidth = this.game.ship.width * 2;
-	var maximumWidth = this.game.ship.width * 6;
-	var minimumX = 0;
-	var maximumX = canvas.width - maximumWidth;
+	this.minimumX = 0;
+	this.maximumX = canvas.width - this.maxWidth;
 
-	xVolatility = 0.08;
-	yVolatility = 0.05;
-	widthVolatility = 0.03;
-	heightVolatility = 0.02;
+	this.initialXVolatility = 0.08;
+	this.initialYVolatility = 0.05;
+	this.initialWidthVolatility = 0.03;
+	this.initialHeightVolatility = 0.02;
 
-	var phaseOneReached = false;
-	var phaseTwoReached = false;
-
-	// Set the x, y, width, height for lots of safeZones, add them to the SafeZone queue
-	for (var y = baseY; y >= -this.game.canyon.length; y -= 3) {
-		if (y <= -this.game.canyon.length * 0.5 && !phaseTwoReached) { 
-			maximumWidth *= 0.8;
-			standardWidth *= 0.8;
-			xVolatility *= 1.2;
-			phaseTwoReached = true;
-		} else if (y <= -this.game.canyon.length * 0.3 && !phaseOneReached) {
-			maximumWidth = maximumWidth * 0.9;
-			standardWidth = standardWidth * 0.9;
-			xVolatility *= 1.4;
-			phaseOneReached = true;
+	this.phaseSettings = {
+		0: {
+			xVolatility: this.initialXVolatility
+		, maxWidth: this.maxWidth
+		, meanWidth: this.meanWidth
 		}
 
-		// Ad hoc fixes
-		if (x <= minimumX) { x += 50; }
-		if (x >= maximumX) { x -= 50; }
-		if (width <= minimumWidth || width >= maximumWidth) { width = standardWidth };
+	, 1: {
+			xVolatility: this.initialXVolatility * 1.2
+		, maxWidth: this.maxWidth * 0.9
+		, meanWidth: this.meanWidth * 0.9
+		}
 
-		x = x * volatilityMultiple(xVolatility);
-		width = width * volatilityMultiple(widthVolatility);
-		height = height * volatilityMultiple(heightVolatility);
-		this.game.safeZones.push(new SafeZone(this.game, x, y, width, height));
+	, 2: {
+			xVolatility: this.initialXVolatility * 1.4
+		, maxWidth: this.maxWidth * 0.8
+		, meanWidth: this.meanWidth * 0.8
+		}
 	}
+
+};
+
+SafeZoneManager.prototype.initBaseZone = function (ctx) {
+	this.game.safeZones = this.game.safeZones || [];
+	this.game.safeZones.push(new SafeZone(this.game, this.baseX, this.baseY, this.baseWidth, this.baseHeight));
+}
+
+SafeZoneManager.prototype.getPhase = function (y) {
+	if (y <= -this.game.canyon.length * 0.7) {
+		return 2;
+	} else if (y <= -this.game.canyon.length * 0.5) {
+		return 1;
+	} else if (y <= this.baseY) {
+		return 0;
+	}
+}
+
+SafeZoneManager.prototype.initAllOtherZones = function (ctx) {
+	this.game.safeZones = this.game.safeZones || [];
+
+	var x = this.meanX;
+	var width = this.meanWidth;
+	var height = this.meanHeight;
+
+	// Set the x, y, width, height for lots of safeZones, add them to the SafeZone queue
+	for (var y = this.baseY; y >= -this.game.canyon.length; y -= 3) {
+		var phase = this.getPhase(y);
+
+		x = x * volatilityMultiple(this.phaseSettings[phase].xVolatility);
+		width = width * volatilityMultiple(this.initialWidthVolatility);
+		height = height * volatilityMultiple(this.initialHeightVolatility);
+
+		// Ad hoc fixes
+		if (x <= this.minimumX) { x += 50; }
+		if (x >= this.maximumX) { x -= 50; }
+		if (width <= this.minWidth || width >= this.phaseSettings[phase].maxWidth) { 
+			width = this.phaseSettings[phase].meanWidth
+		};
+
+		this.game.safeZones.push(new SafeZone(this.game, x, y, width, height));
+
+	}
+}
+
+SafeZoneManager.prototype.init = function (ctx) {
+	this.initBaseZone(ctx);
+	this.initAllOtherZones(ctx);
 }
