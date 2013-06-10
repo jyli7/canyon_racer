@@ -43,12 +43,12 @@ SafeZoneManager.prototype.init = function (ctx) {
 		if (y <= -this.game.canyon.length * 0.5 && !phaseTwoReached) { 
 			maximumWidth *= 0.8;
 			standardWidth *= 0.8;
-			xVolatility *= 1.1;
+			xVolatility *= 1.2;
 			phaseTwoReached = true;
 		} else if (y <= -this.game.canyon.length * 0.3 && !phaseOneReached) {
 			maximumWidth = maximumWidth * 0.9;
 			standardWidth = standardWidth * 0.9;
-			xVolatility *= 1.1;
+			xVolatility *= 1.4;
 			phaseOneReached = true;
 		}
 
