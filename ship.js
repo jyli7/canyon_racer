@@ -20,7 +20,7 @@ Ship.prototype.draw = function (ctx) {
 };
 
 Ship.prototype.update = function (elapsedTime) {
-	if (this.game.currentState === 'playing') {
+	if (this.game.currentState === 'playing' || ('gameOver' && !this.crashed)) {
 		// Make the ship go forward some amount, automatically
 		this.y -= this.baseSpeed * elapsedTime;
 

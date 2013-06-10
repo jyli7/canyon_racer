@@ -17,7 +17,7 @@ var SafeZoneManager = function (game) {
 	this.minimumX = 0;
 	this.maximumX = canvas.width - this.maxWidth;
 
-	this.initialXVolatility = 0.08;
+	this.initialXVolatility = 0.10;
 	this.initialYVolatility = 0.05;
 	this.initialWidthVolatility = 0.03;
 	this.initialHeightVolatility = 0.02;
@@ -62,17 +62,19 @@ SafeZoneManager.prototype.getPhase = function (y) {
 SafeZoneManager.prototype.initAllOtherZones = function (ctx) {
 	this.game.safeZones = this.game.safeZones || [];
 
+	// Starting values
 	var x = this.meanX;
 	var width = this.meanWidth;
 	var height = this.meanHeight;
 
-	// Set the x, y, width, height for lots of safeZones, add them to the SafeZone queue
+	// Set the x, y, width, height for lots of safeZones, add them to the SafeZone array
 	for (var y = this.baseY; y >= -this.game.canyon.length; y -= 3) {
 		var phase = this.getPhase(y);
 
-		x = x * volatilityMultiple(this.phaseSettings[phase].xVolatility);
-		width = width * volatilityMultiple(this.initialWidthVolatility);
-		height = height * volatilityMultiple(this.initialHeightVolatility);
+		// Tweak the x, width, and height values each time through the loop
+		x *= volatilityMultiple(this.phaseSettings[phase].xVolatility);
+		width *= volatilityMultiple(this.initialWidthVolatility);
+		height *= volatilityMultiple(this.initialHeightVolatility);
 
 		// Ad hoc fixes
 		if (x <= this.minimumX) { x += 50; }
@@ -82,7 +84,6 @@ SafeZoneManager.prototype.initAllOtherZones = function (ctx) {
 		};
 
 		this.game.safeZones.push(new SafeZone(this.game, x, y, width, height));
-
 	}
 }
 
