@@ -66,9 +66,7 @@ Game.prototype.initRefreshOnEnter = function () {
 }
 
 Game.prototype.update = function (delta) {
-	this.entities.forEach (function (entity) {
-		entity.update(delta);
-	});
+	this.entities.forEach (function (entity) { entity.update(delta); });
 };
 
 Game.prototype.draw = function (ctx) {
@@ -78,9 +76,7 @@ Game.prototype.draw = function (ctx) {
 	this.ctx.translate(0, this.scrollSpeed);
 	this.translatedDistance += this.scrollSpeed;
 
-	this.entities.forEach (function (entity) {
-		entity.draw(that.ctx);
-	});
+	this.entities.forEach (function (entity) { entity.draw(that.ctx); });
 }
 
 Game.prototype.init = function () {
