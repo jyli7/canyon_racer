@@ -1,5 +1,4 @@
 // TODO Turn this into a simple object, put inside module
-
 var SafeZoneManager = function (game) {
 	this.game = game;
 	this.currentPhase = 0;
@@ -9,10 +8,10 @@ var SafeZoneManager = function (game) {
 	this.baseX = 0;
 	this.baseY = canvas.height - this.baseHeight;
 
-	this.maxWidth = this.game.ship.width * 4;
-	this.minWidth = this.game.ship.width * 2;
-	this.minimumX = 25;
-	this.maximumX = canvas.width - 25;
+	this.maxWidth = this.game.ship.width * 3;
+	this.minWidth = this.game.ship.width * 1.5;
+	this.minimumX = 0;
+	this.maximumX = canvas.width - this.maxWidth;
 
 	this.meanWidth = (this.maxWidth + this.minWidth) / 2;
 	this.meanHeight = canvas.height * 0.2;
@@ -20,7 +19,6 @@ var SafeZoneManager = function (game) {
 
 	this.initialXVolatilityBound = 45;
 	this.widthVolatilityBound = this.meanWidth * 0.1;
-	// this.heightVolatilityBound = this.meanHeight * 0.1;
 
 	this.phaseSettings = {
 		0: {
@@ -71,7 +69,7 @@ SafeZoneManager.prototype.initAllOtherZones = function (ctx) {
 	var height = this.meanHeight;
 
 	// Set the x, y, width, height for lots of safeZones, add them to the SafeZone array
-	for (var y = this.baseY; y >= -this.game.canyon.length; y -= 3) {
+	for (var y = this.baseY; y >= -this.game.canyon.length; y -= 4) {
 		var phase = this.getPhase(y);
 		var phaseSettings = this.phaseSettings[phase];
 

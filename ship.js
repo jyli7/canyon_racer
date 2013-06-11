@@ -1,7 +1,7 @@
 var Ship = function (game) {
 	this.game = game;
 	this.x = canvas.width / 2;
-	this.y = canvas.height - 10;
+	this.y = canvas.height - 100;
 	this.width = 20;
 	this.height = 20;
 	this.baseSpeed = 275;

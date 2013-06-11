@@ -1,7 +1,7 @@
 var Game = function (ctx, scrollSpeed) {
 	var that = this;
 	this.ctx = ctx;
-	this.scrollSpeed = 3.4;
+	this.scrollSpeed = 3.0;
 	this.currentState = 'countdown';
 	
 	this.countdownTicker = 0;
@@ -35,7 +35,7 @@ var Game = function (ctx, scrollSpeed) {
 	, victory: function () {
 			setMessage('primary-message', 'You won!');
 			setMessage('secondary-message', "Press 'Enter' to play again");
-			this.refreshOnEnter();
+			this.initRefreshOnEnter();
 			this.currentState = 'gameOver';
 		}
 	
@@ -43,7 +43,7 @@ var Game = function (ctx, scrollSpeed) {
 			setMessage('primary-message', 'You crashed!');
 			setMessage('secondary-message', "Press 'Enter' to play again");
 			this.ship.crashed = true;
-			this.refreshOnEnter();
+			this.initRefreshOnEnter();
 			this.currentState = 'gameOver';
 		}
 
@@ -54,7 +54,7 @@ var Game = function (ctx, scrollSpeed) {
 	};
 };
 
-Game.prototype.refreshOnEnter = function () {
+Game.prototype.initRefreshOnEnter = function () {
 	var that = this;
 	var startGameOnEnter = function (e) {
 		if (e.keyCode == 13) {
