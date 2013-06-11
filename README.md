@@ -1,4 +1,4 @@
-test_flight
-===========
+Canyon Racer
+============
 
 Canyon flying game.
