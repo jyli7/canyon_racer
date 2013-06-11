@@ -8,18 +8,18 @@ var SafeZoneManager = function (game) {
 	this.baseX = 0;
 	this.baseY = canvas.height - this.baseHeight;
 
-	this.meanWidth = this.game.ship.width * 3;
-	this.meanHeight = canvas.height / 6;
-	this.meanX = canvas.width / 2 - this.meanWidth / 2;
+	this.meanWidth = this.game.ship.width * 2;
+	this.meanHeight = canvas.height * 0.25;
+	this.meanX = canvas.width * 0.5 - this.meanWidth * 0.5;
 
-	this.maxWidth = this.game.ship.width * 5;
-	this.minWidth = this.game.ship.width * 2;
-	this.minimumX = 50;
-	this.maximumX = canvas.width - this.maxWidth;
+	this.maxWidth = this.game.ship.width * 3;
+	this.minWidth = this.game.ship.width * 1.5;
+	this.minimumX = 25;
+	this.maximumX = canvas.width - 25;
 
-	this.initialXVolatilityBound = 15;
+	this.initialXVolatilityBound = 40;
 	this.widthVolatilityBound = this.meanWidth * 0.1;
-	this.heightVolatilityBound = this.meanHeight * 0.1;
+	// this.heightVolatilityBound = this.meanHeight * 0.1;
 
 	this.phaseSettings = {
 		0: {
@@ -29,13 +29,13 @@ var SafeZoneManager = function (game) {
 		}
 
 	, 1: {
-			xVolatilityBound: 20
+			xVolatilityBound: this.initialXVolatilityBound * 1.2
 		, maxWidth: this.maxWidth
 		, meanWidth: this.meanWidth
 		}
 
 	, 2: {
-			xVolatilityBound: 30
+			xVolatilityBound: this.initialXVolatilityBound * 1.4
 		, maxWidth: this.maxWidth
 		, meanWidth: this.meanWidth
 		}
@@ -78,7 +78,6 @@ SafeZoneManager.prototype.initAllOtherZones = function (ctx) {
 		// (TOASK: move this elsewhere?)
 		x += volatilityFactor(phaseSettings.xVolatilityBound);
 		width += volatilityFactor(this.widthVolatilityBound);
-		height += volatilityFactor(this.heightVolatilityBound);
 
 		// Ad hoc fixes (TOASK: move this elsewhere?)
 		if (x <= this.minimumX) { x += 50; }
