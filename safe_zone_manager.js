@@ -1,7 +1,6 @@
-// Turn this into a simple object, put inside module
+// TODO Turn this into a simple object, put inside module
 
 var SafeZoneManager = function (game) {
-	// TOASK: should I have all this stuff up here?
 	this.game = game;
 	this.currentPhase = 0;
 	

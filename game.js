@@ -1,7 +1,7 @@
 var Game = function (ctx, scrollSpeed) {
 	var that = this;
 	this.ctx = ctx;
-	this.scrollSpeed = 3.9;
+	this.scrollSpeed = 3.4;
 	this.currentState = 'countdown';
 	
 	this.countdownTicker = 0;
@@ -25,9 +25,9 @@ var Game = function (ctx, scrollSpeed) {
 			this.update(this.loopTimeElapsed);
 			this.draw(ctx);
 
-			if ( this.beyondVictoryLine() ) {
+			if ( inVictoryZone(this) ) {
 				return 'victory';
-			} else if ( !this.inSafeZone() ) {
+			} else if ( !inSafeZone(this) ) {
 				return 'loss';
 			}
 		}
@@ -53,25 +53,6 @@ var Game = function (ctx, scrollSpeed) {
 		}
 	};
 };
-
-Game.prototype.inSafeZone = function () {
-	for (var i = 0; i < this.safeZones.length; i ++) {
-		var zone = this.safeZones[i];
-		if (this.ship.x >= zone.xLeft && this.ship.x <= zone.xRight
-		  && this.ship.y >= zone.yTop && this.ship.y <= zone.yBottom) {
-		  return true;	
-		}
-	}
-	return false;
-}
-
-Game.prototype.beyondVictoryLine = function () {
-	if (this.ship.y <= this.victoryZone.yBottom) {
-	  return true;	
-	} else {
-		return false;
-	}
-}
 
 Game.prototype.refreshOnEnter = function () {
 	var that = this;
