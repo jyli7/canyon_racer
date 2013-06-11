@@ -1,7 +1,7 @@
 var Game = function (ctx, scrollSpeed) {
 	var that = this;
 	this.ctx = ctx;
-	this.scrollSpeed = 3.0;
+	this.scrollSpeed = 2;
 	this.currentState = 'countdown';
 	
 	this.countdownTicker = 0;
@@ -27,7 +27,7 @@ var Game = function (ctx, scrollSpeed) {
 
 			if ( inVictoryZone(this) ) {
 				return 'victory';
-			} else if ( !inSafeZone(this) ) {
+			} else if ( !inSafeZone(this) || collidedWithPillar(this) ) {
 				return 'loss';
 			}
 		}
@@ -89,8 +89,10 @@ Game.prototype.init = function () {
 	this.safeZoneManager = new SafeZoneManager(this);
 	this.safeZoneManager.init(this.ctx);
 	this.victoryZone = new VictoryZone(this, -1 * (this.canyon.length + canvas.height * 0.4));
+	this.pillarManager = new PillarManager(this);
+	this.pillarManager.init(this.ctx);
 
-	this.entities = [this.canyon, this.victoryZone, this.ship].concat(this.safeZones);
+	this.entities = [this.canyon, this.victoryZone, this.ship].concat(this.safeZones).concat(this.pillars);
 	this.entities.sort(function (a, b) {
 		return a.zIndex - b.zIndex;
 	});

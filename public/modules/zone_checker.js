@@ -10,6 +10,17 @@
 		return false;
 	}
 
+	exports.collidedWithPillar = function (game) {
+		for (var i = 0; i < game.pillars.length; i ++) {
+			var zone = game.pillars[i];
+			if (game.ship.x >= zone.xLeft && game.ship.x <= zone.xRight
+			  && game.ship.y >= zone.yTop && game.ship.y <= zone.yBottom) {
+			  return true;	
+			}
+		}
+		return false;	
+	}
+
 	exports.inVictoryZone = function (game) {
 		if (game.ship.y <= game.victoryZone.yBottom) {
 		  return true;	
