@@ -2,6 +2,7 @@ var Ship = function (game) {
 	this.game = game;
 	this.x = canvas.width / 2;
 	this.y = canvas.height - 100;
+
 	this.width = 20;
 	this.height = 20;
 	this.baseSpeed = 175;
@@ -19,6 +20,10 @@ Ship.prototype.draw = function (ctx) {
 	ctx.lineTo(this.x + (this.width / 2), this.y - this.height);
 	ctx.fill();
 };
+
+Ship.prototype.getRight = function () {
+	return this.x + this.width;
+}
 
 Ship.prototype.update = function (elapsedTime) {
 	if (this.game.currentState === 'playing' || ('gameOver' && !this.crashed)) {
