@@ -1,4 +1,5 @@
 var SafeZoneManager = function (game) {
+	// TOASK: should I have all this stuff up here?
 	this.game = game;
 	this.currentPhase = 0;
 	
@@ -13,32 +14,30 @@ var SafeZoneManager = function (game) {
 
 	this.maxWidth = this.game.ship.width * 5;
 	this.minWidth = this.game.ship.width * 2;
-
-	this.minimumX = 0;
+	this.minimumX = 50;
 	this.maximumX = canvas.width - this.maxWidth;
 
-	this.initialXVolatility = 0.10;
-	this.initialYVolatility = 0.05;
-	this.initialWidthVolatility = 0.03;
-	this.initialHeightVolatility = 0.02;
+	this.initialXVolatilityBound = 15;
+	this.widthVolatilityBound = this.meanWidth * 0.1;
+	this.heightVolatilityBound = this.meanHeight * 0.1;
 
 	this.phaseSettings = {
 		0: {
-			xVolatility: this.initialXVolatility
+			xVolatilityBound: this.initialXVolatilityBound
 		, maxWidth: this.maxWidth
 		, meanWidth: this.meanWidth
 		}
 
 	, 1: {
-			xVolatility: this.initialXVolatility * 1.2
-		, maxWidth: this.maxWidth * 0.9
-		, meanWidth: this.meanWidth * 0.9
+			xVolatilityBound: 20
+		, maxWidth: this.maxWidth
+		, meanWidth: this.meanWidth
 		}
 
 	, 2: {
-			xVolatility: this.initialXVolatility * 1.4
-		, maxWidth: this.maxWidth * 0.8
-		, meanWidth: this.meanWidth * 0.8
+			xVolatilityBound: 30
+		, maxWidth: this.maxWidth
+		, meanWidth: this.meanWidth
 		}
 	}
 
@@ -50,10 +49,13 @@ SafeZoneManager.prototype.initBaseZone = function (ctx) {
 }
 
 SafeZoneManager.prototype.getPhase = function (y) {
+	// If we've traversed 7/10 of the canyon, we're in phase 2
 	if (y <= -this.game.canyon.length * 0.7) {
 		return 2;
+	// If we've traversed between 5/10 and 7/10 of canyon, we're in phase 1
 	} else if (y <= -this.game.canyon.length * 0.5) {
 		return 1;
+	// If we've traversed less than 5/10 of the canyon, we're in phase 0
 	} else if (y <= this.baseY) {
 		return 0;
 	}
@@ -70,19 +72,22 @@ SafeZoneManager.prototype.initAllOtherZones = function (ctx) {
 	// Set the x, y, width, height for lots of safeZones, add them to the SafeZone array
 	for (var y = this.baseY; y >= -this.game.canyon.length; y -= 3) {
 		var phase = this.getPhase(y);
+		var phaseSettings = this.phaseSettings[phase];
 
 		// Tweak the x, width, and height values each time through the loop
-		x *= volatilityMultiple(this.phaseSettings[phase].xVolatility);
-		width *= volatilityMultiple(this.initialWidthVolatility);
-		height *= volatilityMultiple(this.initialHeightVolatility);
+		// (TOASK: move this elsewhere?)
+		x += volatilityFactor(phaseSettings.xVolatilityBound);
+		width += volatilityFactor(this.widthVolatilityBound);
+		height += volatilityFactor(this.heightVolatilityBound);
 
-		// Ad hoc fixes
+		// Ad hoc fixes (TOASK: move this elsewhere?)
 		if (x <= this.minimumX) { x += 50; }
 		if (x >= this.maximumX) { x -= 50; }
-		if (width <= this.minWidth || width >= this.phaseSettings[phase].maxWidth) { 
-			width = this.phaseSettings[phase].meanWidth
+		if (width <= this.minWidth || width >= phaseSettings.maxWidth) { 
+			width = phaseSettings.meanWidth
 		};
 
+		// Don't let the canyon be too much a straight shot
 		this.game.safeZones.push(new SafeZone(this.game, x, y, width, height));
 	}
 }

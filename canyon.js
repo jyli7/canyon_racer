@@ -1,6 +1,6 @@
 var Canyon = function (game) {
 	this.game = game;
-	this.length = 1000;
+	this.length = 3000;
 };
 
 Canyon.prototype.draw = function (ctx) {

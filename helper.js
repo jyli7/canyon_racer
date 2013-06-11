@@ -1,6 +1,15 @@
-// Returns the right multiple, given the volatility factor,
-// e.g. give it 0.3, and it returns a number between 0.7 and 1.3
-var volatilityMultiple = function (volatility) {
-	return 1 + (Math.random() * volatility * 2 - volatility);
+// Given a bound, returns anything between that bound and -1 * that bound.
+// e.g. give it 100, and it returns something between -100 and 100
+var volatilityFactor = function (bound) {
+	return Math.random() * bound * 2 - bound;
+}
+
+var setMessage = function (id, message) {
+	document.getElementById(id).innerHTML = message;
+}
+
+var wipeAllMessages = function () {
+	setMessage('primary-message', "");
+	setMessage('secondary-message', "");
 }
 

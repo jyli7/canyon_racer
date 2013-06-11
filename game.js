@@ -3,19 +3,22 @@ var Game = function (ctx, scrollSpeed) {
 	this.ctx = ctx;
 	this.scrollSpeed = 2.2;
 	this.currentState = 'countdown';
-	this.countdownCount = 0;
-	this.countdownDisplay = 3;
+	
+	this.countdownTicker = 0;
+	this.countdownCount = 3;
 	this.states = {
 		countdown: function () {
 			var countdownElement = document.getElementById('countdown');
-			if (that.countdownDisplay < 0) {
+			// If count is below 0, remove text and return next game phase
+			if (that.countdownCount < 0) {
 				countdownElement.innerHTML = "";
 				return 'playing';
-			} else if (that.countdownCount % 80 === 0) {
-				if (that.countdownDisplay !== 0) { countdownElement.innerHTML = that.countdownDisplay; }
-				that.countdownDisplay -= 1;
+			// If count is above zero, show the count
+			} else if (that.countdownTicker % 80 === 0) {
+				if (that.countdownCount !== 0) { countdownElement.innerHTML = that.countdownCount; }
+				that.countdownCount -= 1;
 			}
-			that.countdownCount += 1;
+			that.countdownTicker += 1;
 		}
 
 	, playing: function () {
@@ -30,15 +33,15 @@ var Game = function (ctx, scrollSpeed) {
 		}
 
 	, victory: function () {
-			document.getElementById('primary-message').innerHTML = "You won!";
-			document.getElementById('secondary-message').innerHTML = "Press 'Enter' to play again";
+			setMessage('primary-message', 'You won!');
+			setMessage('secondary-message', "Press 'Enter' to play again");
 			this.refreshOnEnter();
 			this.currentState = 'gameOver';
 		}
 	
 	, loss: function () {
-			document.getElementById('primary-message').innerHTML = "You crashed!";
-			document.getElementById('secondary-message').innerHTML = "Press 'Enter' to play again";
+			setMessage('primary-message', 'You crashed!');
+			setMessage('secondary-message', "Press 'Enter' to play again");
 			this.ship.crashed = true;
 			this.refreshOnEnter();
 			this.currentState = 'gameOver';
@@ -50,6 +53,17 @@ var Game = function (ctx, scrollSpeed) {
 		}
 	};
 };
+
+Game.prototype.refreshOnEnter = function () {
+	var that = this;
+	var startGameOnEnter = function (e) {
+		if (e.keyCode == 13) {
+			that.refresh();
+			removeEventListener("keypress", startGameOnEnter);
+		}
+	}
+	this.listener = addEventListener("keypress", startGameOnEnter);
+}
 
 Game.prototype.inSafeZone = function () {
 	for (var i = 0; i < this.safeZones.length; i ++) {
@@ -76,7 +90,6 @@ Game.prototype.update = function (delta) {
 	});
 };
 
-
 Game.prototype.draw = function (ctx) {
 	var that = this;
 	this.ctx.clearRect(0, -this.translatedDistance, canvas.width, canvas.height);
@@ -93,102 +106,27 @@ Game.prototype.init = function () {
 	// Bring canvas back to original position
 	this.ctx.translate(0, -this.translatedDistance);
 	this.translatedDistance = 0;
+
 	this.ship = new Ship(this);
 	this.canyon = new Canyon(this);
 	this.safeZoneManager = new SafeZoneManager(this);
 	this.safeZoneManager.init(this.ctx);
 	this.victoryZone = new VictoryZone(this, -1 * (this.canyon.length + canvas.height * 0.4));
 
-	// TO DO: Figure out why I need this particular order.
+	// TOASK: Figure out why I need this particular order.
 	this.entities = [this.canyon, this.victoryZone].concat(this.safeZones).concat(this.ship);
 }
 
-Game.prototype.refreshOnEnter = function () {
-	var that = this;
-	var startGameOnEnter = function (e) {
-		if (e.keyCode == 13) {
-			that.refresh();
-			removeEventListener("keypress", startGameOnEnter);
-		}
-	}
-	this.listener = addEventListener("keypress", startGameOnEnter);
-}
-
 Game.prototype.refresh = function () {
-	document.getElementById('primary-message').innerHTML = "";
-	document.getElementById('secondary-message').innerHTML = "";
+	wipeAllMessages();
 	clearInterval(this.loop);
 	startGame();
-}
-
-// Setup base safe zone, somewhat randomly generate other safe zones
-Game.prototype.initSafeZones = function () {
-	this.safeZones = [];
-	
-	// For the base safe zone
-	var baseWidth = canvas.width;
-	var baseHeight = canvas.height / 2;
-	var baseX = 0;
-	var baseY = canvas.height - baseHeight;
-
-	// For the other safe zones
-	var standardWidth = this.ship.width * 3;
-	var standardHeight = canvas.height / 6;
-	var standardX = canvas.width / 2 - standardWidth / 2.
-	
-	// Create base safeZone
-	this.safeZones.push(new SafeZone(this, baseX, baseY, baseWidth, baseHeight));
-
-	// Starting from the top of the baseSafeZone, create other safeZones
-	var x = standardX;
-	var width = standardWidth;
-	var height = standardHeight;
-
-	// Minima and maxima
-	var minimumWidth = this.ship.width * 2;
-	var maximumWidth = this.ship.width * 6;
-	var minimumX = 0;
-	var maximumX = canvas.width - maximumWidth;
-
-	xVolatility = 0.08;
-	yVolatility = 0.05;
-	widthVolatility = 0.03;
-	heightVolatility = 0.02;
-
-	var phaseOneReached = false;
-	var phaseTwoReached = false;
-
-	// Set the x, y, width, height for lots of safeZones
-	for (var y = baseY; y >= -this.canyon.length; y -= 3) {
-		if (y <= -this.canyon.length * 0.5 && !phaseTwoReached) { 
-			maximumWidth *= 0.8;
-			standardWidth *= 0.8;
-			xVolatility *= 1.1;
-			phaseTwoReached = true;
-		} else if (y <= -this.canyon.length * 0.3 && !phaseOneReached) {
-			maximumWidth = maximumWidth * 0.9;
-			standardWidth = standardWidth * 0.9;
-			xVolatility *= 1.1;
-			phaseOneReached = true;
-		}
-
-		// Ad hoc fixes
-		if (x <= minimumX) { x += 50; }
-		if (x >= maximumX) { x -= 50; }
-		if (width <= minimumWidth || width >= maximumWidth) { width = standardWidth };
-
-		x = x * volatilityMultiple(xVolatility);
-		width = width * volatilityMultiple(widthVolatility);
-		height = height * volatilityMultiple(heightVolatility);
-		this.safeZones.push(new SafeZone(this, x, y, width, height));
-	}
 }
 
 var startGame = function () {
 	// Hide the start screen
 	document.getElementById('start-screen').className = 'hidden';
-	document.getElementById('primary-message').innerHTML = "";
-	document.getElementById('secondary-message').innerHTML = "";
+	wipeAllMessages();
 
 	// Set up the canvas
 	var canvas = document.getElementById('canvas');

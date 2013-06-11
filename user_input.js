@@ -16,5 +16,4 @@
 			return key in keysHeldDown;
 		};
 	}
-
 })(this);
