@@ -9,7 +9,7 @@ var SafeZoneManager = function (game) {
 	this.baseY = canvas.height - this.baseHeight;
 
 	this.maxWidth = this.game.ship.width * 3;
-	this.minWidth = this.game.ship.width * 1.75;
+	this.minWidth = this.game.ship.width * 1.85;
 	this.minimumX = 0;
 	this.maximumX = canvas.width - this.maxWidth;
 
