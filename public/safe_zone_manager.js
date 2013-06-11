@@ -9,7 +9,7 @@ var SafeZoneManager = function (game) {
 	this.baseY = canvas.height - this.baseHeight;
 
 	this.maxWidth = this.game.ship.width * 3;
-	this.minWidth = this.game.ship.width * 1.5;
+	this.minWidth = this.game.ship.width * 1.75;
 	this.minimumX = 0;
 	this.maximumX = canvas.width - this.maxWidth;
 
@@ -17,7 +17,7 @@ var SafeZoneManager = function (game) {
 	this.meanHeight = canvas.height * 0.2;
 	this.meanX = canvas.width * 0.5 - this.meanWidth * 0.5;
 
-	this.initialXVolatilityBound = 45;
+	this.initialXVolatilityBound = 40;
 	this.widthVolatilityBound = this.meanWidth * 0.1;
 
 	this.phaseSettings = {
