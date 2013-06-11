@@ -1,0 +1,77 @@
+body {
+	margin: 0px;
+}
+
+.canvas-container {
+	width: 100%;
+	height: 100%;
+	text-align:center;
+}
+
+canvas {
+	border: 1px solid black;
+	display: inline;
+	margin-top: 35px;
+}
+
+.hidden {
+	display: none;
+}
+
+#start-screen {
+	font-size: 40px;
+	text-align: center;
+	background-color: black;
+	color: white;
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	font-family: 'helvetica sans-serif';
+	line-height: 50%;
+	text-align: center;
+}
+
+.primary-message, .secondary-message {
+	font-family: 'Roboto Slab', serif;
+	color: red;
+}
+
+.primary-message {
+	font-size: 50px;
+}
+
+.secondary-message {
+	font-size: 30px;
+	margin-top: 5px;
+}
+
+#countdown {
+	text-align: center;
+	position: absolute;
+	top: 40%;
+	left: 48%;
+	font-size: 75px;
+	font-family: 'Roboto Slab', serif;
+	color: red;
+}
+
+.title {
+	font-family: 'Lato', sans-serif;
+	font-style: italic;
+	letter-spacing: 25px;
+	font-size: 50px;
+}
+
+.subtitle {
+	font-size: 20px;
+	color: #E3E1E1;
+	letter-spacing: 5px;
+	font-family: 'Roboto Slab', serif;
+	margin-top: 45px;
+}
+
+.message-container {
+	position: absolute;
+	top: 38%;
+	left: 28%;
+}

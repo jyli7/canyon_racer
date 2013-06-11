@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Testing Ground</title>
+	<script src="head.min.js"></script>
+	<script>
+	head.js("helper.js"
+		  , "user_input.js"
+		  , "zone_checker.js"
+		  , "ship.js"
+		  , "canyon.js"
+		  , "safe_zone.js"
+		  , "safe_zone_manager.js"
+		  , "victory_zone.js"
+		  , "game.js"
+		  , "on_load.js", function () {
+		  	console.log("all js loaded");
+		  })
+	</script>
+	<link href='http://fonts.googleapis.com/css?family=Lato:400,100italic|Roboto+Slab:400,100' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<div id="start-screen" class="start-screen">
+		<div class="message-container">
+			<div class="title">Canyon Racer</div>
+			<div class="subtitle">Press 'Enter' to Play!</div>
+		</div>
+	</div>
+	<div id="countdown" class="primary-message"></div>
+	<div class="message-container">
+		<div id="primary-message" class="primary-message"></div>
+		<div id="secondary-message" class="secondary-message"></div>
+	</div>
+	<div class="canvas-container">
+		<canvas id="canvas">Your browser does not support canvas</canvas>
+	</div>
+</body>
