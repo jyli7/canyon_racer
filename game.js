@@ -54,17 +54,6 @@ var Game = function (ctx, scrollSpeed) {
 	};
 };
 
-Game.prototype.refreshOnEnter = function () {
-	var that = this;
-	var startGameOnEnter = function (e) {
-		if (e.keyCode == 13) {
-			that.refresh();
-			removeEventListener("keypress", startGameOnEnter);
-		}
-	}
-	this.listener = addEventListener("keypress", startGameOnEnter);
-}
-
 Game.prototype.inSafeZone = function () {
 	for (var i = 0; i < this.safeZones.length; i ++) {
 		var zone = this.safeZones[i];
@@ -82,6 +71,17 @@ Game.prototype.beyondVictoryLine = function () {
 	} else {
 		return false;
 	}
+}
+
+Game.prototype.refreshOnEnter = function () {
+	var that = this;
+	var startGameOnEnter = function (e) {
+		if (e.keyCode == 13) {
+			that.refresh();
+			removeEventListener("keypress", startGameOnEnter);
+		}
+	}
+	this.listener = addEventListener("keypress", startGameOnEnter);
 }
 
 Game.prototype.update = function (delta) {
@@ -113,8 +113,10 @@ Game.prototype.init = function () {
 	this.safeZoneManager.init(this.ctx);
 	this.victoryZone = new VictoryZone(this, -1 * (this.canyon.length + canvas.height * 0.4));
 
-	// TOASK: Figure out why I need this particular order.
-	this.entities = [this.canyon, this.victoryZone].concat(this.safeZones).concat(this.ship);
+	this.entities = [this.canyon, this.victoryZone, this.ship].concat(this.safeZones);
+	this.entities.sort(function (a, b) {
+		return a.zIndex - b.zIndex;
+	});
 }
 
 Game.prototype.refresh = function () {

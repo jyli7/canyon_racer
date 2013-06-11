@@ -6,6 +6,7 @@ var VictoryZone = function (game, yTop) {
 	this.xRight = this.xLeft + this.width;
 	this.yTop = yTop;
 	this.yBottom = yTop + this.height;
+	this.zIndex = 2;
 }
 
 VictoryZone.prototype.draw = function (ctx) {

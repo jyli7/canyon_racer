@@ -6,6 +6,7 @@ var SafeZone = function (game, xLeft, yTop, width, height) {
 	this.xRight = this.xLeft + this.width;
 	this.yTop = yTop;
 	this.yBottom = yTop + this.height;
+	this.zIndex = 1;
 };
 
 SafeZone.prototype.draw = function (ctx) {

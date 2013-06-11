@@ -1,3 +1,5 @@
+// Turn this into a simple object, put inside module
+
 var SafeZoneManager = function (game) {
 	// TOASK: should I have all this stuff up here?
 	this.game = game;

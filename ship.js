@@ -8,6 +8,7 @@ var Ship = function (game) {
 	this.extraSpeed = 200;
 	this.userInput = new UserInput();
 	this.crashed = false;
+	this.zIndex = 3;
 };
 
 Ship.prototype.draw = function (ctx) {
