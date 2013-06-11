@@ -1,6 +1,6 @@
 var Canyon = function (game) {
 	this.game = game;
-	this.length = 2000;
+	this.length = 3000;
 	this.zIndex = 0;
 };
 
