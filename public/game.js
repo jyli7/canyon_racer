@@ -5,25 +5,29 @@ var Game = function (ctx, scrollSpeed) {
 	this.currentLevel = 1;
 	this.currentState = 'countdown';
 	
+	this.countdownInterval = 80;
+	this.levelDisplayLength = this.countdownInterval * 2;
 	this.countdownTicker = 0;
 	this.countdownCount = 3;
 	this.states = {
 		countdown: function () {
 			var countdownElement = document.getElementById('countdown');
-			if (that.countdownTicker < 160) {
+			// Level Display
+			if (that.countdownTicker < this.levelDisplayLength) {
 				setMessage('primary-message', 'Level ' + that.currentLevel);
 				setMessage('secondary-message', 'Use all of the arrow keys');
 			}
+
+			// Countdown Display
 			if (that.countdownCount < 0) {
 				countdownElement.innerHTML = "";
 				wipeAllMessages();
 				return 'playing';
-			// If count is above zero, show the count
-			} else if (that.countdownTicker >= 160 && that.countdownTicker % 80 === 0) {
-				if (that.countdownCount !== 0) {
-					wipeAllMessages();
-					countdownElement.innerHTML = that.countdownCount;
-				}
+			
+			// If count is above level display length, show the count
+			} else if (that.countdownTicker >= that.levelDisplayLength && that.countdownTicker % that.countdownInterval === 0) {
+				wipeAllMessages();
+				countdownElement.innerHTML = that.countdownCount;
 				that.countdownCount -= 1;
 			}
 			that.countdownTicker += 1;
