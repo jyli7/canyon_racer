@@ -2,6 +2,7 @@ var Game = function (ctx, scrollSpeed) {
 	var that = this;
 	this.ctx = ctx;
 	this.scrollSpeed = 3.1;
+	this.currentLevel = 1;
 	this.currentState = 'countdown';
 	
 	this.countdownTicker = 0;
@@ -9,15 +10,20 @@ var Game = function (ctx, scrollSpeed) {
 	this.states = {
 		countdown: function () {
 			var countdownElement = document.getElementById('countdown');
-			setMessage('secondary-message', 'Use all of the arrow keys');
-			// If count is below 0, remove text and return next game phase
+			if (that.countdownTicker < 160) {
+				setMessage('primary-message', 'Level ' + that.currentLevel);
+				setMessage('secondary-message', 'Use all of the arrow keys');
+			}
 			if (that.countdownCount < 0) {
 				countdownElement.innerHTML = "";
 				wipeAllMessages();
 				return 'playing';
 			// If count is above zero, show the count
-			} else if (that.countdownTicker % 80 === 0) {
-				if (that.countdownCount !== 0) { countdownElement.innerHTML = that.countdownCount; }
+			} else if (that.countdownTicker >= 160 && that.countdownTicker % 80 === 0) {
+				if (that.countdownCount !== 0) {
+					wipeAllMessages();
+					countdownElement.innerHTML = that.countdownCount;
+				}
 				that.countdownCount -= 1;
 			}
 			that.countdownTicker += 1;

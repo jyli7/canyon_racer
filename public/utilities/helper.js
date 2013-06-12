@@ -12,3 +12,8 @@ var wipeAllMessages = function () {
 	setMessage('primary-message', "");
 	setMessage('secondary-message', "");
 }
+
+var playTheme = function (theme) {
+	document.getElementById(theme);
+	theme.play();
+}
