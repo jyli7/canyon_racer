@@ -1,34 +1,40 @@
 (function (exports) {
-	exports.inSafeZone = function (game) {
-		for (var i = 0; i < game.safeZones.length; i ++) {
-			var zone = game.safeZones[i];
-			if ((game.ship.y >= zone.yTop && game.ship.y <= zone.yBottom) &&
-				((game.ship.x >= zone.xLeft && game.ship.x <= zone.xRight) ||
-				(game.ship.getRight() >= zone.xLeft && game.ship.getRight() <= zone.xRight))) {
-			  return true;
-			}
-		}
-		return false;
+
+	exports.inZone = function (point, zone) {
+		return ((point.y >= zone.yTop && point.y <= zone.yBottom) &&
+					 	(point.x >= zone.xLeft && point.x <= zone.xRight));
 	}
 
-	exports.collidedWithPillar = function (game) {
-		for (var i = 0; i < game.pillars.length; i ++) {
-			var zone = game.pillars[i];
-			if ((game.ship.y >= zone.yTop && game.ship.y <= zone.yBottom) &&
-				((game.ship.x >= zone.xLeft && game.ship.x <= zone.xRight) ||
-				(game.ship.getRight() >= zone.xLeft && game.ship.getRight() <= zone.xRight))) {
-			  return true;
-			}
-		}
-		return false;
+	exports.inAnyOfZones = function (point, zones) {
+		var result = false;
+		zones.forEach(function (zone) {
+			if (inZone(point, zone)) {
+				result = true;
+			};
+		});
+		return result;
 	}
 
-	exports.inVictoryZone = function (game) {
-		if (game.ship.y <= game.victoryZone.yBottom) {
-		  return true;	
-		} else {
-			return false;
-		}
+	exports.shipInAnyZones = function (game, zones) {
+		var result = true;
+		game.ship.points().forEach(function (point) {
+			if (!inAnyOfZones(point, zones)) {
+				result = false;
+			}
+		});
+		return result;
+	}
+
+	exports.shipInASafeZone = function (game) {
+		return this.shipInAnyZones(game, game.safeZones);
+	}
+
+	exports.shipInAPillar = function (game) {
+		return this.shipInAnyZones(game, game.pillars);
+	}
+
+	exports.shipBeyondVictoryLine = function (game) {
+		return (game.ship.y <= game.victoryZone.yBottom);
 	}
 
 })(this);

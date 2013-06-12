@@ -1,12 +1,12 @@
 var Pillar = function (game, xLeft, yTop) {
 	this.game = game;
 	this.zIndex = 2;
-	this.width = 20;
-	this.height = 20;
+	this.width = 10 + volatilityFactor(6);
+	this.height = 10 + volatilityFactor(6);
 	this.xLeft = xLeft;
 	this.yTop = yTop;
 	this.xRight = this.xLeft + this.width;
-	this.yBottom = yTop + this.height;
+	this.yBottom = this.yTop + this.height;
 };
 
 Pillar.prototype.draw = function (ctx) {
@@ -17,7 +17,7 @@ Pillar.prototype.draw = function (ctx) {
 	var topLine = threshold - canvas.height * 1.2;
 
 	if (this.yTop < bottomLine && this.yTop > topLine ) {
-		ctx.fillStyle = "rgb(0, 0, 0)";
+		ctx.fillStyle = "rgb(86, 57, 29)";
 		ctx.fillRect(this.xLeft, this.yTop, this.width, this.height);
 	}
 };

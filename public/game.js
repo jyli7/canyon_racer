@@ -1,7 +1,7 @@
 var Game = function (ctx, scrollSpeed) {
 	var that = this;
 	this.ctx = ctx;
-	this.scrollSpeed = 2;
+	this.scrollSpeed = 3.1;
 	this.currentState = 'countdown';
 	
 	this.countdownTicker = 0;
@@ -9,9 +9,11 @@ var Game = function (ctx, scrollSpeed) {
 	this.states = {
 		countdown: function () {
 			var countdownElement = document.getElementById('countdown');
+			setMessage('secondary-message', 'Use all of the arrow keys');
 			// If count is below 0, remove text and return next game phase
 			if (that.countdownCount < 0) {
 				countdownElement.innerHTML = "";
+				wipeAllMessages();
 				return 'playing';
 			// If count is above zero, show the count
 			} else if (that.countdownTicker % 80 === 0) {
@@ -25,9 +27,9 @@ var Game = function (ctx, scrollSpeed) {
 			this.update(this.loopTimeElapsed);
 			this.draw(ctx);
 
-			if ( inVictoryZone(this) ) {
+			if ( shipBeyondVictoryLine(this) ) {
 				return 'victory';
-			} else if ( !inSafeZone(this) || collidedWithPillar(this) ) {
+			} else if ( !shipInASafeZone(this) || shipInAPillar(this) ) {
 				return 'loss';
 			}
 		}
@@ -86,9 +88,9 @@ Game.prototype.init = function () {
 
 	this.ship = new Ship(this);
 	this.canyon = new Canyon(this);
+	this.victoryZone = new VictoryZone(this, -1 * (this.canyon.length + canvas.height * 0.4));
 	this.safeZoneManager = new SafeZoneManager(this);
 	this.safeZoneManager.init(this.ctx);
-	this.victoryZone = new VictoryZone(this, -1 * (this.canyon.length + canvas.height * 0.4));
 	this.pillarManager = new PillarManager(this);
 	this.pillarManager.init(this.ctx);
 

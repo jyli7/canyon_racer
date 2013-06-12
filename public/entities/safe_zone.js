@@ -19,7 +19,6 @@ SafeZone.prototype.draw = function (ctx) {
 		ctx.fillStyle = "rgb(255,255,255)";
 		ctx.fillRect(this.xLeft, this.yTop, this.width, this.height);
 	}
-	
 };
 
 SafeZone.prototype.update = function () {};

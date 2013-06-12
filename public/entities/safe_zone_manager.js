@@ -4,7 +4,7 @@ var SafeZoneManager = function (game) {
 	this.currentPhase = 0;
 	
 	this.baseWidth = canvas.width;
-	this.baseHeight = canvas.height * 0.5;
+	this.baseHeight = canvas.height * 0.7;
 	this.baseX = 0;
 	this.baseY = canvas.height - this.baseHeight;
 
@@ -34,7 +34,7 @@ var SafeZoneManager = function (game) {
 		}
 
 	, 2: {
-			xVolatilityBound: this.initialXVolatilityBound * 1.4
+			xVolatilityBound: this.initialXVolatilityBound * 1.3
 		, maxWidth: this.maxWidth
 		, meanWidth: this.meanWidth
 		}
@@ -69,7 +69,7 @@ SafeZoneManager.prototype.initAllOtherZones = function (ctx) {
 	var height = this.meanHeight;
 
 	// Set the x, y, width, height for lots of safeZones, add them to the SafeZone array
-	for (var y = this.baseY; y >= -this.game.canyon.length; y -= 4) {
+	for (var y = this.baseY; y >= this.game.victoryZone.yBottom; y -= 4) {
 		var phase = this.getPhase(y);
 		var phaseSettings = this.phaseSettings[phase];
 

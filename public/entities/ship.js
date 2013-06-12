@@ -1,29 +1,52 @@
 var Ship = function (game) {
 	this.game = game;
+
+	// x is the x coord of the middle of the triangle
 	this.x = canvas.width / 2;
-	this.y = canvas.height - 100;
+
+	// y is the y coord of the top tip of the triangle
+	this.y = canvas.height - 200;
 
 	this.width = 20;
 	this.height = 20;
-	this.baseSpeed = 175;
-	this.extraSpeed = 200;
+	this.baseSpeed = 275;
+	this.extraSpeed = 175;
 	this.userInput = new UserInput();
 	this.crashed = false;
 	this.zIndex = 3;
 };
 
+Ship.prototype.bottomLeftX = function () {
+	return this.x - (this.width / 2);
+}
+
+Ship.prototype.bottomLeftY = function () {
+	return this.y + this.height;
+}
+
+Ship.prototype.bottomRightX = function () {
+	return this.x + (this.width / 2);
+}
+
+Ship.prototype.bottomRightY = function () {
+	return this.y + this.height;
+}
+
+Ship.prototype.points = function () {
+	return [{x: this.bottomLeftX(), y: this.bottomLeftY()},
+			{x: this.bottomRightX(), y: this.bottomRightY()},
+			{x: this.x, y: this.y}];
+}
+
 Ship.prototype.draw = function (ctx) {
 	ctx.fillStyle = "rgb(0, 0, 0)";
 	ctx.beginPath();
-	ctx.moveTo(this.x, this.y);
-	ctx.lineTo(this.x + this.width, this.y);
-	ctx.lineTo(this.x + (this.width / 2), this.y - this.height);
+	ctx.moveTo(this.bottomLeftX(), this.bottomLeftY());
+	ctx.lineTo(this.bottomRightX(), this.bottomRightY());
+	ctx.lineTo(this.x, this.y);
 	ctx.fill();
 };
 
-Ship.prototype.getRight = function () {
-	return this.x + this.width;
-}
 
 Ship.prototype.update = function (elapsedTime) {
 	if (this.game.currentState === 'playing' || ('gameOver' && !this.crashed)) {
