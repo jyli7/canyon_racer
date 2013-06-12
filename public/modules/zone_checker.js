@@ -15,7 +15,7 @@
 		return result;
 	}
 
-	exports.shipInAnyZones = function (game, zones) {
+	exports.entireShipInAnyZones = function (game, zones) {
 		var result = true;
 		game.ship.points().forEach(function (point) {
 			if (!inAnyOfZones(point, zones)) {
@@ -25,12 +25,22 @@
 		return result;
 	}
 
+	exports.shipPointInAnyZones = function (game, zones) {
+		var result = false;
+		game.ship.points().forEach(function (point) {
+			if (inAnyOfZones(point, zones)) {
+				result = true;
+			}
+		});
+		return result;
+	}
+
 	exports.shipInASafeZone = function (game) {
-		return this.shipInAnyZones(game, game.safeZones);
+		return this.entireShipInAnyZones(game, game.safeZones);
 	}
 
 	exports.shipInAPillar = function (game) {
-		return this.shipInAnyZones(game, game.pillars);
+		return this.shipPointInAnyZones(game, game.pillars);
 	}
 
 	exports.shipBeyondVictoryLine = function (game) {
