@@ -11,6 +11,9 @@ var Game = function (ctx, scrollSpeed) {
 	this.countdownCount = 3;
 	this.states = {
 		countdown: function () {
+			this.update(this.loopTimeElapsed);
+			this.draw(ctx);
+
 			var countdownElement = document.getElementById('countdown');
 			// Level Display
 			if (that.countdownTicker < this.levelDisplayLength) {

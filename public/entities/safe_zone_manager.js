@@ -3,10 +3,9 @@ var SafeZoneManager = function (game) {
 	this.game = game;
 	this.currentPhase = 0;
 	
-	this.baseWidth = canvas.width;
-	this.baseHeight = canvas.height * 0.7;
-	this.baseX = 0;
-	this.baseY = canvas.height - this.baseHeight;
+	this.warmUpWidth = canvas.width*0.9;
+	this.warmUpHeight = canvas.height * 0.5;
+	this.warmUpX = canvas.width * 0.05;
 
 	this.maxWidth = this.game.ship.width * 3;
 	this.minWidth = this.game.ship.width * 1.85;
@@ -34,7 +33,7 @@ var SafeZoneManager = function (game) {
 		}
 
 	, 2: {
-			xVolatilityBound: this.initialXVolatilityBound * 1.3
+			xVolatilityBound: this.initialXVolatilityBound * 1.25
 		, maxWidth: this.maxWidth
 		, meanWidth: this.meanWidth
 		}
@@ -42,9 +41,11 @@ var SafeZoneManager = function (game) {
 
 };
 
-SafeZoneManager.prototype.initBaseZone = function (ctx) {
+SafeZoneManager.prototype.initWarmUpZones = function (ctx) {
 	this.game.safeZones = this.game.safeZones || [];
-	this.game.safeZones.push(new SafeZone(this.game, this.baseX, this.baseY, this.baseWidth, this.baseHeight));
+	for (var y = canvas.height; y >= -this.game.canyon.warmUpLength; y -= this.warmUpHeight*.99) {
+		this.game.safeZones.push(new SafeZone(this.game, this.warmUpX, y, this.warmUpWidth, this.warmUpHeight));	
+	}
 }
 
 SafeZoneManager.prototype.getPhase = function (y) {
@@ -55,7 +56,7 @@ SafeZoneManager.prototype.getPhase = function (y) {
 	} else if (y <= -this.game.canyon.length * 0.5) {
 		return 1;
 	// If we've traversed less than 5/10 of the canyon, we're in phase 0
-	} else if (y <= this.baseY) {
+	} else if (y <= canvas.height) {
 		return 0;
 	}
 }
@@ -69,7 +70,7 @@ SafeZoneManager.prototype.initAllOtherZones = function (ctx) {
 	var height = this.meanHeight;
 
 	// Set the x, y, width, height for lots of safeZones, add them to the SafeZone array
-	for (var y = this.baseY; y >= this.game.victoryZone.yBottom; y -= 4) {
+	for (var y = -this.game.canyon.warmUpLength * 0.95; y >= this.game.victoryZone.yBottom * 1.01; y -= 4) {
 		var phase = this.getPhase(y);
 		var phaseSettings = this.phaseSettings[phase];
 
@@ -91,6 +92,6 @@ SafeZoneManager.prototype.initAllOtherZones = function (ctx) {
 }
 
 SafeZoneManager.prototype.init = function (ctx) {
-	this.initBaseZone(ctx);
+	this.initWarmUpZones(ctx);
 	this.initAllOtherZones(ctx);
 }

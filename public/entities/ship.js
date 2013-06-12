@@ -10,7 +10,7 @@ var Ship = function (game) {
 	this.width = 20;
 	this.height = 20;
 	this.baseSpeed = 275;
-	this.extraSpeed = 175;
+	this.extraSpeed = 225;
 	this.userInput = new UserInput();
 	this.crashed = false;
 	this.zIndex = 3;
@@ -49,8 +49,9 @@ Ship.prototype.draw = function (ctx) {
 
 
 Ship.prototype.update = function (elapsedTime) {
-	if (this.game.currentState === 'playing' || ('gameOver' && !this.crashed)) {
-		// Make the ship go forward some amount, automatically
+	if (elapsedTime && this.game.currentState === 'countdown' || 
+		this.game.currentState === 'playing' || 
+		(this.game.currentState === 'gameOver' && !this.crashed)) {
 		this.y -= this.baseSpeed * elapsedTime;
 
 		// Player holding up
