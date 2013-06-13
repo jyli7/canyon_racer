@@ -10,8 +10,8 @@ var Ship = function (level, game) {
 
 	this.width = 20;
 	this.height = 20;
-	this.baseSpeed = 220;
-	this.extraSpeed = 170;
+	this.baseSpeed = 250;
+	this.extraSpeed = 220;
 	this.userInput = new UserInput();
 	this.crashed = false;
 	this.zIndex = 3;

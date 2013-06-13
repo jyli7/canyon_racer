@@ -1,8 +1,7 @@
-var Game = function (ctx, scrollSpeed) {
+var Game = function (level) {
 	var that = this;
-	this.ctx = ctx;
 	this.scrollSpeed = 3.0;
-	this.currentLevelNum = 1;
+	this.currentLevelNum = level || 1;
 	this.currentState = 'countdown';
 	
 	this.countdownInterval = 80;
@@ -12,7 +11,7 @@ var Game = function (ctx, scrollSpeed) {
 	this.states = {
 		countdown: function () {
 			this.update(this.loopTimeElapsed);
-			this.draw(ctx);
+			this.draw(that.ctx);
 
 			var countdownElement = document.getElementById('countdown');
 			// Level Display
@@ -38,7 +37,7 @@ var Game = function (ctx, scrollSpeed) {
 
 	, playing: function () {
 			this.update(this.loopTimeElapsed);
-			this.draw(ctx);
+			this.draw(that.ctx);
 
 			if ( shipBeyondVictoryLine(this.currentLevel) ) {
 				return 'victory';
@@ -49,7 +48,8 @@ var Game = function (ctx, scrollSpeed) {
 
 	, victory: function () {
 			setMessage('primary-message', 'You won!');
-			setMessage('secondary-message', "Press 'Enter' to play again");
+			setMessage('secondary-message', "Press 'Enter' to start next level");
+			this.currentLevelNum += 1;
 			this.initRefreshOnEnter();
 			this.currentState = 'gameOver';
 		}
@@ -64,21 +64,10 @@ var Game = function (ctx, scrollSpeed) {
 
 	, gameOver: function () {
 			this.update(this.loopTimeElapsed);
-			this.draw(ctx);
+			this.draw(that.ctx);
 		}
 	};
 };
-
-Game.prototype.initRefreshOnEnter = function () {
-	var that = this;
-	var startGameOnEnter = function (e) {
-		if (e.keyCode == 13) {
-			that.refresh();
-			removeEventListener("keypress", startGameOnEnter);
-		}
-	}
-	this.listener = addEventListener("keypress", startGameOnEnter);
-}
 
 Game.prototype.update = function (delta) {
 	this.currentLevel.entities.forEach (function (entity) { entity.update(delta); });
@@ -103,13 +92,24 @@ Game.prototype.init = function () {
 
 }
 
-Game.prototype.refresh = function () {
-	wipeAllMessages();
-	clearInterval(this.loop);
-	startGame();
+Game.prototype.initRefreshOnEnter = function () {
+	var that = this;
+	var startGameOnEnter = function (e) {
+		if (e.keyCode == 13) {
+			that.refresh(that.currentLevelNum);
+			removeEventListener("keypress", startGameOnEnter);
+		}
+	}
+	this.listener = addEventListener("keypress", startGameOnEnter);
 }
 
-var startGame = function () {
+Game.prototype.refresh = function (level) {
+	wipeAllMessages();
+	clearInterval(this.loop);
+	startGame(level);
+}
+
+var startGame = function (level) {
 	// Hide the start screen
 	document.getElementById('start-screen').className = 'hidden';
 	wipeAllMessages();
@@ -121,7 +121,7 @@ var startGame = function () {
 	canvas.height = 600;
 
 	// Init the game
-	var game = new Game();
+	var game = new Game(level);
 	game.ctx = ctx;
 	game.init(ctx);
 	game.draw(ctx);
