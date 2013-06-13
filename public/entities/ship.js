@@ -9,8 +9,8 @@ var Ship = function (game) {
 
 	this.width = 20;
 	this.height = 20;
-	this.baseSpeed = 225;
-	this.extraSpeed = 200;
+	this.baseSpeed = 250;
+	this.extraSpeed = 230;
 	this.userInput = new UserInput();
 	this.crashed = false;
 	this.zIndex = 3;
