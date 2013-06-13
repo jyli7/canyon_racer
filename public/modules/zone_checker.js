@@ -25,7 +25,7 @@
 		return result;
 	}
 
-	exports.shipPointInAnyZones = function (game, zones) {
+	exports.shipVertexInAnyZones = function (game, zones) {
 		var result = false;
 		game.ship.points().forEach(function (point) {
 			if (inAnyOfZones(point, zones)) {
@@ -40,7 +40,7 @@
 	}
 
 	exports.shipInAPillar = function (game) {
-		return this.shipPointInAnyZones(game, game.pillars);
+		return this.shipVertexInAnyZones(game, game.pillars);
 	}
 
 	exports.shipBeyondVictoryLine = function (game) {

@@ -27,13 +27,13 @@ var SafeZoneManager = function (game) {
 		}
 
 	, 1: {
-			xVolatilityBound: this.initialXVolatilityBound * 1.2
+			xVolatilityBound: this.initialXVolatilityBound * 1.17
 		, maxWidth: this.maxWidth
 		, meanWidth: this.meanWidth
 		}
 
 	, 2: {
-			xVolatilityBound: this.initialXVolatilityBound * 1.25
+			xVolatilityBound: this.initialXVolatilityBound * 1.2
 		, maxWidth: this.maxWidth
 		, meanWidth: this.meanWidth
 		}
