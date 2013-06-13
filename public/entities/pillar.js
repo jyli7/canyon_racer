@@ -1,4 +1,5 @@
-var Pillar = function (game, xLeft, yTop) {
+var Pillar = function (level, game, xLeft, yTop) {
+	this.level = level;
 	this.game = game;
 	this.zIndex = 2;
 	this.width = 10 + volatilityFactor(6);

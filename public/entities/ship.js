@@ -1,4 +1,5 @@
-var Ship = function (game) {
+var Ship = function (level, game) {
+	this.level = level;
 	this.game = game;
 
 	// x is the x coord of the middle of the triangle
@@ -9,8 +10,8 @@ var Ship = function (game) {
 
 	this.width = 20;
 	this.height = 20;
-	this.baseSpeed = 250;
-	this.extraSpeed = 230;
+	this.baseSpeed = 220;
+	this.extraSpeed = 170;
 	this.userInput = new UserInput();
 	this.crashed = false;
 	this.zIndex = 3;

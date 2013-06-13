@@ -1,4 +1,5 @@
-var VictoryZone = function (game, yTop) {
+var VictoryZone = function (level, game, yTop) {
+	this.level = level;
 	this.game = game;
 	this.width = canvas.width;
 	this.height = canvas.height;

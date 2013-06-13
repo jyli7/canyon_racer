@@ -15,9 +15,9 @@
 		return result;
 	}
 
-	exports.entireShipInAnyZones = function (game, zones) {
+	exports.entireShipInAnyZones = function (level, zones) {
 		var result = true;
-		game.ship.points().forEach(function (point) {
+		level.ship.points().forEach(function (point) {
 			if (!inAnyOfZones(point, zones)) {
 				result = false;
 			}
@@ -25,9 +25,9 @@
 		return result;
 	}
 
-	exports.shipVertexInAnyZones = function (game, zones) {
+	exports.shipVertexInAnyZones = function (level, zones) {
 		var result = false;
-		game.ship.points().forEach(function (point) {
+		level.ship.points().forEach(function (point) {
 			if (inAnyOfZones(point, zones)) {
 				result = true;
 			}
@@ -35,16 +35,16 @@
 		return result;
 	}
 
-	exports.shipInASafeZone = function (game) {
-		return this.entireShipInAnyZones(game, game.safeZones);
+	exports.shipInASafeZone = function (level) {
+		return this.entireShipInAnyZones(level, level.safeZones);
 	}
 
-	exports.shipInAPillar = function (game) {
-		return this.shipVertexInAnyZones(game, game.pillars);
+	exports.shipInAPillar = function (level) {
+		return this.shipVertexInAnyZones(level, level.pillars);
 	}
 
-	exports.shipBeyondVictoryLine = function (game) {
-		return (game.ship.y <= game.victoryZone.yBottom);
+	exports.shipBeyondVictoryLine = function (level) {
+		return (level.ship.y <= level.victoryZone.yBottom);
 	}
 
 })(this);

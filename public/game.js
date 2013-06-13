@@ -1,8 +1,8 @@
 var Game = function (ctx, scrollSpeed) {
 	var that = this;
 	this.ctx = ctx;
-	this.scrollSpeed = 3.1;
-	this.currentLevel = 1;
+	this.scrollSpeed = 3.0;
+	this.currentLevelNum = 1;
 	this.currentState = 'countdown';
 	
 	this.countdownInterval = 80;
@@ -17,7 +17,7 @@ var Game = function (ctx, scrollSpeed) {
 			var countdownElement = document.getElementById('countdown');
 			// Level Display
 			if (that.countdownTicker < this.levelDisplayLength) {
-				setMessage('primary-message', 'Level ' + that.currentLevel);
+				setMessage('primary-message', 'Level ' + that.currentLevelNum);
 				setMessage('secondary-message', 'Use all of the arrow keys');
 			}
 
@@ -40,9 +40,9 @@ var Game = function (ctx, scrollSpeed) {
 			this.update(this.loopTimeElapsed);
 			this.draw(ctx);
 
-			if ( shipBeyondVictoryLine(this) ) {
+			if ( shipBeyondVictoryLine(this.currentLevel) ) {
 				return 'victory';
-			} else if ( !shipInASafeZone(this) || shipInAPillar(this) ) {
+			} else if ( !shipInASafeZone(this.currentLevel) || shipInAPillar(this.currentLevel) ) {
 				return 'loss';
 			}
 		}
@@ -57,7 +57,7 @@ var Game = function (ctx, scrollSpeed) {
 	, loss: function () {
 			setMessage('primary-message', 'You crashed!');
 			setMessage('secondary-message', "Press 'Enter' to play again");
-			this.ship.crashed = true;
+			this.currentLevel.ship.crashed = true;
 			this.initRefreshOnEnter();
 			this.currentState = 'gameOver';
 		}
@@ -81,7 +81,7 @@ Game.prototype.initRefreshOnEnter = function () {
 }
 
 Game.prototype.update = function (delta) {
-	this.entities.forEach (function (entity) { entity.update(delta); });
+	this.currentLevel.entities.forEach (function (entity) { entity.update(delta); });
 };
 
 Game.prototype.draw = function (ctx) {
@@ -91,26 +91,16 @@ Game.prototype.draw = function (ctx) {
 	this.ctx.translate(0, this.scrollSpeed);
 	this.translatedDistance += this.scrollSpeed;
 
-	this.entities.forEach (function (entity) { entity.draw(that.ctx); });
+	this.currentLevel.entities.forEach (function (entity) { entity.draw(that.ctx); });
 }
 
 Game.prototype.init = function () {
+	this.currentLevel = new Level(this, this.currentLevelNum);
+
 	// Bring canvas back to original position
 	this.ctx.translate(0, -this.translatedDistance);
 	this.translatedDistance = 0;
 
-	this.ship = new Ship(this);
-	this.canyon = new Canyon(this);
-	this.victoryZone = new VictoryZone(this, -1 * (this.canyon.length + canvas.height * 0.4));
-	this.safeZoneManager = new SafeZoneManager(this);
-	this.safeZoneManager.init(this.ctx);
-	this.pillarManager = new PillarManager(this);
-	this.pillarManager.init(this.ctx);
-
-	this.entities = [this.canyon, this.victoryZone, this.ship].concat(this.safeZones).concat(this.pillars);
-	this.entities.sort(function (a, b) {
-		return a.zIndex - b.zIndex;
-	});
 }
 
 Game.prototype.refresh = function () {
