@@ -21,7 +21,8 @@ var Level = function (game, num) {
 		this.victoryZone = new VictoryZone(this, game, -1 * (this.length + canvas.height * 0.4));
 		this.gateWallManager = new GateWallManager(this, game);
 		this.gateWallManager.init(game.ctx);
-	
+		debugger;
+
 		// this.safeZoneManager = new SafeZoneManager(this, game);
 		// this.safeZoneManager.init(game.ctx);
 		// this.pillarManager = new PillarManager(this, game);
