@@ -1,11 +1,12 @@
 var EnemyShip = function (level, game, xLeft, yTop) {
 	this.level = level;
 	this.game = game;
-	this.height = 10;
-	this.width = 10;
+	this.height = 20;
+	this.width = 20;
 
-	this.baseYSpeed = 325;
+	this.baseYSpeed = 300;
 	this.baseXSpeed = 100;
+
 	this.xLeft = xLeft;
 	this.xRight = this.xLeft + this.width;
 	this.yTop = yTop;
