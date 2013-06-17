@@ -16,10 +16,13 @@ EnemyShipManager.prototype.update = function (ctx) {
 									   , [this.level.ship.x, this.level.ship.y + 200]
 									   , [canvas.width + 10, this.level.ship.y + 50]];
 
+		var newShips = [];
 		for (var i = 0; i < 3; i++) {
 			var startingPosition = possibleStartingPositions[Math.floor(Math.random() * possibleStartingPositions.length)];
-			this.level.entities.push(new EnemyShip(this.level, this.game, startingPosition[0], startingPosition[1]));
+			newShips.push(new EnemyShip(this.level, this.game, startingPosition[0], startingPosition[1]));
 		}
+		this.level.enemyShips = this.level.enemyShips.concat(newShips);
+		this.level.entities = this.level.entities.concat(newShips);
 	}
 };
 
