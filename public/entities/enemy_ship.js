@@ -4,8 +4,8 @@ var EnemyShip = function (level, game, xLeft, yTop) {
 	this.height = 10;
 	this.width = 10;
 
-	this.baseYSpeed = 300;
-	this.baseXSpeed = 50;
+	this.baseYSpeed = 325;
+	this.baseXSpeed = 100;
 	this.xLeft = xLeft;
 	this.xRight = this.xLeft + this.width;
 	this.yTop = yTop;
@@ -52,6 +52,12 @@ EnemyShip.prototype.update = function (elapsedTime) {
 			var yDirection = (this.level.ship.y - this.yTop) > 0 ? 1 : -1;
 
 			// TODO: Should not need to change all four of these
+			// If at a right angle, don't change direction
+
+			// if (Math.abs(this.yTop - targetY) < 20) {
+			// 	baseYSpeed = 5;
+			// }
+
 			this.yTop = this.yTop + yDirection * this.baseYSpeed * elapsedTime;
 			this.yBottom = this.yBottom + yDirection * this.baseYSpeed * elapsedTime;
 			this.xLeft = this.xLeft + xDirection * this.baseXSpeed * elapsedTime;

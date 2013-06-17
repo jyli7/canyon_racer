@@ -5,13 +5,20 @@ var EnemyShipManager = function (level, game) {
 
 EnemyShipManager.prototype.init = function (ctx) {
 	this.level.enemyShips = this.level.enemyShips || [];
-	this.level.enemyShips.push(new EnemyShip(this.level, this.game, this.level.ship.x - 100, this.level.ship.y + 200));
-}
+	this.level.enemyShips.push(new EnemyShip(this.level, this.game, this.level.ship.x, this.level.ship.y + 100));
+};
 
 EnemyShipManager.prototype.update = function (ctx) {
-	if (Math.round(this.level.ship.y) % 250 === 0) {
-		this.level.entities.push(new EnemyShip(this.level, this.game, this.level.ship.x - 100, this.level.ship.y + 100));
-	}
-}
+	if (Math.round(this.level.ship.y) % 200 === 0) {
+		var possibleStartingPositions = [[-10, this.level.ship.y + 50]
+									   , [this.level.ship.x, this.level.ship.y + 200]
+									   , [canvas.width + 10, this.level.ship.y + 50]];
 
-EnemyShipManager.prototype.draw = function () {}
+		for (var i = 0; i < 3; i++) {
+			var startingPosition = possibleStartingPositions[Math.floor(Math.random() * possibleStartingPositions.length)];
+			this.level.entities.push(new EnemyShip(this.level, this.game, startingPosition[0], startingPosition[1]));	
+		}
+	}
+};
+
+EnemyShipManager.prototype.draw = function () {};
