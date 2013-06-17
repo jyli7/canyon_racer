@@ -4,13 +4,22 @@ var EnemyShip = function (level, game, xLeft, yTop) {
 	this.height = 10;
 	this.width = 10;
 
-	this.baseYSpeed = 275 + volatilityFactor(75);
-	this.baseXSpeed = 100 + volatilityFactor(25);
+	this.baseYSpeed = 325 + volatilityFactor(50);
+	this.baseXSpeed = 75 + volatilityFactor(50);
+
+	this.backwardSpeed = 200;
+
+	this.targetYError = 20 + volatilityFactor(20);
+	this.targetXError = 20 + volatilityFactor(20);
 
 	this.xLeft = xLeft;
 	this.xRight = this.xLeft + this.width;
 	this.yTop = yTop;
 	this.yBottom = this.yTop + this.height;
+
+	this.findTargetTicker = 0;
+
+	this.intelligence = 20 + volatilityFactor(10);
 	
 	this.zIndex = 1;
 };
@@ -44,25 +53,35 @@ EnemyShip.prototype.update = function (elapsedTime) {
 			var index = this.level.entities.indexOf(this);
 			this.level.entities.splice(index, 1);
 			var that = this;
-			// Create replacement ship
-			
+
+		// TODO: Eliminate need for yTop, yBottom
 		} else {
-			var targetY = this.level.ship.y;
-			var targetX = this.level.ship.x;
-			var xDirection = (this.level.ship.x - this.xLeft) > 0 ? 1 : -1;
-			var yDirection = (this.level.ship.y - this.yTop) > 0 ? 1 : -1;
+			if (this.findTargetTicker % this.intelligence === 0) {
+				this.yTop = this.yTop + -1 * this.baseYSpeed * elapsedTime;
+				this.yBottom = this.yBottom + -1 * this.baseYSpeed * elapsedTime;
+				this.xLeft = this.xLeft + volatilityFactor(1) * this.baseXSpeed * elapsedTime;
+				this.xRight = this.xRight + volatilityFactor(1) * this.baseXSpeed * elapsedTime;
+			} else {
+				var targetY = this.level.ship.y + this.targetYError;
+				var targetX = this.level.ship.x + this.targetXError;
+				var xDirection = (this.level.ship.x - this.xLeft) > 0 ? 1 : -1;
+				var yDirection = (this.level.ship.y - this.yTop) > 0 ? 1 : -1;
 
-			// TODO: Should not need to change all four of these
-			// If at a right angle, don't change direction
+				this.yTop = this.yTop + -1 * this.baseYSpeed * elapsedTime;
+				this.yBottom = this.yBottom + -1 * this.baseYSpeed * elapsedTime;
 
-			// if (Math.abs(this.yTop - targetY) < 20) {
-			// 	baseYSpeed = 5;
-			// }
 
-			this.yTop = this.yTop + yDirection * this.baseYSpeed * elapsedTime;
-			this.yBottom = this.yBottom + yDirection * this.baseYSpeed * elapsedTime;
-			this.xLeft = this.xLeft + xDirection * this.baseXSpeed * elapsedTime;
-			this.xRight = this.xRight + xDirection * this.baseXSpeed * elapsedTime;
+				// Enemy ship is above the target
+				if (yDirection > 0) {
+					this.yTop += this.backwardSpeed * elapsedTime;
+					this.yBottom += this.backwardSpeed * elapsedTime;
+				}
+
+				this.xLeft = this.xLeft + xDirection * this.baseXSpeed * elapsedTime;
+				this.xRight = this.xRight + xDirection * this.baseXSpeed * elapsedTime;	
+			}
+			this.findTargetTicker += 1;
+			
 		}
 		
 	}
