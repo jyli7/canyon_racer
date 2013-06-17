@@ -68,3 +68,40 @@ Ship.prototype.update = function (elapsedTime) {
 		if (this.userInput.keyIsHeld(39)) { this.x += this.extraSpeed * elapsedTime; }
 	}
 };
+
+Ship.prototype.entirelyInAnyZones = function (zones) {
+	var result = true;
+	this.points().forEach(function (point) {
+		if (!inAnyOfZones(point, zones)) {
+			result = false;
+		}
+	});
+	return result;
+}	
+
+Ship.prototype.vertexInAnyZones = function (zones) {
+	var result = false;
+	this.points().forEach(function (point) {
+		if (inAnyOfZones(point, zones)) {
+			result = true;
+		}
+	});
+	return result;
+}
+
+Ship.prototype.inASafeZone = function () {
+	return this.entirelyInAnyZones(this.level.safeZones);
+}
+
+Ship.prototype.inAPillar = function () {
+	return this.vertexInAnyZones(this.level.pillars);
+}
+
+Ship.prototype.inAGateWall = function () {
+	return this.vertexInAnyZones(this.level.gateWalls);
+}
+
+Ship.prototype.beyondVictoryLine = function () {
+	return (this.y <= this.level.victoryZone.yBottom);
+}
+

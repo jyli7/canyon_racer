@@ -4,6 +4,9 @@ var EnemyShip = function (level, game, xLeft, yTop) {
 	this.height = 10;
 	this.width = 10;
 
+	this.baseYSpeed = 300;
+	this.baseXSpeed = 150;
+
 	this.xLeft = xLeft;
 	this.xRight = this.xLeft + this.width;
 	this.yTop = yTop;
@@ -11,6 +14,13 @@ var EnemyShip = function (level, game, xLeft, yTop) {
 	
 	this.zIndex = 1;
 };
+
+EnemyShip.prototype.points = function () {
+	return [{x: this.xLeft, y: this.yBottom},
+			{x: this.xRight, y: this.yBottom},
+			{x: this.xLeft, y: this.yTop},
+			{x: this.xRight, y: this.yTop}];
+}
 
 EnemyShip.prototype.draw = function (ctx) {
 	// Draw only those GateWalls that are in advance of the ship
@@ -24,4 +34,17 @@ EnemyShip.prototype.draw = function (ctx) {
 	}
 };
 
-EnemyShip.prototype.update = function () {};
+EnemyShip.prototype.update = function (elapsedTime) {
+	if (elapsedTime && this.game.currentState === 'countdown' || 
+		this.game.currentState === 'playing' || 
+		(this.game.currentState === 'gameOver' && !this.crashed)) {
+		
+		var targetY = this.level.ship.y;
+		var targetX = this.level.ship.x;
+		var xDirection = (this.level.ship.x - this.xLeft) > 0 ? 1 : -1;
+		var yDirection = (this.level.ship.y - this.yTop) > 0 ? 1 : -1;
+
+		this.yTop = this.yTop + yDirection * this.baseYSpeed * elapsedTime;
+		this.xLeft = this.xLeft + xDirection * this.baseXSpeed * elapsedTime
+	}
+};

@@ -40,17 +40,17 @@ var Game = function (level) {
 			this.draw(that.ctx);
 
 			if (this.currentLevelNum === 1) {
-				if ( shipBeyondVictoryLine(this.currentLevelObj) ) {
+				if ( this.currentLevelObj.ship.beyondVictoryLine() ) {
 					return 'victory';
-				} else if ( !shipInASafeZone(this.currentLevelObj) || shipInAPillar(this.currentLevelObj) ) {
+				} else if ( !this.currentLevelObj.ship.inASafeZone() || this.currentLevelObj.ship.inAPillar() ) {
 					return 'loss';
 				}	
 			} else if (this.currentLevelNum === 2) {
-				if ( shipBeyondVictoryLine(this.currentLevelObj) ) {
+				if ( this.currentLevelObj.ship.beyondVictoryLine() ) {
 					return 'victory';
-				} else if ( shipInAGateWall(this.currentLevelObj) ) {
+				} else if ( this.currentLevelObj.ship.inAGateWall() ) {
 					return 'loss';
-				}	
+				}
 			}
 		}
 
