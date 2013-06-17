@@ -11,7 +11,7 @@ EnemyShipManager.prototype.init = function (ctx) {
 };
 
 EnemyShipManager.prototype.update = function (ctx) {
-	if (Math.round(this.level.ship.y) % 200 === 0) {
+	if (this.game.currentState === 'playing' && Math.round(this.level.ship.y) % 150 === 0) {
 		var possibleStartingPositions = [[-10, this.level.ship.y + 50]
 									   , [this.level.ship.x, this.level.ship.y + 200]
 									   , [canvas.width + 10, this.level.ship.y + 50]];

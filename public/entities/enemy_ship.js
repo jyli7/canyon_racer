@@ -4,10 +4,11 @@ var EnemyShip = function (level, game, xLeft, yTop) {
 	this.height = 10;
 	this.width = 10;
 
-	this.baseYSpeed = 325 + volatilityFactor(50);
+	this.baseYSpeed = 300 + volatilityFactor(50);
 	this.baseXSpeed = 75 + volatilityFactor(50);
 
-	this.backwardSpeed = 200;
+	// TODO: Refactor this backward speed business
+	this.backwardSpeed = 175;
 
 	this.targetYError = 20 + volatilityFactor(20);
 	this.targetXError = 20 + volatilityFactor(20);

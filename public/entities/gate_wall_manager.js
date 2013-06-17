@@ -21,7 +21,7 @@ GateWallManager.prototype.init = function (ctx) {
 	var gapWidth = this.meanGapWidth;
 	var yInterval = this.meanYInterval;
 
-	for (var y = -this.level.warmUpLength * 0.95; y >= this.level.victoryZone.yBottom * 1.01; y-= this.meanYInterval) {
+	for (var y = -this.level.warmUpLength * 1.5; y >= this.level.victoryZone.yBottom * 1.01; y-= this.meanYInterval) {
 		x += volatilityFactor(this.xVolatility);
 		gapWidth += volatilityFactor(this.gapWidthVolatility);
 
