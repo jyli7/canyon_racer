@@ -43,6 +43,10 @@
 		return this.shipVertexInAnyZones(level, level.pillars);
 	}
 
+	exports.shipInAGateWall = function (level) {
+		return this.shipVertexInAnyZones(level, level.gateWalls);
+	}
+
 	exports.shipBeyondVictoryLine = function (level) {
 		return (level.ship.y <= level.victoryZone.yBottom);
 	}

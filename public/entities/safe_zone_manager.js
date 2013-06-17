@@ -44,7 +44,7 @@ var SafeZoneManager = function (level, game) {
 
 SafeZoneManager.prototype.initWarmUpZones = function (ctx) {
 	this.level.safeZones = this.level.safeZones || [];
-	for (var y = canvas.height; y >= -this.level.canyon.warmUpLength; y -= this.warmUpHeight*.99) {
+	for (var y = canvas.height; y >= -this.level.warmUpLength; y -= this.warmUpHeight*.99) {
 		this.level.safeZones.push(new SafeZone(this.level, this.game, this.warmUpX, y, this.warmUpWidth, this.warmUpHeight));	
 	}
 }
@@ -71,7 +71,7 @@ SafeZoneManager.prototype.initAllOtherZones = function (ctx) {
 	var height = this.meanHeight;
 
 	// Set the x, y, width, height for lots of safeZones, add them to the SafeZone array
-	for (var y = -this.level.canyon.warmUpLength * 0.95; y >= this.level.victoryZone.yBottom * 1.01; y -= 4) {
+	for (var y = -this.level.warmUpLength * 0.95; y >= this.level.victoryZone.yBottom * 1.01; y -= 4) {
 		var phase = this.getPhase(y);
 		var phaseSettings = this.phaseSettings[phase];
 

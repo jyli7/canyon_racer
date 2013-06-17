@@ -1,7 +1,7 @@
 var Game = function (level) {
 	var that = this;
 	this.scrollSpeed = 3.0;
-	this.currentLevelNum = level || 1;
+	this.currentLevelNum = 2;
 	this.currentState = 'countdown';
 	
 	this.countdownInterval = 80;
@@ -39,10 +39,18 @@ var Game = function (level) {
 			this.update(this.loopTimeElapsed);
 			this.draw(that.ctx);
 
-			if ( shipBeyondVictoryLine(this.currentLevel) ) {
-				return 'victory';
-			} else if ( !shipInASafeZone(this.currentLevel) || shipInAPillar(this.currentLevel) ) {
-				return 'loss';
+			if (this.currentLevelNum === 1) {
+				if ( shipBeyondVictoryLine(this.currentLevelObj) ) {
+					return 'victory';
+				} else if ( !shipInASafeZone(this.currentLevelObj) || shipInAPillar(this.currentLevelObj) ) {
+					return 'loss';
+				}	
+			} else if (this.currentLevelNum === 2) {
+				if ( shipBeyondVictoryLine(this.currentLevelObj) ) {
+					return 'victory';
+				} else if ( shipInAGateWall(this.currentLevelObj) ) {
+					return 'loss';
+				}	
 			}
 		}
 
@@ -57,7 +65,7 @@ var Game = function (level) {
 	, loss: function () {
 			setMessage('primary-message', 'You crashed!');
 			setMessage('secondary-message', "Press 'Enter' to play again");
-			this.currentLevel.ship.crashed = true;
+			this.currentLevelObj.ship.crashed = true;
 			this.initRefreshOnEnter();
 			this.currentState = 'gameOver';
 		}
@@ -70,7 +78,7 @@ var Game = function (level) {
 };
 
 Game.prototype.update = function (delta) {
-	this.currentLevel.entities.forEach (function (entity) { entity.update(delta); });
+	this.currentLevelObj.entities.forEach (function (entity) { entity.update(delta); });
 };
 
 Game.prototype.draw = function (ctx) {
@@ -80,11 +88,11 @@ Game.prototype.draw = function (ctx) {
 	this.ctx.translate(0, this.scrollSpeed);
 	this.translatedDistance += this.scrollSpeed;
 
-	this.currentLevel.entities.forEach (function (entity) { entity.draw(that.ctx); });
+	this.currentLevelObj.entities.forEach (function (entity) { entity.draw(that.ctx); });
 }
 
 Game.prototype.init = function () {
-	this.currentLevel = new Level(this, this.currentLevelNum);
+	this.currentLevelObj = new Level(this, this.currentLevelNum);
 
 	// Bring canvas back to original position
 	this.ctx.translate(0, -this.translatedDistance);

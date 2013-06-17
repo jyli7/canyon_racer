@@ -1,8 +1,7 @@
 var Canyon = function (level, game) {
 	this.level = level;
 	this.game = game;
-	this.length = 6500;
-	this.warmUpLength = 1300;
+	this.length = this.level.length;
 	this.zIndex = 0;
 };
 
