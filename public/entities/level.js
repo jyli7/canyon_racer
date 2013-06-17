@@ -21,13 +21,14 @@ var Level = function (game, num) {
 		this.victoryZone = new VictoryZone(this, game, -1 * (this.length + canvas.height * 0.4));
 		this.gateWallManager = new GateWallManager(this, game);
 		this.gateWallManager.init(game.ctx);
-		debugger;
+		this.enemyShipManager = new EnemyShipManager(this, game);
+		this.enemyShipManager.init(game.ctx);
 
 		// this.safeZoneManager = new SafeZoneManager(this, game);
 		// this.safeZoneManager.init(game.ctx);
 		// this.pillarManager = new PillarManager(this, game);
 		// this.pillarManager.init(game.ctx);
-		this.entities = [this.ship].concat(this.gateWalls);
+		this.entities = [this.ship].concat(this.gateWalls).concat(this.enemyShips);
 		// this.entities = [this.canyon, this.victoryZone, this.ship].concat(this.safeZones).concat(this.pillars);
 		this.entities.sort(function (a, b) {
 			return a.zIndex - b.zIndex;
