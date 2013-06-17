@@ -39,12 +39,57 @@ EnemyShip.prototype.update = function (elapsedTime) {
 		this.game.currentState === 'playing' || 
 		(this.game.currentState === 'gameOver' && !this.crashed)) {
 		
-		var targetY = this.level.ship.y;
-		var targetX = this.level.ship.x;
-		var xDirection = (this.level.ship.x - this.xLeft) > 0 ? 1 : -1;
-		var yDirection = (this.level.ship.y - this.yTop) > 0 ? 1 : -1;
+		if (this.inAGateWall()) {
+			var index = this.level.entities.indexOf(this);
+			this.level.entities.splice(index, 1);
+		} else {
+			var targetY = this.level.ship.y;
+			var targetX = this.level.ship.x;
+			var xDirection = (this.level.ship.x - this.xLeft) > 0 ? 1 : -1;
+			var yDirection = (this.level.ship.y - this.yTop) > 0 ? 1 : -1;
 
-		this.yTop = this.yTop + yDirection * this.baseYSpeed * elapsedTime;
-		this.xLeft = this.xLeft + xDirection * this.baseXSpeed * elapsedTime
+			// TODO: Should not need to change all four of these
+			this.yTop = this.yTop + yDirection * this.baseYSpeed * elapsedTime;
+			this.yBottom = this.yBottom + yDirection * this.baseYSpeed * elapsedTime;
+			this.xLeft = this.xLeft + xDirection * this.baseXSpeed * elapsedTime;
+			this.xRight = this.xRight + xDirection * this.baseXSpeed * elapsedTime;
+		}
+		
 	}
 };
+
+EnemyShip.prototype.entirelyInAnyZones = function (zones) {
+	var result = true;
+	this.points().forEach(function (point) {
+		if (!inAnyOfZones(point, zones)) {
+			result = false;
+		}
+	});
+	return result;
+}	
+
+EnemyShip.prototype.vertexInAnyZones = function (zones) {
+	var result = false;
+	this.points().forEach(function (point) {
+		if (inAnyOfZones(point, zones)) {
+			result = true;
+		}
+	});
+	return result;
+}
+
+EnemyShip.prototype.inASafeZone = function () {
+	return this.entirelyInAnyZones(this.level.safeZones);
+}
+
+EnemyShip.prototype.inAPillar = function () {
+	return this.vertexInAnyZones(this.level.pillars);
+}
+
+EnemyShip.prototype.inAGateWall = function () {
+	return this.vertexInAnyZones(this.level.gateWalls);
+}
+
+EnemyShip.prototype.beyondVictoryLine = function () {
+	return (this.y <= this.level.victoryZone.yBottom);
+}

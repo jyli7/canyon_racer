@@ -2,8 +2,8 @@ var GateWallManager = function (level, game) {
 	this.level = level;
 	this.game = game;
 	this.xVolatility = 300;
-	this.maxGapWidth = this.level.ship.width * 5;
-	this.minGapWidth = this.level.ship.width * 2.5;
+	this.maxGapWidth = this.level.ship.width * 10;
+	this.minGapWidth = this.level.ship.width * 5;
 	this.meanGapWidth = (this.maxGapWidth + this.minGapWidth) / 2;
 	this.gapWidthVolatility = this.meanGapWidth * 0.2;
 
