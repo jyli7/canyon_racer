@@ -28,7 +28,7 @@ var Level = function (game, num) {
 		// this.safeZoneManager.init(game.ctx);
 		// this.pillarManager = new PillarManager(this, game);
 		// this.pillarManager.init(game.ctx);
-		this.entities = [this.ship].concat(this.gateWalls).concat(this.enemyShips);
+		this.entities = [this.ship, this.enemyShipManager].concat(this.gateWalls).concat(this.enemyShips);
 		// this.entities = [this.canyon, this.victoryZone, this.ship].concat(this.safeZones).concat(this.pillars);
 		this.entities.sort(function (a, b) {
 			return a.zIndex - b.zIndex;

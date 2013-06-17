@@ -10,8 +10,8 @@ var Ship = function (level, game) {
 
 	this.width = 20;
 	this.height = 20;
-	this.baseSpeed = 260;
-	this.extraSpeed = 200;
+	this.baseSpeed = 250;
+	this.extraSpeed = 225;
 	this.userInput = new UserInput();
 	this.crashed = false;
 	this.zIndex = 3;
@@ -95,6 +95,10 @@ Ship.prototype.inASafeZone = function () {
 
 Ship.prototype.inAPillar = function () {
 	return this.vertexInAnyZones(this.level.pillars);
+}
+
+Ship.prototype.inEnemyShip = function () {
+	return this.vertexInAnyZones(this.level.enemyShips);
 }
 
 Ship.prototype.inAGateWall = function () {

@@ -48,7 +48,7 @@ var Game = function (level) {
 			} else if (this.currentLevelNum === 2) {
 				if ( this.currentLevelObj.ship.beyondVictoryLine() ) {
 					return 'victory';
-				} else if ( this.currentLevelObj.ship.inAGateWall() ) {
+				} else if ( this.currentLevelObj.ship.inAGateWall() || this.currentLevelObj.ship.inEnemyShip() ) {
 					return 'loss';
 				}
 			}

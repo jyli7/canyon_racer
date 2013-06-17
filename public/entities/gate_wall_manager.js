@@ -8,7 +8,7 @@ var GateWallManager = function (level, game) {
 	this.gapWidthVolatility = this.meanGapWidth * 0.2;
 
 	this.meanX = canvas.width * 0.5 - this.meanGapWidth * 0.5;
-	this.meanYInterval = 400;
+	this.meanYInterval = 500;
 
 	this.minimumX = 0;
 	this.maximumX = canvas.width - this.maxGapWidth;

@@ -5,7 +5,7 @@ var EnemyShip = function (level, game, xLeft, yTop) {
 	this.width = 10;
 
 	this.baseYSpeed = 300;
-	this.baseXSpeed = 150;
+	this.baseXSpeed = 100;
 
 	this.xLeft = xLeft;
 	this.xRight = this.xLeft + this.width;
@@ -40,8 +40,12 @@ EnemyShip.prototype.update = function (elapsedTime) {
 		(this.game.currentState === 'gameOver' && !this.crashed)) {
 		
 		if (this.inAGateWall()) {
+			// Destroy this ship
 			var index = this.level.entities.indexOf(this);
 			this.level.entities.splice(index, 1);
+			var that = this;
+			// Create replacement ship
+			
 		} else {
 			var targetY = this.level.ship.y;
 			var targetX = this.level.ship.x;
@@ -58,6 +62,7 @@ EnemyShip.prototype.update = function (elapsedTime) {
 	}
 };
 
+// TO DO: GET RID OF THIS, I.E. REFACTOR INTO A MIXIN
 EnemyShip.prototype.entirelyInAnyZones = function (zones) {
 	var result = true;
 	this.points().forEach(function (point) {
