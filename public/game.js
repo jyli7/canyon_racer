@@ -1,7 +1,7 @@
 var Game = function (level) {
 	var that = this;
 	this.scrollSpeed = 3.8;
-	this.currentLevelNum = 2;
+	this.currentLevelNum = level || 1;
 	this.currentState = 'countdown';
 	
 	this.countdownInterval = 80;
@@ -59,6 +59,7 @@ var Game = function (level) {
 			setMessage('primary-message', 'You won!');
 			setMessage('secondary-message', "Press 'Enter' to start next level");
 			this.currentLevelNum += 1;
+			this.currentLevelObj.ship.baseSpeed *= 2;
 			this.initRefreshOnEnter();
 			this.currentState = 'gameOver';
 		}
@@ -93,6 +94,7 @@ Game.prototype.draw = function (ctx) {
 }
 
 Game.prototype.init = function () {
+	debugger;
 	this.currentLevelObj = new Level(this, this.currentLevelNum);
 
 	// Bring canvas back to original position

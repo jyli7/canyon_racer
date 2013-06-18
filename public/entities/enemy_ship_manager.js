@@ -8,7 +8,6 @@ var EnemyShipManager = function (level, game) {
 
 EnemyShipManager.prototype.init = function (ctx) {
 	this.level.enemyShips = this.level.enemyShips || [];
-	this.level.enemyShips.push(new EnemyShip(this.level, this.game, this.level.ship.xMid, this.level.ship.yTop + 100));
 };
 
 EnemyShipManager.prototype.update = function (ctx) {
