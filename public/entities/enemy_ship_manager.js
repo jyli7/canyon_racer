@@ -12,16 +12,31 @@ EnemyShipManager.prototype.init = function (ctx) {
 
 EnemyShipManager.prototype.update = function (ctx) {
 	if (this.game.currentState === 'playing' && Math.round(this.level.ship.yTop) % this.distanceBetweenShipBatches === 0) {
-		var possibleStartingPositions = [[-10, this.level.ship.yTop + 50]
+		if (this.game.currentLevelNum === 2) {
+			var possibleStartingPositions = [[-10, this.level.ship.yTop + 50]
 									   , [this.level.ship.xMid, this.level.ship.yTop + 200]
 									   , [canvas.width + 10, this.level.ship.yTop + 50]];
 
-		var newShips = [];
-		for (var i = 0; i < 2; i++) {
-			var startingPosition = possibleStartingPositions[Math.floor(Math.random() * possibleStartingPositions.length)];
-			newShips.push(new EnemyShip(this.level, this.game, startingPosition[0], startingPosition[1]));
-		}
-		this.level.addObj(newShips, 'enemyShips');
+			var newShips = [];
+			for (var i = 0; i < 2; i++) {
+				var startingPosition = possibleStartingPositions[Math.floor(Math.random() * possibleStartingPositions.length)];
+				newShips.push(new EnemyShip(this.level, this.game, startingPosition[0], startingPosition[1]));
+			}
+			this.level.addObj(newShips, 'enemyShips');
+
+		} else if (this.game.currentLevelNum === 3) {
+				var possibleStartingPositions = [[canvas.width * 0.3, this.level.ship.yTop - 300]
+									   , [this.level.ship.xMid, this.level.ship.yTop - 300]
+									   , [canvas.width * 0.7, this.level.ship.yTop - 300]];
+
+				var newShips = [];
+				for (var i = 0; i < 2; i++) {
+					var startingPosition = possibleStartingPositions[Math.floor(Math.random() * possibleStartingPositions.length)];
+					newShips.push(new EnemyShip(this.level, this.game, startingPosition[0], startingPosition[1], 20, 20));
+				}
+				this.level.addObj(newShips, 'enemyShips');
+
+			}
 	}
 };
 

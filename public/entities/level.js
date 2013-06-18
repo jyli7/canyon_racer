@@ -33,8 +33,9 @@ var Level = function (game, num) {
 		this.warmUpLength = 1300;
 		this.ship = new Ship(this, game);
 		this.victoryZone = new VictoryZone(this, game, -1 * (this.length + canvas.height * 0.4));
-		// this.canyon = new Canyon(this, game);
-		this.entities = [this.ship];
+		this.enemyShipManager = new EnemyShipManager(this, game);
+		this.enemyShipManager.init(game.ctx);
+		this.entities = [this.victoryZone, this.ship, this.enemyShipManager].concat(this.enemyShips);
 	}
 
 	this.entities.sort(function (a, b) {
@@ -43,10 +44,10 @@ var Level = function (game, num) {
 }
 
 Level.prototype.removeObj = function (obj, type) {
-	var eIndex = this.entities.indexOf(this);
+	var eIndex = this.entities.indexOf(obj);
 	this.entities.splice(eIndex, 1);
 
-	var oIndex = this[type].indexOf(this);
+	var oIndex = this[type].indexOf(obj);
 	this[type].splice(oIndex, 1);
 }
 

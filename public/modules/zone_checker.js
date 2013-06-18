@@ -56,12 +56,14 @@
 	}
 
 	exports.sourceZoneTouchGateWall = function (sourceZone) {
-		return sourceZoneVertexInAnyTargetZones(sourceZone, sourceZone.level.gateWalls);
+		if (sourceZone.level.gateWalls) {
+			return sourceZoneVertexInAnyTargetZones(sourceZone, sourceZone.level.gateWalls);	
+		}
 	}
 
 	exports.sourceZoneTouchBullet = function (sourceZone) {
 		if (sourceZone.level.bullets) {
-			return sourceZoneVertexInAnyTargetZones(sourceZone, sourceZone.level.bullets);	
+			return sourceZoneVertexInAnyTargetZones(sourceZone, sourceZone.level.bullets);
 		}
 	}
 

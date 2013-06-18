@@ -32,7 +32,7 @@ Bullet.prototype.draw = function (ctx) {
 
 Bullet.prototype.update = function (elapsedTime) {
 	if (sourceZoneTouchEnemyShip(this)) {
-		this.level.removeObj(this, this.objType)
+		// this.level.removeObj(this, this.objType)
 	} else {
 		this.yBottom -= this.baseSpeed * elapsedTime
 		this.yTop -= this.baseSpeed * elapsedTime;	

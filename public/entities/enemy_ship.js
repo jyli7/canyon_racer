@@ -1,4 +1,4 @@
-var EnemyShip = function (level, game, xLeft, yTop) {
+var EnemyShip = function (level, game, xLeft, yTop, height, width) {
 	mixin(this, mixins.zone);
 	this.shape = RECTANGLE;
 
@@ -6,8 +6,8 @@ var EnemyShip = function (level, game, xLeft, yTop) {
 
 	this.level = level;
 	this.game = game;
-	this.height = 10;
-	this.width = 10;
+	this.height = height || 10;
+	this.width = width || 10;
 
 	this.baseYSpeed = 300 + volatilityFactor(50);
 	this.baseXSpeed = 100 + volatilityFactor(40);
@@ -83,7 +83,7 @@ EnemyShip.prototype.update = function (elapsedTime) {
 	if (elapsedTime && this.game.currentState === 'countdown' || 
 		this.game.currentState === 'playing' || 
 		(this.game.currentState === 'gameOver' && !this.crashed)) {
-		
+
 		if (sourceZoneTouchGateWall(this) || sourceZoneTouchBullet(this)) {
 			this.level.removeObj(this, this.objType);
 		} else {
