@@ -1,7 +1,7 @@
 var Game = function (level) {
 	var that = this;
-	this.scrollSpeed = 3.8;
-	this.currentLevelNum = level || 1;
+	this.scrollSpeed = 3.3;
+	this.currentLevelNum = level || 2;
 	this.currentState = 'countdown';
 	
 	this.countdownInterval = 80;
@@ -94,7 +94,6 @@ Game.prototype.draw = function (ctx) {
 }
 
 Game.prototype.init = function () {
-	debugger;
 	this.currentLevelObj = new Level(this, this.currentLevelNum);
 
 	// Bring canvas back to original position

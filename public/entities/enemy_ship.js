@@ -7,23 +7,24 @@ var EnemyShip = function (level, game, xLeft, yTop) {
 	this.height = 10;
 	this.width = 10;
 
-	this.baseYSpeed = 350 + volatilityFactor(75);
-	this.baseXSpeed = 100 + volatilityFactor(50);
+	this.baseYSpeed = 300 + volatilityFactor(50);
+	this.baseXSpeed = 100 + volatilityFactor(40);
 
-	// TODO: Refactor this backward speed business
-	this.backwardSpeed = 175;
+	this.backwardYSpeed = 100;
 
-	this.targetYError = 20 + volatilityFactor(20);
-	this.targetXError = 20 + volatilityFactor(20);
+	// Some ships will aim at the wrong target
+	this.targetYError = 10 + volatilityFactor(10);
+	this.targetXError = 10 + volatilityFactor(10);
 
 	this.xLeft = xLeft;
 	this.xRight = this.xLeft + this.width;
 	this.yTop = yTop;
 	this.yBottom = this.yTop + this.height;
 
-	this.findTargetTicker = 0;
+	this.tickerForIntelligence = 0;
 
-	this.intelligence = 20 + volatilityFactor(10);
+	// The higher the intelligence, the less frequently the ship "screws up"
+	this.intelligence = 30 + volatilityFactor(10);
 	
 	this.zIndex = 1;
 };
@@ -40,6 +41,42 @@ EnemyShip.prototype.draw = function (ctx) {
 	}
 };
 
+EnemyShip.prototype.moveStupidly = function (elapsedTime) {
+	this.yTop = this.yTop + volatilityFactor(1) * this.baseYSpeed * elapsedTime;
+	this.yBottom = this.yBottom + volatilityFactor(1) * this.baseYSpeed * elapsedTime;
+	this.xLeft = this.xLeft + volatilityFactor(1) * this.baseXSpeed * elapsedTime;
+	this.xRight = this.xRight + volatilityFactor(1) * this.baseXSpeed * elapsedTime;
+}
+
+
+EnemyShip.prototype.moveAlongY = function (amount) {
+	this.yTop += amount;
+	this.yBottom += amount;
+}
+
+EnemyShip.prototype.moveAlongX = function (amount) {
+	this.xLeft += amount;
+	this.xRight += amount;
+}
+
+EnemyShip.prototype.moveTowardTarget = function (elapsedTime) {
+	var targetY = this.level.ship.yTop + this.targetYError;
+	var targetX = this.level.ship.xMid + this.targetXError;
+	var xDirection = (this.level.ship.xMid - this.xLeft) > 0 ? 1 : -1;
+	var yDirection = (this.level.ship.yTop - this.yTop) > 0 ? 1 : -1;
+
+	// Base movement along Y axis
+	this.moveAlongY(-1 * this.baseYSpeed * elapsedTime);
+
+	// Enemy ship is above the target, move backward
+	if (yDirection > 0) {
+		this.moveAlongY(this.backwardYSpeed * elapsedTime);
+	}
+
+	// Move in correct direction on x axis
+	this.moveAlongX(xDirection * this.baseXSpeed * elapsedTime);
+}
+
 EnemyShip.prototype.update = function (elapsedTime) {
 	if (elapsedTime && this.game.currentState === 'countdown' || 
 		this.game.currentState === 'playing' || 
@@ -51,33 +88,13 @@ EnemyShip.prototype.update = function (elapsedTime) {
 			this.level.entities.splice(index, 1);
 			var that = this;
 
-		// TODO: Eliminate need for yTop, yBottom
 		} else {
-			if (this.findTargetTicker % this.intelligence === 0) {
-				this.yTop = this.yTop + -1 * this.baseYSpeed * elapsedTime;
-				this.yBottom = this.yBottom + -1 * this.baseYSpeed * elapsedTime;
-				this.xLeft = this.xLeft + volatilityFactor(1) * this.baseXSpeed * elapsedTime;
-				this.xRight = this.xRight + volatilityFactor(1) * this.baseXSpeed * elapsedTime;
+			if (this.tickerForIntelligence % this.intelligence === 0) {
+				this.moveStupidly(elapsedTime);
 			} else {
-				var targetY = this.level.ship.yTop + this.targetYError;
-				var targetX = this.level.ship.xMid + this.targetXError;
-				var xDirection = (this.level.ship.xMid - this.xLeft) > 0 ? 1 : -1;
-				var yDirection = (this.level.ship.yTop - this.yTop) > 0 ? 1 : -1;
-
-				this.yTop = this.yTop + -1 * this.baseYSpeed * elapsedTime;
-				this.yBottom = this.yBottom + -1 * this.baseYSpeed * elapsedTime;
-
-
-				// Enemy ship is above the target
-				if (yDirection > 0) {
-					this.yTop += this.backwardSpeed * elapsedTime;
-					this.yBottom += this.backwardSpeed * elapsedTime;
-				}
-
-				this.xLeft = this.xLeft + xDirection * this.baseXSpeed * elapsedTime;
-				this.xRight = this.xRight + xDirection * this.baseXSpeed * elapsedTime;	
+				this.moveTowardTarget(elapsedTime);
 			}
-			this.findTargetTicker += 1;
+			this.tickerForIntelligence += 1;
 			
 		}
 		
