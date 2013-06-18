@@ -21,8 +21,7 @@ EnemyShipManager.prototype.update = function (ctx) {
 			var startingPosition = possibleStartingPositions[Math.floor(Math.random() * possibleStartingPositions.length)];
 			newShips.push(new EnemyShip(this.level, this.game, startingPosition[0], startingPosition[1]));
 		}
-		this.level.enemyShips = this.level.enemyShips.concat(newShips);
-		this.level.entities = this.level.entities.concat(newShips);
+		this.level.addObj(newShips, 'enemyShips');
 	}
 };
 

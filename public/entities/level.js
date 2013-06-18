@@ -41,3 +41,19 @@ var Level = function (game, num) {
 		return a.zIndex - b.zIndex;
 	});
 }
+
+Level.prototype.removeObj = function (obj, type) {
+	var eIndex = this.entities.indexOf(this);
+	this.entities.splice(eIndex, 1);
+
+	var oIndex = this[type].indexOf(this);
+	this[type].splice(oIndex, 1);
+}
+
+Level.prototype.addObj = function (obj, type) {
+	this[type] = this[type] || [];
+	this[type] = this[type].concat(obj);
+
+	this.entities = this.entities || [];
+	this.entities = this.entities.concat(obj);
+}

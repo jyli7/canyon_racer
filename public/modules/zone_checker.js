@@ -51,16 +51,24 @@
 		return sourceZoneEntirelyInAnyTargetZone(sourceZone, sourceZone.level.safeZones);
 	}
 
-	exports.sourceZoneInPillar = function (sourceZone) {
+	exports.sourceZoneTouchPillar = function (sourceZone) {
 		return sourceZoneVertexInAnyTargetZones(sourceZone, sourceZone.level.pillars);
 	}
 
-	exports.sourceZoneInGateWall = function (sourceZone) {
+	exports.sourceZoneTouchGateWall = function (sourceZone) {
 		return sourceZoneVertexInAnyTargetZones(sourceZone, sourceZone.level.gateWalls);
 	}
 
-	exports.sourceZoneInEnemyShip = function (sourceZone) {
-		return sourceZoneVertexInAnyTargetZones(sourceZone, sourceZone.level.enemyShips);
+	exports.sourceZoneTouchBullet = function (sourceZone) {
+		if (sourceZone.level.bullets) {
+			return sourceZoneVertexInAnyTargetZones(sourceZone, sourceZone.level.bullets);	
+		}
+	}
+
+	exports.sourceZoneTouchEnemyShip = function (sourceZone) {
+		if (sourceZone.level.enemyShips) {
+			return sourceZoneVertexInAnyTargetZones(sourceZone, sourceZone.level.enemyShips);	
+		}
 	}
 
 	exports.sourceZoneBeyondVictoryLine = function (sourceZone) {

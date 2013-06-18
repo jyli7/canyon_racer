@@ -2,6 +2,8 @@ var EnemyShip = function (level, game, xLeft, yTop) {
 	mixin(this, mixins.zone);
 	this.shape = RECTANGLE;
 
+	this.objType = 'enemyShips'
+
 	this.level = level;
 	this.game = game;
 	this.height = 10;
@@ -82,12 +84,8 @@ EnemyShip.prototype.update = function (elapsedTime) {
 		this.game.currentState === 'playing' || 
 		(this.game.currentState === 'gameOver' && !this.crashed)) {
 		
-		if (sourceZoneInGateWall(this)) {
-			// Destroy this ship
-			var index = this.level.entities.indexOf(this);
-			this.level.entities.splice(index, 1);
-			var that = this;
-
+		if (sourceZoneTouchGateWall(this) || sourceZoneTouchBullet(this)) {
+			this.level.removeObj(this, this.objType);
 		} else {
 			if (this.tickerForIntelligence % this.intelligence === 0) {
 				this.moveStupidly(elapsedTime);

@@ -43,13 +43,13 @@ var Game = function (level) {
 			if (this.currentLevelNum === 1) {
 				if ( sourceZoneBeyondVictoryLine(ship) ) {
 					return 'victory';
-				} else if ( !sourceZoneInSafeZone(ship) || sourceZoneInPillar(ship) ) {
+				} else if ( !sourceZoneInSafeZone(ship) || sourceZoneTouchPillar(ship) ) {
 					return 'loss';
 				}	
 			} else if (this.currentLevelNum === 2) {
 				if ( sourceZoneBeyondVictoryLine(ship) ) {
 					return 'victory';
-				} else if ( sourceZoneInGateWall(ship) || sourceZoneInEnemyShip(ship) ) {
+				} else if ( sourceZoneTouchGateWall(ship) || sourceZoneTouchEnemyShip(ship) ) {
 					return 'loss';
 				}
 			}

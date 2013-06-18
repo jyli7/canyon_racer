@@ -1,13 +1,15 @@
-var Bullet = function (level, game, xLeft, yTop) {
+var Bullet = function (level, game, xMid, yTop) {
 	mixin(this, mixins.zone);
 	this.shape = RECTANGLE;
+	this.objType = 'bullets';
 	
 	this.level = level;
 	this.game = game;
 	this.zIndex = 2;
 	this.width = 5;
 	this.height = 5;
-	this.xLeft = xLeft;
+	this.xMid = xMid;
+	this.xLeft = this.xMid - this.width / 2;
 	this.yTop = yTop;
 	this.xRight = this.xLeft + this.width;
 	this.yBottom = this.yTop + this.height;
@@ -29,6 +31,10 @@ Bullet.prototype.draw = function (ctx) {
 };
 
 Bullet.prototype.update = function (elapsedTime) {
-	this.yBottom -= this.baseSpeed * elapsedTime
-	this.yTop -= this.baseSpeed * elapsedTime;
+	if (sourceZoneTouchEnemyShip(this)) {
+		this.level.removeObj(this, this.objType)
+	} else {
+		this.yBottom -= this.baseSpeed * elapsedTime
+		this.yTop -= this.baseSpeed * elapsedTime;	
+	}
 };
