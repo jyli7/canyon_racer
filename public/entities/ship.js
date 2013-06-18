@@ -1,9 +1,9 @@
 var Ship = function (level, game) {
 	mixin(this, mixins.zone);
+	this.shape = TRIANGLE;
 	
 	this.level = level;
 	this.game = game;
-	this.shape = TRIANGLE;
 
 	// xMid is the x coord of the middle of the triangle
 	this.xMid = canvas.width / 2;
@@ -19,7 +19,6 @@ var Ship = function (level, game) {
 
 	this.crashed = false;
 	this.zIndex = 3;
-	debugger;
 };
 
 Ship.prototype.draw = function (ctx) {

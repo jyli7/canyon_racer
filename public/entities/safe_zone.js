@@ -1,4 +1,7 @@
 var SafeZone = function (level, game, xLeft, yTop, width, height) {
+	mixin(this, mixins.zone);
+	this.shape = RECTANGLE;
+	
 	this.level = level;
 	this.game = game;
 	this.width = width;

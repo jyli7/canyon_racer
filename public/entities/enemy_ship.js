@@ -1,4 +1,7 @@
 var EnemyShip = function (level, game, xLeft, yTop) {
+	mixin(this, mixins.zone);
+	this.shape = RECTANGLE;
+
 	this.level = level;
 	this.game = game;
 	this.height = 10;
@@ -24,13 +27,6 @@ var EnemyShip = function (level, game, xLeft, yTop) {
 	
 	this.zIndex = 1;
 };
-
-EnemyShip.prototype.points = function () {
-	return [{x: this.xLeft, y: this.yBottom},
-			{x: this.xRight, y: this.yBottom},
-			{x: this.xLeft, y: this.yTop},
-			{x: this.xRight, y: this.yTop}];
-}
 
 EnemyShip.prototype.draw = function (ctx) {
 	// Draw only those GateWalls that are in advance of the ship

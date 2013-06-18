@@ -1,4 +1,7 @@
 var Pillar = function (level, game, xLeft, yTop) {
+	mixin(this, mixins.zone);
+	this.shape = RECTANGLE;
+	
 	this.level = level;
 	this.game = game;
 	this.zIndex = 2;
