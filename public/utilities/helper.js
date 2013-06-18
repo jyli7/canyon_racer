@@ -1,3 +1,6 @@
+var TRIANGLE = 0;
+var RECTANGLE = 1;
+
 // Given a bound, returns anything between that bound and -1 * that bound.
 // e.g. give it 100, and it returns something between -100 and 100
 var volatilityFactor = function (bound) {
@@ -17,4 +20,10 @@ var playSound = function (file) {
 	var snd = new Audio("sounds/" + file); // buffers automatically when created
 	snd.play();
 	snd.loop = true;
+}
+
+var mixin = function (obj, mixin) {
+	for (var i in mixin) {
+		obj[i] = mixin[i];
+	}
 }

@@ -63,10 +63,10 @@ EnemyShip.prototype.update = function (elapsedTime) {
 				this.xLeft = this.xLeft + volatilityFactor(1) * this.baseXSpeed * elapsedTime;
 				this.xRight = this.xRight + volatilityFactor(1) * this.baseXSpeed * elapsedTime;
 			} else {
-				var targetY = this.level.ship.y + this.targetYError;
-				var targetX = this.level.ship.x + this.targetXError;
-				var xDirection = (this.level.ship.x - this.xLeft) > 0 ? 1 : -1;
-				var yDirection = (this.level.ship.y - this.yTop) > 0 ? 1 : -1;
+				var targetY = this.level.ship.yTop + this.targetYError;
+				var targetX = this.level.ship.xMid + this.targetXError;
+				var xDirection = (this.level.ship.xMid - this.xLeft) > 0 ? 1 : -1;
+				var yDirection = (this.level.ship.yTop - this.yTop) > 0 ? 1 : -1;
 
 				this.yTop = this.yTop + -1 * this.baseYSpeed * elapsedTime;
 				this.yBottom = this.yBottom + -1 * this.baseYSpeed * elapsedTime;

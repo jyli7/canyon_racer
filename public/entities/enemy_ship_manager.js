@@ -7,14 +7,14 @@ var EnemyShipManager = function (level, game) {
 
 EnemyShipManager.prototype.init = function (ctx) {
 	this.level.enemyShips = this.level.enemyShips || [];
-	this.level.enemyShips.push(new EnemyShip(this.level, this.game, this.level.ship.x, this.level.ship.y + 100));
+	this.level.enemyShips.push(new EnemyShip(this.level, this.game, this.level.ship.xMid, this.level.ship.yTop + 100));
 };
 
 EnemyShipManager.prototype.update = function (ctx) {
-	if (this.game.currentState === 'playing' && Math.round(this.level.ship.y) % 150 === 0) {
-		var possibleStartingPositions = [[-10, this.level.ship.y + 50]
-									   , [this.level.ship.x, this.level.ship.y + 200]
-									   , [canvas.width + 10, this.level.ship.y + 50]];
+	if (this.game.currentState === 'playing' && Math.round(this.level.ship.yTop) % 150 === 0) {
+		var possibleStartingPositions = [[-10, this.level.ship.yTop + 50]
+									   , [this.level.ship.xMid, this.level.ship.yTop + 200]
+									   , [canvas.width + 10, this.level.ship.yTop + 50]];
 
 		var newShips = [];
 		for (var i = 0; i < 3; i++) {
