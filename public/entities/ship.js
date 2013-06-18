@@ -14,7 +14,7 @@ var Ship = function (level, game) {
 	this.width = 20;
 	this.height = 20;
 	this.baseSpeed = 250;
-	this.extraSpeed = 225;
+	this.extraSpeed = 200;
 	this.userInput = new UserInput();
 
 	this.crashed = false;
@@ -35,7 +35,7 @@ Ship.prototype.update = function (elapsedTime) {
 	if (elapsedTime && this.game.currentState === 'countdown' || 
 		this.game.currentState === 'playing' || 
 		(this.game.currentState === 'gameOver' && !this.crashed)) {
-		this.y -= this.baseSpeed * elapsedTime;
+		this.yTop -= this.baseSpeed * elapsedTime;
 
 		// Player holding up
 		if (this.userInput.keyIsHeld(38)) { this.yTop -= this.extraSpeed * elapsedTime; }

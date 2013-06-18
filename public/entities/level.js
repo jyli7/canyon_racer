@@ -1,6 +1,6 @@
 var Level = function (game, num) {
 	if (num === 1) {
-		this.length = 6000;
+		this.length = 2000;
 		this.warmUpLength = 1300;
 		this.ship = new Ship(this, game);
 		this.canyon = new Canyon(this, game);
@@ -15,7 +15,7 @@ var Level = function (game, num) {
 			return a.zIndex - b.zIndex;
 		});
 	} else if (num === 2) {
-		this.length = 6000;
+		this.length = 8000;
 		this.warmUpLength = 1300;
 		this.ship = new Ship(this, game);
 		this.victoryZone = new VictoryZone(this, game, -1 * (this.length + canvas.height * 0.4));

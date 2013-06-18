@@ -1,6 +1,6 @@
 var Game = function (level) {
 	var that = this;
-	this.scrollSpeed = 3.0;
+	this.scrollSpeed = 3.8;
 	this.currentLevelNum = 2;
 	this.currentState = 'countdown';
 	
@@ -38,17 +38,18 @@ var Game = function (level) {
 	, playing: function () {
 			this.update(this.loopTimeElapsed);
 			this.draw(that.ctx);
+			var ship = this.currentLevelObj.ship;
 
 			if (this.currentLevelNum === 1) {
-				if ( this.currentLevelObj.ship.beyondVictoryLine() ) {
+				if ( sourceZoneBeyondVictoryLine(ship) ) {
 					return 'victory';
-				} else if ( !this.currentLevelObj.ship.inASafeZone() || this.currentLevelObj.ship.inAPillar() ) {
+				} else if ( !sourceZoneInSafeZone(ship) || sourceZoneInPillar(ship) ) {
 					return 'loss';
 				}	
 			} else if (this.currentLevelNum === 2) {
-				if ( this.currentLevelObj.ship.beyondVictoryLine() ) {
+				if ( sourceZoneBeyondVictoryLine(ship) ) {
 					return 'victory';
-				} else if ( this.currentLevelObj.ship.inAGateWall() || this.currentLevelObj.ship.inEnemyShip() ) {
+				} else if ( sourceZoneInGateWall(ship) || sourceZoneInEnemyShip(ship) ) {
 					return 'loss';
 				}
 			}

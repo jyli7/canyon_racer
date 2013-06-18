@@ -1,6 +1,6 @@
 var mixins = {
 	zone: {
-		shape: RECTANGLE
+	  shape: RECTANGLE
 	, xLeft: 0
 	, xRight: 0
 	, yBottom: 0

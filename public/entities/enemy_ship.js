@@ -7,8 +7,8 @@ var EnemyShip = function (level, game, xLeft, yTop) {
 	this.height = 10;
 	this.width = 10;
 
-	this.baseYSpeed = 300 + volatilityFactor(50);
-	this.baseXSpeed = 75 + volatilityFactor(50);
+	this.baseYSpeed = 350 + volatilityFactor(75);
+	this.baseXSpeed = 100 + volatilityFactor(50);
 
 	// TODO: Refactor this backward speed business
 	this.backwardSpeed = 175;
@@ -45,7 +45,7 @@ EnemyShip.prototype.update = function (elapsedTime) {
 		this.game.currentState === 'playing' || 
 		(this.game.currentState === 'gameOver' && !this.crashed)) {
 		
-		if (this.inAGateWall()) {
+		if (sourceZoneInGateWall(this)) {
 			// Destroy this ship
 			var index = this.level.entities.indexOf(this);
 			this.level.entities.splice(index, 1);
@@ -83,40 +83,3 @@ EnemyShip.prototype.update = function (elapsedTime) {
 		
 	}
 };
-
-// TO DO: GET RID OF THIS, I.E. REFACTOR INTO A MIXIN
-EnemyShip.prototype.entirelyInAnyZones = function (zones) {
-	var result = true;
-	this.points().forEach(function (point) {
-		if (!inAnyOfZones(point, zones)) {
-			result = false;
-		}
-	});
-	return result;
-}	
-
-EnemyShip.prototype.vertexInAnyZones = function (zones) {
-	var result = false;
-	this.points().forEach(function (point) {
-		if (inAnyOfZones(point, zones)) {
-			result = true;
-		}
-	});
-	return result;
-}
-
-EnemyShip.prototype.inASafeZone = function () {
-	return this.entirelyInAnyZones(this.level.safeZones);
-}
-
-EnemyShip.prototype.inAPillar = function () {
-	return this.vertexInAnyZones(this.level.pillars);
-}
-
-EnemyShip.prototype.inAGateWall = function () {
-	return this.vertexInAnyZones(this.level.gateWalls);
-}
-
-EnemyShip.prototype.beyondVictoryLine = function () {
-	return (this.y <= this.level.victoryZone.yBottom);
-}
