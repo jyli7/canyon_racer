@@ -1,7 +1,7 @@
 var Game = function (level) {
 	var that = this;
 	this.scrollSpeed = 3.3;
-	this.currentLevelNum = level || 2;
+	this.currentLevelNum = level || 3;
 	this.currentState = 'countdown';
 	
 	this.countdownInterval = 80;

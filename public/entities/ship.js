@@ -19,6 +19,10 @@ var Ship = function (level, game) {
 
 	this.crashed = false;
 	this.zIndex = 3;
+
+	if (this.game.currentLevelNum === 3) {
+		this.initGun();	
+	}
 };
 
 Ship.prototype.draw = function (ctx) {
@@ -29,7 +33,6 @@ Ship.prototype.draw = function (ctx) {
 	ctx.lineTo(this.xMid, this.yTop);
 	ctx.fill();
 };
-
 
 Ship.prototype.update = function (elapsedTime) {
 	if (elapsedTime && this.game.currentState === 'countdown' || 
@@ -69,6 +72,17 @@ Ship.prototype.vertexInAnyZones = function (zones) {
 		}
 	});
 	return result;
+}
+
+Ship.prototype.initGun = function () {
+	var that = this;
+	this.listener = addEventListener("keypress", this.fireGun.bind(this));
+}
+
+Ship.prototype.fireGun = function (e, ship) {
+	if (e.keyCode == 102) {
+		this.level.entities.push(new Bullet(this.level, this.game, this.xMid, this.yTop));
+	}
 }
 
 Ship.prototype.inASafeZone = function () {
