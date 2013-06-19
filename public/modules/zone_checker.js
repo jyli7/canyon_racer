@@ -27,32 +27,7 @@
 		return result;
 	}
 
-	exports.targetZoneVertexInSourceZone = function (sourceZone, targetZone) {
-		var result = false;
-		targetZone.points().forEach(function (point) {
-			if (pointInTargetZone(point, sourceZone)) {
-				result = true;
-			}
-		});
-		return result;
-	}
-
-	exports.anyTargetZoneVertexInSourceZone = function (sourceZone, targetZones) {
-		var result = false;
-		targetZones.forEach(function (targetZone) {
-			if (targetZoneVertexInSourceZone(sourceZone, targetZone)) {
-				result = true;
-			}
-		});
-		return result;
-	}
-
-	exports.bulletVertexInAsteroid = function (asteroid, bullets) {
-		if (bullets) {
-			return anyTargetZoneVertexInSourceZone(asteroid, bullets);	
-		}
-	}
-
+	// e.g. triangle is entirely within rectangle
 	exports.sourceZoneEntirelyInAnyTargetZone = function (sourceZone, targetZones) {
 		var result = true;
 		sourceZone.points().forEach(function (point) {
@@ -61,16 +36,43 @@
 			}
 		});
 		return result;
-	}	
+	}
 
-	exports.sourceZoneVertexInAnyTargetZones = function (sourceZone, targetZones) {
+	// e.g. triangle top tip is in specific rectangle
+	exports.sourceZoneVertexInTargetZone = function (sourceZone, targetZone) {
 		var result = false;
 		sourceZone.points().forEach(function (point) {
-			if (pointInAnyOfTargetZones(point, targetZones)) {
+			if (pointInTargetZone(point, targetZone)) {
 				result = true;
 			}
 		});
 		return result;
+	}
+
+	// e.g. triangle top tip is in any of 5 rectangles
+	exports.sourceZoneVertexInAnyTargetZones = function (sourceZone, targetZones) {
+		var result = false;
+		if (targetZones) {
+			targetZones.forEach(function (targetZone) {
+				if (sourceZoneVertexInTargetZone(sourceZone, targetZone)) {
+					result = true;
+				}
+			});
+			return result;
+		}
+	}
+
+	// e.g. if any of these triangle's vertices is in specific rectangle
+	exports.anySourceZoneVertexInTargetZone = function (sourceZones, targetZone) {
+		var result = false;
+		if (sourceZones) {
+			sourceZones.forEach(function (sourceZone) {
+				if (sourceZoneVertexInTargetZone(sourceZone, targetZone)) {
+					result = true;
+				}
+			});
+			return result;
+		}
 	}
 
 	exports.sourceZoneInSafeZone = function (sourceZone) {
@@ -82,27 +84,19 @@
 	}
 
 	exports.sourceZoneVertexTouchGateWall = function (sourceZone) {
-		if (sourceZone.level.gateWalls) {
-			return sourceZoneVertexInAnyTargetZones(sourceZone, sourceZone.level.gateWalls);	
-		}
+		return sourceZoneVertexInAnyTargetZones(sourceZone, sourceZone.level.gateWalls);
 	}
 
 	exports.sourceZoneVertexTouchBullet = function (sourceZone) {
-		if (sourceZone.level.bullets) {
-			return sourceZoneVertexInAnyTargetZones(sourceZone, sourceZone.level.bullets);
-		}
+		return sourceZoneVertexInAnyTargetZones(sourceZone, sourceZone.level.bullets);
 	}
 
 	exports.sourceZoneVertexTouchEnemyShip = function (sourceZone) {
-		if (sourceZone.level.enemyShips) {
-			return sourceZoneVertexInAnyTargetZones(sourceZone, sourceZone.level.enemyShips);	
-		}
+		return sourceZoneVertexInAnyTargetZones(sourceZone, sourceZone.level.enemyShips);	
 	}
 
 	exports.sourceZoneVertexTouchAsteroid = function (sourceZone) {
-		if (sourceZone.level.asteroids) {
-			return sourceZoneVertexInAnyTargetZones(sourceZone, sourceZone.level.asteroids);
-		}
+		return sourceZoneVertexInAnyTargetZones(sourceZone, sourceZone.level.asteroids);
 	}
 
 	exports.sourceZoneBeyondVictoryLine = function (sourceZone) {

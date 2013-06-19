@@ -28,7 +28,7 @@ Asteroid.prototype.draw = function (ctx) {
 
 Asteroid.prototype.update = function (elapsedTime) {
 	if (elapsedTime && this.game.currentState === 'countdown' || this.game.currentState === 'playing') {
-		if (bulletVertexInAsteroid(this, this.level.bullets)) {
+		if (anySourceZoneVertexInTargetZone(this.level.bullets, this)) {
 			this.level.removeObj(this, this.objType);
 		}
 	}
