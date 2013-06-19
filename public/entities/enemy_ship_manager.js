@@ -1,9 +1,15 @@
 var EnemyShipManager = function (level, game) {
 	this.level = level;
 	this.game = game;
-	this.baseYSpeed = 300;
-	this.baseXSpeed = 100;
-	this.distanceBetweenShipBatches = 50;
+
+	if (this.game.difficulty === 1) {
+		this.distanceBetweenShipBatches = 100;
+	} else if (this.game.difficulty === 2) {
+		this.distanceBetweenShipBatches = 80;
+	} else if (this.game.difficulty === 3) {
+		this.distanceBetweenShipBatches = 50;
+	}
+	
 };
 
 EnemyShipManager.prototype.init = function (ctx) {
@@ -14,7 +20,7 @@ EnemyShipManager.prototype.update = function (ctx) {
 	if (this.game.currentState === 'playing' && Math.round(this.level.ship.yTop) % this.distanceBetweenShipBatches === 0) {
 		if (this.game.currentLevelNum === 2) {
 			var possibleStartingPositions = [[-10, this.level.ship.yTop + 50]
-									   , [this.level.ship.xMid, this.level.ship.yTop + 200]
+									   , [this.level.ship.xMid, -this.game.translatedDistance + canvas.height + 100]
 									   , [canvas.width + 10, this.level.ship.yTop + 50]];
 
 			var newShips = [];

@@ -21,8 +21,14 @@ var Level = function (game, num) {
 
 	// LEVEL 2
 	} else if (num === 2) {
-		this.length = 8000;
-		this.warmUpLength = 1300;
+		if (game.difficulty === 1 || game.difficulty === 2) {
+			this.length = 8000;
+			this.warmUpLength = 2000;
+		} else {
+			this.length = 10000;
+			this.warmUpLength = 2500;
+		}
+
 		this.ship = new Ship(this, game);
 		this.victoryZone = new VictoryZone(this, game, -1 * (this.length + canvas.height * 0.4));
 		this.gateWallManager = new GateWallManager(this, game);

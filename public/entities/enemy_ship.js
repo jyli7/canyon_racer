@@ -1,4 +1,4 @@
-var EnemyShip = function (level, game, xLeft, yTop, height, width) {
+var EnemyShip = function (level, game, xLeft, yTop, height, width, baseXSpeed, baseYSpeed) {
 	mixin(this, mixins.zone);
 	this.shape = RECTANGLE;
 
@@ -9,14 +9,26 @@ var EnemyShip = function (level, game, xLeft, yTop, height, width) {
 	this.height = height || 10;
 	this.width = width || 10;
 
-	this.baseYSpeed = 300 + volatilityFactor(50);
-	this.baseXSpeed = 100 + volatilityFactor(40);
-
-	this.backwardYSpeed = 100;
+	if (this.game.difficulty === 1) {
+		this.baseYSpeed = 300 + volatilityFactor(50);
+		this.baseXSpeed = 75 + volatilityFactor(30);
+		this.backwardYSpeed = 75 + volatilityFactor(25);
+		this.intelligence = 20 + volatilityFactor(10);
+	} else if (this.game.difficulty === 2) {
+		this.baseYSpeed = 300 + volatilityFactor(75);
+		this.baseXSpeed = 100 + volatilityFactor(50);
+		this.backwardYSpeed = 75 + volatilityFactor(25);
+		this.intelligence = 30 + volatilityFactor(10);
+	} else if (this.game.difficulty === 3) {
+		this.baseYSpeed = 375 + volatilityFactor(75);
+		this.baseXSpeed = 125 + volatilityFactor(50);
+		this.backwardYSpeed = 125 + volatilityFactor(25);
+		this.intelligence =  40 + volatilityFactor(5);
+	}
 
 	// Some ships will aim at the wrong target
-	this.targetYError = 10 + volatilityFactor(10);
-	this.targetXError = 10 + volatilityFactor(10);
+	this.targetYError = 5 + volatilityFactor(5);
+	this.targetXError = 5 + volatilityFactor(5);
 
 	this.xLeft = xLeft;
 	this.xRight = this.xLeft + this.width;
@@ -24,10 +36,6 @@ var EnemyShip = function (level, game, xLeft, yTop, height, width) {
 	this.yBottom = this.yTop + this.height;
 
 	this.tickerForIntelligence = 0;
-
-	// The higher the intelligence, the less frequently the ship "screws up"
-	this.intelligence = 30 + volatilityFactor(10);
-	
 	this.zIndex = 1;
 };
 

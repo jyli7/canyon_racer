@@ -3,9 +3,9 @@ var Game = function (level, difficulty) {
 	this.difficulty = difficulty;
 
 	if (this.difficulty === 1 || this.difficulty === 2) {
-		this.scrollSpeed = 3;
+		this.scrollSpeed = 2.7;
 	} else {
-		this.scrollSpeed = 5;
+		this.scrollSpeed = 4;
 	}
 
 	this.currentLevelNum = level;

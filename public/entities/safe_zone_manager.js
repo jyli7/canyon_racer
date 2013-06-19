@@ -10,12 +10,10 @@ var SafeZoneManager = function (level, game) {
 	if (game.difficulty === 1) {
 		this.maxWidth = this.level.ship.width * 8;
 		this.minWidth = this.level.ship.width * 4;
-		this.initialXVolatilityBound = 30;
 
 	} else if (game.difficulty === 2) {
-		this.maxWidth = this.level.ship.width * 3;
-		this.minWidth = this.level.ship.width * 1.95;
-		this.initialXVolatilityBound = 40;
+		this.maxWidth = this.level.ship.width * 6;
+		this.minWidth = this.level.ship.width * 3;
 
 	} else if (game.difficulty === 3) {
 		this.maxWidth = this.level.ship.width * 3;
@@ -30,6 +28,7 @@ var SafeZoneManager = function (level, game) {
 	this.meanHeight = canvas.height * 0.2;
 	this.meanX = canvas.width * 0.5 - this.meanWidth * 0.5;
 
+	this.initialXVolatilityBound = 40;
 	this.widthVolatilityBound = this.meanWidth * 0.1;
 
 	this.phaseSettings = {

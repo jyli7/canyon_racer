@@ -5,7 +5,7 @@ var PillarManager = function (level, game) {
 	if (this.game.difficulty === 1 || this.game.difficulty === 2) {
 		this.avgSafeZonesPerPillar = 60;
 	} else {
-		this.avgSafeZonesPerPillar = 30;
+		this.avgSafeZonesPerPillar = 45;
 	}
 	
 };

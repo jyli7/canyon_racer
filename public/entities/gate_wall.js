@@ -1,6 +1,7 @@
 var GateWall = function (level, game, xStart, xEnd, y) {
 	this.level = level;
 	this.game = game;
+
 	this.xLeft = xStart;
 	this.xRight = xEnd;
 	this.yBottom = y;
