@@ -53,6 +53,12 @@ var Game = function (level) {
 				} else if ( sourceZoneVertexTouchGateWall(ship) || sourceZoneVertexTouchEnemyShip(ship) ) {
 					return 'loss';
 				}
+			} else if (this.currentLevelNum === 3) {
+				if ( sourceZoneBeyondVictoryLine(ship) ) {
+					return 'victory';
+				} else if ( sourceZoneVertexTouchAsteroid(ship) ) {
+					return 'loss';
+				}
 			}
 		}
 

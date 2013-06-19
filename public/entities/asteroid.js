@@ -1,6 +1,7 @@
 var Asteroid = function (level, game, xLeft, yTop, width, height) {
 	mixin(this, mixins.zone);
 	this.shape = RECTANGLE;
+	this.objType = 'asteroids';
 	
 	this.level = level;
 	this.game = game;
@@ -28,8 +29,13 @@ Asteroid.prototype.draw = function (ctx) {
 
 Asteroid.prototype.update = function (elapsedTime) {
 	if (elapsedTime && this.game.currentState === 'countdown' || this.game.currentState === 'playing') {
-		if (anySourceZoneVertexInTargetZone(this.level.bullets, this)) {
+		var resultHash = anySourceZoneVertexInTargetZone(this.level.bullets, this) || {};
+		var bulletHitAsteroid = resultHash.result;
+		var relevantBullet = resultHash.sourceZone;
+
+		if (bulletHitAsteroid) {
 			this.level.removeObj(this, this.objType);
+			this.level.removeObj(relevantBullet, relevantBullet.objType);
 		}
 	}
 };

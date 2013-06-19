@@ -65,13 +65,16 @@
 	// e.g. if any of these triangle's vertices is in specific rectangle
 	exports.anySourceZoneVertexInTargetZone = function (sourceZones, targetZone) {
 		var result = false;
+		var relevantSourceZone;
 		if (sourceZones) {
 			sourceZones.forEach(function (sourceZone) {
 				if (sourceZoneVertexInTargetZone(sourceZone, targetZone)) {
 					result = true;
+					relevantSourceZone = sourceZone;
+					return false;
 				}
 			});
-			return result;
+			return { result: result, sourceZone: relevantSourceZone };
 		}
 	}
 
