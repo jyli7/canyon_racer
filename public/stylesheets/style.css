@@ -113,3 +113,32 @@ canvas {
 .hidden {
 	display: none;
 }
+
+.title {
+	margin-bottom: 40px;
+}
+
+.difficulty-link {
+	display: inline-block;
+	font-size: 20px;
+	color: #E8E8E8;
+	letter-spacing: 5px;
+	font-family: 'Lato', sans-serif;
+	font-weight: 200;
+	margin-right: 45px;
+	text-decoration: none;
+}
+
+.difficulty-link:hover {
+	color: #939393;
+	-webkit-transition: color 0.1s linear;
+     -moz-transition: color 0.1s linear;
+      -ms-transition: color 0.1s linear;
+       -o-transition: color 0.1s linear;
+          transition: color 0.1s linear;
+}
+
+.difficulty-link-container {
+	position: relative;
+	left: 20px;
+}
