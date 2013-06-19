@@ -1,8 +1,7 @@
 var AsteroidManager = function (level, game) {
 	this.level = level;
 	this.game = game;
-	this.meanWidth = 35;
-	this.meanHeight = 40;
+	this.meanWidth = 40; this.meanHeight = 40;
 	this.widthVolatility = 20;
 	this.heightVolatility = 30;
 	this.meanSpeed = 60;

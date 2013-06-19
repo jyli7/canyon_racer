@@ -1,7 +1,7 @@
 var Game = function (level) {
 	var that = this;
 	this.scrollSpeed = 3.3;
-	this.currentLevelNum = level || 3;
+	this.currentLevelNum = level || 1;
 	this.currentState = 'countdown';
 	this.theme = new Audio("sounds/" + 'level-' + this.currentLevelNum + '.wav');
 	
@@ -18,7 +18,12 @@ var Game = function (level) {
 			// Level Display
 			if (that.countdownTicker < this.levelDisplayLength) {
 				setMessage('primary-message', 'Level ' + that.currentLevelNum);
-				setMessage('secondary-message', 'Use all of the arrow keys');
+				if (this.currentLevelNum === 3) {
+					setMessage('secondary-message', "Press 'F' to fire! (Limited ammo)");
+				} else {
+					setMessage('secondary-message', 'Use all of the arrow keys');
+				}
+				
 			}
 
 			// Countdown Display
@@ -66,7 +71,11 @@ var Game = function (level) {
 			if (this.currentLevelNum === 3) {
 				setMessage('primary-message', 'Congrats - you beat Canyon Racer!');
 				setMessage('secondary-message', "Press 'Enter' to try the game on a higher difficulty");
-				this.initNewGameOnEnter();
+				this.initRefreshOnEnter();
+				// TODO: CHANGE THIS TO START SCREEN
+				this.currentLevelNum = 1;
+				this.currentLevelObj.ship.baseSpeed *= 2;
+				this.currentState = 'gameOver';
 			} else {
 				setMessage('primary-message', 'You won!');
 				setMessage('secondary-message', "Press 'Enter' to start next level");
@@ -124,18 +133,6 @@ Game.prototype.initRefreshOnEnter = function () {
 		}
 	}
 	this.listener = addEventListener("keypress", startGameOnEnter);
-}
-
-Game.prototype.initNewGameOnEnter = function () {
-	var that = this;
-	var newGameOnEnter = function (e) {
-		if (e.keyCode == 13) {
-			// TODO: Implement new game logic
-			console.log("NEW GAME!")
-			removeEventListener("keypress", newGameOnEnter);
-		}
-	}
-	this.listener = addEventListener("keypress", newGameOnEnter);
 }
 
 Game.prototype.refresh = function (level) {
