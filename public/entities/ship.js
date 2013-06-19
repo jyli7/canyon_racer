@@ -5,6 +5,17 @@ var Ship = function (level, game) {
 	this.level = level;
 	this.game = game;
 
+	if (game.difficulty === 1) {
+		this.baseSpeed = 190;
+		this.extraSpeed = 250;
+	} else if (game.difficulty === 2) {
+		this.baseSpeed = 190;
+		this.extraSpeed = 200;
+	} else if (game.difficulty === 3) {
+		this.baseSpeed = 300;
+		this.extraSpeed = 225;
+	}
+
 	// xMid is the x coord of the middle of the triangle
 	this.xMid = canvas.width / 2;
 
@@ -13,8 +24,6 @@ var Ship = function (level, game) {
 
 	this.width = 20;
 	this.height = 20;
-	this.baseSpeed = 270;
-	this.extraSpeed = 200;
 	this.userInput = new UserInput();
 
 	this.crashed = false;
@@ -57,26 +66,6 @@ Ship.prototype.update = function (elapsedTime) {
 	}
 };
 
-Ship.prototype.entirelyInAnyZones = function (zones) {
-	var result = true;
-	this.points().forEach(function (point) {
-		if (!inAnyOfZones(point, zones)) {
-			result = false;
-		}
-	});
-	return result;
-}	
-
-Ship.prototype.vertexInAnyZones = function (zones) {
-	var result = false;
-	this.points().forEach(function (point) {
-		if (inAnyOfZones(point, zones)) {
-			result = true;
-		}
-	});
-	return result;
-}
-
 Ship.prototype.initGun = function () {
 	var that = this;
 	this.listener = addEventListener("keypress", this.fireGun.bind(this));
@@ -92,24 +81,3 @@ Ship.prototype.fireGun = function (e, ship) {
 		shortenAmmoBar(this);
 	}
 }
-
-Ship.prototype.inASafeZone = function () {
-	return this.entirelyInAnyZones(this.level.safeZones);
-}
-
-Ship.prototype.inAPillar = function () {
-	return this.vertexInAnyZones(this.level.pillars);
-}
-
-Ship.prototype.inEnemyShip = function () {
-	return this.vertexInAnyZones(this.level.enemyShips);
-}
-
-Ship.prototype.inAGateWall = function () {
-	return this.vertexInAnyZones(this.level.gateWalls);
-}
-
-Ship.prototype.beyondVictoryLine = function () {
-	return (this.y <= this.level.victoryZone.yBottom);
-}
-

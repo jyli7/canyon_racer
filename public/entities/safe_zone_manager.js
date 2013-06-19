@@ -1,15 +1,28 @@
-// TODO Turn this into a simple object, put inside module
 var SafeZoneManager = function (level, game) {
 	this.level = level;
 	this.game = game;
 	this.currentPhase = 0;
-	
+
 	this.warmUpWidth = canvas.width*0.9;
 	this.warmUpHeight = canvas.height * 0.5;
 	this.warmUpX = canvas.width * 0.05;
 
-	this.maxWidth = this.level.ship.width * 3;
-	this.minWidth = this.level.ship.width * 1.85;
+	if (game.difficulty === 1) {
+		this.maxWidth = this.level.ship.width * 8;
+		this.minWidth = this.level.ship.width * 4;
+		this.initialXVolatilityBound = 30;
+
+	} else if (game.difficulty === 2) {
+		this.maxWidth = this.level.ship.width * 3;
+		this.minWidth = this.level.ship.width * 1.95;
+		this.initialXVolatilityBound = 40;
+
+	} else if (game.difficulty === 3) {
+		this.maxWidth = this.level.ship.width * 3;
+		this.minWidth = this.level.ship.width * 1.95;
+		this.initialXVolatilityBound = 40;
+	}
+
 	this.minimumX = 0;
 	this.maximumX = canvas.width - this.maxWidth;
 
@@ -17,7 +30,6 @@ var SafeZoneManager = function (level, game) {
 	this.meanHeight = canvas.height * 0.2;
 	this.meanX = canvas.width * 0.5 - this.meanWidth * 0.5;
 
-	this.initialXVolatilityBound = 40;
 	this.widthVolatilityBound = this.meanWidth * 0.1;
 
 	this.phaseSettings = {
@@ -44,7 +56,7 @@ var SafeZoneManager = function (level, game) {
 
 SafeZoneManager.prototype.initWarmUpZones = function (ctx) {
 	this.level.safeZones = this.level.safeZones || [];
-	for (var y = canvas.height; y >= -this.level.warmUpLength; y -= this.warmUpHeight*.99) {
+	for (var y = canvas.height; y >= -this.level.warmUpLength * 1.02; y -= this.warmUpHeight*.99) {
 		this.level.safeZones.push(new SafeZone(this.level, this.game, this.warmUpX, y, this.warmUpWidth, this.warmUpHeight));	
 	}
 }

@@ -1,7 +1,14 @@
-var Game = function (level) {
+var Game = function (level, difficulty) {
 	var that = this;
-	this.scrollSpeed = 3.3;
-	this.currentLevelNum = level || 3;
+	this.difficulty = difficulty;
+
+	if (this.difficulty === 1 || this.difficulty === 2) {
+		this.scrollSpeed = 3;
+	} else {
+		this.scrollSpeed = 5;
+	}
+
+	this.currentLevelNum = level;
 	this.currentState = 'countdown';
 	this.theme = new Audio("sounds/" + 'level-' + this.currentLevelNum + '.wav');
 	
@@ -119,31 +126,29 @@ Game.prototype.init = function () {
 	this.currentLevelObj = new Level(this, this.currentLevelNum);
 
 	// Bring canvas back to original position
-	this.ctx.translate(0, -this.translatedDistance);
 	this.translatedDistance = 0;
-
 }
 
 Game.prototype.initRefreshOnEnter = function () {
 	var that = this;
 	var startGameOnEnter = function (e) {
 		if (e.keyCode == 13) {
-			that.refresh(that.currentLevelNum);
+			that.refresh(that.currentLevelNum, that.difficulty);
 			removeEventListener("keypress", startGameOnEnter);
 		}
 	}
 	this.listener = addEventListener("keypress", startGameOnEnter);
 }
 
-Game.prototype.refresh = function (level) {
+Game.prototype.refresh = function (level, difficulty) {
 	wipeAllMessages();
 	clearInterval(this.loop);
-	this.theme.pause()
-	startGame(level);
+	this.theme.pause();
+	startGame(level, difficulty);
 	refillAmmoBar();
 }
 
-var startGame = function (level) {
+var startGame = function (level, difficulty) {
 	// Hide the start screen
 	document.getElementById('start-screen').className = 'hidden';
 	wipeAllMessages();
@@ -155,7 +160,7 @@ var startGame = function (level) {
 	canvas.height = 600;
 
 	// Init the game
-	var game = new Game(level);
+	var game = new Game(level, difficulty);
 
 	game.theme.play();
 
@@ -169,6 +174,7 @@ var startGame = function (level) {
 	game.loop = setInterval(function () {
 		var nextState = game.states[game.currentState].call(game);
 
+		// if nextState is returned, update current state
 		if (nextState !== undefined) {
 			game.currentState = nextState;
 		}

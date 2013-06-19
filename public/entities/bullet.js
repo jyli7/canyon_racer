@@ -31,10 +31,6 @@ Bullet.prototype.draw = function (ctx) {
 };
 
 Bullet.prototype.update = function (elapsedTime) {
-	if (sourceZoneVertexTouchAsteroid(this)) {
-		this.level.removeObj(this, this.objType)
-	} else {
-		this.yBottom -= this.baseSpeed * elapsedTime
-		this.yTop -= this.baseSpeed * elapsedTime;	
-	}
+	this.yBottom -= this.baseSpeed * elapsedTime
+	this.yTop -= this.baseSpeed * elapsedTime;
 };

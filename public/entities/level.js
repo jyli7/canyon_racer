@@ -2,8 +2,13 @@ var Level = function (game, num) {
 
 	// LEVEL 1
 	if (num === 1) {
-		this.length = 6000;
-		this.warmUpLength = 1300;
+		if (game.difficulty === 1 || game.difficulty === 2) {
+			this.warmUpLength = 1300;
+			this.length = 6000;	
+		} else {
+			this.warmUpLength = 2200;
+			this.length = 8000;
+		}
 		this.ship = new Ship(this, game);
 		this.canyon = new Canyon(this, game);
 		this.victoryZone = new VictoryZone(this, game, -1 * (this.length + canvas.height * 0.4));

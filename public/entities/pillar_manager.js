@@ -1,7 +1,13 @@
 var PillarManager = function (level, game) {
 	this.level = level;
 	this.game = game;
-	this.avgSafeZonesPerPillar = 50;
+
+	if (this.game.difficulty === 1 || this.game.difficulty === 2) {
+		this.avgSafeZonesPerPillar = 60;
+	} else {
+		this.avgSafeZonesPerPillar = 30;
+	}
+	
 };
 
 PillarManager.prototype.init = function (ctx) {
