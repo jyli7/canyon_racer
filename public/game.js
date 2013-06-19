@@ -63,12 +63,18 @@ var Game = function (level) {
 		}
 
 	, victory: function () {
-			setMessage('primary-message', 'You won!');
-			setMessage('secondary-message', "Press 'Enter' to start next level");
-			this.currentLevelNum += 1;
-			this.currentLevelObj.ship.baseSpeed *= 2;
-			this.initRefreshOnEnter();
-			this.currentState = 'gameOver';
+			if (this.currentLevelNum === 3) {
+				setMessage('primary-message', 'Congrats - you beat Canyon Racer!');
+				setMessage('secondary-message', "Press 'Enter' to try the game on a higher difficulty");
+				this.initNewGameOnEnter();
+			} else {
+				setMessage('primary-message', 'You won!');
+				setMessage('secondary-message', "Press 'Enter' to start next level");
+				this.currentLevelNum += 1;
+				this.currentLevelObj.ship.baseSpeed *= 2;
+				this.initRefreshOnEnter();
+				this.currentState = 'gameOver';
+			}
 		}
 	
 	, loss: function () {
@@ -120,11 +126,24 @@ Game.prototype.initRefreshOnEnter = function () {
 	this.listener = addEventListener("keypress", startGameOnEnter);
 }
 
+Game.prototype.initNewGameOnEnter = function () {
+	var that = this;
+	var newGameOnEnter = function (e) {
+		if (e.keyCode == 13) {
+			// TODO: Implement new game logic
+			console.log("NEW GAME!")
+			removeEventListener("keypress", newGameOnEnter);
+		}
+	}
+	this.listener = addEventListener("keypress", newGameOnEnter);
+}
+
 Game.prototype.refresh = function (level) {
 	wipeAllMessages();
 	clearInterval(this.loop);
 	this.theme.pause()
 	startGame(level);
+	refillAmmoBar();
 }
 
 var startGame = function (level) {

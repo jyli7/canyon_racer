@@ -1,4 +1,4 @@
-var Asteroid = function (level, game, xLeft, yTop, width, height) {
+var Asteroid = function (level, game, xLeft, yTop, width, height, speed) {
 	mixin(this, mixins.zone);
 	this.shape = RECTANGLE;
 	this.objType = 'asteroids';
@@ -7,6 +7,7 @@ var Asteroid = function (level, game, xLeft, yTop, width, height) {
 	this.game = game;
 	this.width = width;
 	this.height = height;
+	this.speed = speed;
 
 	this.xLeft = xLeft;
 	this.xRight = this.xLeft + this.width;
@@ -29,6 +30,9 @@ Asteroid.prototype.draw = function (ctx) {
 
 Asteroid.prototype.update = function (elapsedTime) {
 	if (elapsedTime && this.game.currentState === 'countdown' || this.game.currentState === 'playing') {
+		this.yTop += this.speed * elapsedTime;
+		this.yBottom += this.speed * elapsedTime;
+
 		var resultHash = anySourceZoneVertexInTargetZone(this.level.bullets, this) || {};
 		var bulletHitAsteroid = resultHash.result;
 		var relevantBullet = resultHash.sourceZone;

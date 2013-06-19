@@ -25,3 +25,15 @@ var mixin = function (obj, mixin) {
 		obj[i] = mixin[i];
 	}
 }
+
+var shortenAmmoBar = function (ship) {
+	var totalWidth = $('.ammo-bar-container').width();
+	var widthReduction = totalWidth / ship.initialBulletCount;
+	var currentWidth = $('.ammo-bar').width();
+	$('.ammo-bar').width(currentWidth - widthReduction);
+}
+
+var refillAmmoBar = function () {
+	var totalWidth = $('.ammo-bar-container').width();
+	$('.ammo-bar').width(totalWidth);
+}

@@ -20,6 +20,9 @@ var Ship = function (level, game) {
 	this.crashed = false;
 	this.zIndex = 3;
 
+	this.initialBulletCount = 10;
+	this.currentBulletCount = this.initialBulletCount;
+
 	if (this.game.currentLevelNum === 3) {
 		this.initGun();	
 	}
@@ -77,13 +80,16 @@ Ship.prototype.vertexInAnyZones = function (zones) {
 Ship.prototype.initGun = function () {
 	var that = this;
 	this.listener = addEventListener("keypress", this.fireGun.bind(this));
+	$('.ammo-bar-zone').removeClass('hidden');
 }
 
 Ship.prototype.fireGun = function (e, ship) {
-	if (e.keyCode == 102) {
+	if (e.keyCode == 102 && this.currentBulletCount > 0) {
 		this.level.bullets = this.level.bullets || [];
 		var bullet = new Bullet(this.level, this.game, this.xMid, this.yTop);
 		this.level.addObj(bullet, bullet.objType);
+		this.currentBulletCount -= 1;
+		shortenAmmoBar(this);
 	}
 }
 

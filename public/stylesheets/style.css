@@ -47,7 +47,7 @@ canvas {
 	left: 36%;
 }
 
-.primary-message, .secondary-message {
+.primary-message, .secondary-message, .corner-message {
 	font-family: 'Roboto Slab', serif;
 	color: black;
 }
@@ -59,6 +59,34 @@ canvas {
 .secondary-message {
 	font-size: 30px;
 	margin-top: 5px;
+}
+
+.ammo-bar-zone {
+	position: absolute;
+	bottom: 45px;
+	right: 120px;
+}
+
+.ammo-label {
+	display: inline-block;
+	margin-bottom: 3px;
+	font-family: 'Lato', sans-serif;
+	font-weight: bold;
+	font-style: italic;
+	letter-spacing: 2px;
+	font-size: 16px;
+}
+
+.ammo-bar-container {
+	border: 1px solid black;
+	width: 80px;
+	height: 20px;
+}
+
+.ammo-bar {
+	height: 100%;
+	width: 100%;
+	background-color: black;
 }
 
 .title-message-container {
@@ -80,4 +108,8 @@ canvas {
 	letter-spacing: 5px;
 	font-family: 'Roboto Slab', serif;
 	margin-top: 45px;
+}
+
+.hidden {
+	display: none;
 }

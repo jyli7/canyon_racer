@@ -7,6 +7,7 @@
 	<script>
 	head.js("utilities/helper.js"
 		  , "utilities/mixins.js"
+		  , "utilities/jquery.min.js"
 		  , "modules/user_input.js"
 		  , "modules/zone_checker.js"
 		  , "entities/ship.js"
@@ -46,5 +47,11 @@
 	</div>
 	<div class="canvas-container">
 		<canvas id="canvas">Your browser does not support canvas</canvas>
+	</div>
+	<div class="ammo-bar-zone hidden">
+		<span class="ammo-label">Ammo</span>
+		<div class="ammo-bar-container">
+			<div class="ammo-bar"></div>
+		</div>
 	</div>
 </body>
