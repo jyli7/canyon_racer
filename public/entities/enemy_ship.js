@@ -84,7 +84,7 @@ EnemyShip.prototype.update = function (elapsedTime) {
 		this.game.currentState === 'playing' || 
 		(this.game.currentState === 'gameOver' && !this.crashed)) {
 
-		if (sourceZoneTouchGateWall(this) || sourceZoneTouchBullet(this)) {
+		if (sourceZoneVertexTouchGateWall(this) || sourceZoneVertexTouchBullet(this)) {
 			this.level.removeObj(this, this.objType);
 		} else {
 			if (this.tickerForIntelligence % this.intelligence === 0) {

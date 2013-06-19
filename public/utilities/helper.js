@@ -17,9 +17,7 @@ var wipeAllMessages = function () {
 }
 
 var playSound = function (file) {
-	var snd = new Audio("sounds/" + file); // buffers automatically when created
-	snd.play();
-	snd.loop = true;
+	
 }
 
 var mixin = function (obj, mixin) {

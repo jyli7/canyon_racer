@@ -3,6 +3,7 @@ var Game = function (level) {
 	this.scrollSpeed = 3.3;
 	this.currentLevelNum = level || 3;
 	this.currentState = 'countdown';
+	this.theme = new Audio("sounds/" + 'level-' + this.currentLevelNum + '.wav');
 	
 	this.countdownInterval = 80;
 	this.levelDisplayLength = this.countdownInterval * 2;
@@ -43,13 +44,13 @@ var Game = function (level) {
 			if (this.currentLevelNum === 1) {
 				if ( sourceZoneBeyondVictoryLine(ship) ) {
 					return 'victory';
-				} else if ( !sourceZoneInSafeZone(ship) || sourceZoneTouchPillar(ship) ) {
+				} else if ( !sourceZoneInSafeZone(ship) || sourceZoneVertexTouchPillar(ship) ) {
 					return 'loss';
 				}	
 			} else if (this.currentLevelNum === 2) {
 				if ( sourceZoneBeyondVictoryLine(ship) ) {
 					return 'victory';
-				} else if ( sourceZoneTouchGateWall(ship) || sourceZoneTouchEnemyShip(ship) ) {
+				} else if ( sourceZoneVertexTouchGateWall(ship) || sourceZoneVertexTouchEnemyShip(ship) ) {
 					return 'loss';
 				}
 			}
@@ -116,6 +117,7 @@ Game.prototype.initRefreshOnEnter = function () {
 Game.prototype.refresh = function (level) {
 	wipeAllMessages();
 	clearInterval(this.loop);
+	this.theme.pause()
 	startGame(level);
 }
 
@@ -132,6 +134,9 @@ var startGame = function (level) {
 
 	// Init the game
 	var game = new Game(level);
+
+	game.theme.play();
+
 	game.ctx = ctx;
 	game.init(ctx);
 	game.draw(ctx);

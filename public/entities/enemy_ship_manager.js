@@ -23,20 +23,7 @@ EnemyShipManager.prototype.update = function (ctx) {
 				newShips.push(new EnemyShip(this.level, this.game, startingPosition[0], startingPosition[1]));
 			}
 			this.level.addObj(newShips, 'enemyShips');
-
-		} else if (this.game.currentLevelNum === 3) {
-				var possibleStartingPositions = [[canvas.width * 0.3, this.level.ship.yTop - 300]
-									   , [this.level.ship.xMid, this.level.ship.yTop - 300]
-									   , [canvas.width * 0.7, this.level.ship.yTop - 300]];
-
-				var newShips = [];
-				for (var i = 0; i < 2; i++) {
-					var startingPosition = possibleStartingPositions[Math.floor(Math.random() * possibleStartingPositions.length)];
-					newShips.push(new EnemyShip(this.level, this.game, startingPosition[0], startingPosition[1], 20, 20));
-				}
-				this.level.addObj(newShips, 'enemyShips');
-
-			}
+		}
 	}
 };
 

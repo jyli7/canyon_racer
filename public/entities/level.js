@@ -33,9 +33,9 @@ var Level = function (game, num) {
 		this.warmUpLength = 1300;
 		this.ship = new Ship(this, game);
 		this.victoryZone = new VictoryZone(this, game, -1 * (this.length + canvas.height * 0.4));
-		this.enemyShipManager = new EnemyShipManager(this, game);
-		this.enemyShipManager.init(game.ctx);
-		this.entities = [this.victoryZone, this.ship, this.enemyShipManager].concat(this.enemyShips);
+		this.asteroidManager = new AsteroidManager(this, game);
+		this.asteroidManager.init(game.ctx);
+		this.entities = [this.victoryZone, this.ship].concat(this.asteroids);
 	}
 
 	this.entities.sort(function (a, b) {

@@ -76,11 +76,9 @@ SafeZoneManager.prototype.initAllOtherZones = function (ctx) {
 		var phaseSettings = this.phaseSettings[phase];
 
 		// Tweak the x, width, and height values each time through the loop
-		// (TOASK: move this elsewhere?)
 		x += volatilityFactor(phaseSettings.xVolatilityBound);
 		width += volatilityFactor(this.widthVolatilityBound);
 
-		// Ad hoc fixes (TOASK: move this elsewhere?)
 		if (x <= this.minimumX) { x += 50; }
 		if (x >= this.maximumX) { x -= 50; }
 		if (width <= this.minWidth || width >= phaseSettings.maxWidth) { 
