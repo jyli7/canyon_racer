@@ -63,7 +63,7 @@ canvas {
 
 .ammo-bar-zone {
 	position: absolute;
-	bottom: 45px;
+	top: 30px;
 	right: 120px;
 }
 
@@ -86,12 +86,12 @@ canvas {
 .ammo-bar {
 	height: 100%;
 	width: 100%;
-	background-color: black;
+	background-color: #800000;
 }
 
 .title-message-container {
 	position: absolute;
-	top: 35%;
+	top: 33%;
 	left: 28%;
 }
 
@@ -100,33 +100,34 @@ canvas {
 	font-style: italic;
 	letter-spacing: 25px;
 	font-size: 50px;
+	margin-bottom: 60px;
 }
 
 .subtitle {
 	font-size: 18px;
 	color: #E8E8E8;
 	letter-spacing: 5px;
-	font-family: 'Roboto Slab', serif;
+	font-family: 'Lato', sans-serif;
+	font-style: italic;
 	margin-top: 45px;
+	margin-bottom: 10px;
 }
 
 .hidden {
 	display: none;
 }
 
-.title {
-	margin-bottom: 40px;
-}
-
 .difficulty-link {
 	display: inline-block;
-	font-size: 20px;
+	font-size: 18px;
 	color: #E8E8E8;
 	letter-spacing: 5px;
 	font-family: 'Lato', sans-serif;
 	font-weight: 200;
+	/*font-style: italic;*/
 	margin-right: 45px;
 	text-decoration: none;
+	padding-bottom: 3px;
 }
 
 .difficulty-link:hover {

@@ -1,7 +1,7 @@
 var Game = function (level) {
 	var that = this;
 	this.scrollSpeed = 3.3;
-	this.currentLevelNum = level || 1;
+	this.currentLevelNum = level || 3;
 	this.currentState = 'countdown';
 	this.theme = new Audio("sounds/" + 'level-' + this.currentLevelNum + '.wav');
 	

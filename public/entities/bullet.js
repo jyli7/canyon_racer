@@ -25,7 +25,7 @@ Bullet.prototype.draw = function (ctx) {
 	var topLine = threshold - canvas.height * 1.2;
 
 	if (this.yTop < bottomLine && this.yTop > topLine ) {
-		ctx.fillStyle = "rgb(0, 0, 0)";
+		ctx.fillStyle = "hex(#800000)";
 		ctx.fillRect(this.xLeft, this.yTop, this.width, this.height);
 	}
 };
