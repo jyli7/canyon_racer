@@ -3,7 +3,7 @@ var Game = function (level, difficulty) {
 	this.difficulty = difficulty;
 
 	if (this.difficulty === 1 || this.difficulty === 2) {
-		this.scrollSpeed = 2.7;
+		this.scrollSpeed = 3.4;
 	} else {
 		this.scrollSpeed = 4;
 	}
@@ -82,12 +82,16 @@ var Game = function (level, difficulty) {
 	, victory: function () {
 			if (this.currentLevelNum === 3) {
 				setMessage('primary-message', 'Victory!');
-				setMessage('secondary-message', "Press 'Enter' to try a harder difficulty");
-				this.initRefreshOnEnter();
-				// TODO: CHANGE THIS TO START SCREEN
-				this.currentLevelNum = 1;
-				this.currentLevelObj.ship.baseSpeed *= 2;
-				this.currentState = 'gameOver';
+				if (this.difficulty === 3) {
+					console.log('Enter your name');
+				} else {
+					setMessage('secondary-message', "Press 'Enter' to play harder difficulty");	
+					this.initRefreshOnEnter();
+					this.currentLevelNum = 1;
+					this.difficulty += 1;
+					this.currentLevelObj.ship.baseSpeed *= 2;
+					this.currentState = 'gameOver';
+				}
 			} else {
 				setMessage('primary-message', 'You won!');
 				setMessage('secondary-message', "Press 'Enter' to start next level");
@@ -130,6 +134,7 @@ Game.prototype.draw = function (ctx) {
 Game.prototype.init = function () {
 	this.currentLevelObj = new Level(this, this.currentLevelNum);
 	setUpAmmoBar(this.currentLevelObj.ship);
+	initDifficultyDisplay(this.difficulty);
 
 	// Bring canvas back to original position
 	this.translatedDistance = 0;

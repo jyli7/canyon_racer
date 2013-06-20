@@ -43,3 +43,15 @@ var refillAmmoBar = function (ship) {
 	$('.ammo-bar').width(totalWidth);
 	$('.ammo-count').html(ship.initialBulletCount);
 }
+
+var initDifficultyDisplay = function (difficulty) {
+	var text;
+	if (difficulty === 1) {
+		text = "Beginner"
+	} else if (difficulty === 2) {
+		text = "Normal"
+	} else if (difficulty === 3) {
+		text = "Hellish"
+	}
+	$('.difficulty-value').html(text);
+}

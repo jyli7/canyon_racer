@@ -40,8 +40,14 @@ var Level = function (game, num) {
 
 	// LEVEL 3
 	} else if (num === 3) {
-		this.length = 8500;
-		this.warmUpLength = 1600;
+		if (game.difficulty === 1 || game.difficulty === 2) {
+			this.length = 8000;
+			this.warmUpLength = 1600;
+		} else {
+			this.length = 8500;
+			this.warmUpLength = 1600;
+		}
+		
 		this.ship = new Ship(this, game);
 		this.victoryZone = new VictoryZone(this, game, -1 * (this.length + canvas.height * 0.4));
 		this.asteroidManager = new AsteroidManager(this, game);

@@ -124,7 +124,6 @@ canvas {
 	letter-spacing: 5px;
 	font-family: 'Lato', sans-serif;
 	font-weight: 200;
-	/*font-style: italic;*/
 	margin-right: 45px;
 	text-decoration: none;
 	padding-bottom: 3px;
@@ -142,4 +141,13 @@ canvas {
 .difficulty-link-container {
 	position: relative;
 	left: 20px;
+}
+
+.difficulty-display {
+	font-style: italic;
+	position: absolute;
+	left: 84%;
+	font-family: 'Lato', sans-serif;
+	font-weight: 200;
+	bottom: 50px;
 }
