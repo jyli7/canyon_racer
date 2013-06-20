@@ -53,6 +53,10 @@ var Game = function (level, difficulty) {
 			this.draw(that.ctx);
 			var ship = this.currentLevelObj.ship;
 
+			if (ship.isOffScreen()) {
+				return 'loss';
+			}
+
 			if (this.currentLevelNum === 1) {
 				if ( sourceZoneBeyondVictoryLine(ship) ) {
 					return 'victory';
@@ -72,6 +76,7 @@ var Game = function (level, difficulty) {
 					return 'loss';
 				}
 			}
+
 		}
 
 	, victory: function () {
@@ -162,7 +167,7 @@ var startGame = function (level, difficulty) {
 	// Init the game
 	var game = new Game(level, difficulty);
 
-	game.theme.play();
+	// game.theme.play();
 
 	game.ctx = ctx;
 	game.init(ctx);

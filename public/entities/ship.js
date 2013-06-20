@@ -6,10 +6,10 @@ var Ship = function (level, game) {
 	this.game = game;
 
 	if (game.difficulty === 1) {
-		this.baseSpeed = 200;
+		this.baseSpeed = 220;
 		this.extraSpeed = 250;
 	} else if (game.difficulty === 2) {
-		this.baseSpeed = 200;
+		this.baseSpeed = 220;
 		this.extraSpeed = 200;
 	} else if (game.difficulty === 3) {
 		this.baseSpeed = 325;
@@ -65,6 +65,10 @@ Ship.prototype.update = function (elapsedTime) {
 		if (this.userInput.keyIsHeld(39)) { this.xMid += this.extraSpeed * elapsedTime; }
 	}
 };
+
+Ship.prototype.isOffScreen = function () {
+	return this.bottomRightX() < 0 || this.bottomLeftX() > canvas.width;
+}
 
 Ship.prototype.initGun = function () {
 	var that = this;

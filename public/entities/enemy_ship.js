@@ -20,10 +20,10 @@ var EnemyShip = function (level, game, xLeft, yTop, height, width, baseXSpeed, b
 		this.backwardYSpeed = 75 + volatilityFactor(25);
 		this.intelligence = 30 + volatilityFactor(10);
 	} else if (this.game.difficulty === 3) {
-		this.baseYSpeed = 375 + volatilityFactor(75);
+		this.baseYSpeed = 350 + volatilityFactor(75);
 		this.baseXSpeed = 125 + volatilityFactor(50);
 		this.backwardYSpeed = 125 + volatilityFactor(25);
-		this.intelligence =  40 + volatilityFactor(5);
+		this.intelligence = 50 + volatilityFactor(5);
 	}
 
 	// Some ships will aim at the wrong target

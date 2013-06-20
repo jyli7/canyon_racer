@@ -10,12 +10,12 @@ var GateWallManager = function (level, game) {
 	} else if (this.game.difficulty === 2) {
 		this.xVolatility = 300;
 		this.maxGapWidth = this.level.ship.width * 15;
-		this.minGapWidth = this.level.ship.width * 8;
+		this.minGapWidth = this.level.ship.width * 10;
 		this.meanYInterval = 1300;
 	} else if (this.game.difficulty === 3) {
 		this.xVolatility = 400;
-		this.maxGapWidth = this.level.ship.width * 12;
-		this.minGapWidth = this.level.ship.width * 6;
+		this.maxGapWidth = this.level.ship.width * 13;
+		this.minGapWidth = this.level.ship.width * 8;
 		this.meanYInterval = 1300;
 	}
 	
@@ -44,7 +44,7 @@ GateWallManager.prototype.init = function (ctx) {
 		if (x <= this.minimumX) { x += this.maxGapWidth; }
 		if (x >= this.maximumX) { x -= this.maxGapWidth; }
 
-		this.level.gateWalls.push(new GateWall(this.level, this.game, 0, x, y));
-		this.level.gateWalls.push(new GateWall(this.level, this.game, x + gapWidth, canvas.width, y));
+		this.level.gateWalls.push(new GateWall(this.level, this.game, -canvas.width, x, y));
+		this.level.gateWalls.push(new GateWall(this.level, this.game, x + gapWidth, canvas.width * 2, y));
 	}
 }
