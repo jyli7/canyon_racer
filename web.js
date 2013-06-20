@@ -60,11 +60,10 @@ app.post('/won', function (req, res) {
 		} else if (difficulty == 3) {
 			doc.hellishWinCount++;
 		}
-		// if (req.body.userName) {
-		// 	console.log(req.body.userName)
-			
-		// 	doc.hellishWinnerNames.push(req.body.userName);
-		// }
+		if (req.body.userName) {
+			doc.hellishWinnerNames = doc.hellishWinnerNames || [];
+			doc.hellishWinnerNames = doc.hellishWinnerNames.push(req.body.userName);
+		}
 		doc.save();	
 	});
 });
