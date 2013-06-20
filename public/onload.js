@@ -3,6 +3,6 @@ window.onload = function () {
 	console.log('loaded');
 	$('.difficulty-link').on('click', function () {
 		var difficulty = parseInt($(this).data('difficulty'));
-		startGame(1, difficulty);
+		startGame(3, difficulty);
 	});
 }
