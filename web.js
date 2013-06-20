@@ -50,6 +50,7 @@ app.post('/started', function (req, res) {
 });
 
 app.post('/won', function (req, res) {
+	var query = db.myInfo.findOne();
 	query.exec(function (err, doc) {
 		var difficulty = req.body.difficulty;
 		if (difficulty == 1) {
@@ -59,9 +60,11 @@ app.post('/won', function (req, res) {
 		} else if (difficulty == 3) {
 			doc.hellishWinCount++;
 		}
-		if (req.body.userName) {
-			doc.hellishWinnerNames.push(userName);
-		}
+		// if (req.body.userName) {
+		// 	console.log(req.body.userName)
+			
+		// 	doc.hellishWinnerNames.push(req.body.userName);
+		// }
 		doc.save();	
 	});
 });

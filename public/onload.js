@@ -4,7 +4,7 @@ window.onload = function () {
 	$('.difficulty-link').on('click', function () {
 		var difficulty = parseInt($(this).data('difficulty'));
 		notifyServerOfStart(difficulty);
-		startGame(1, difficulty);
+		startGame(3, difficulty);
 	});
 
 	$('.difficulty-link').on('mouseenter', function () {
