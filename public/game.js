@@ -129,6 +129,7 @@ Game.prototype.draw = function (ctx) {
 
 Game.prototype.init = function () {
 	this.currentLevelObj = new Level(this, this.currentLevelNum);
+	setUpAmmoBar(this.currentLevelObj.ship);
 
 	// Bring canvas back to original position
 	this.translatedDistance = 0;
@@ -150,7 +151,7 @@ Game.prototype.refresh = function (level, difficulty) {
 	clearInterval(this.loop);
 	this.theme.pause();
 	startGame(level, difficulty);
-	refillAmmoBar();
+	refillAmmoBar(this.currentLevelObj.ship);
 }
 
 var startGame = function (level, difficulty) {

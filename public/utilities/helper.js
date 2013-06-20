@@ -26,14 +26,20 @@ var mixin = function (obj, mixin) {
 	}
 }
 
+var setUpAmmoBar = function (ship) {
+	$('.ammo-count').html(ship.initialBulletCount);
+}
+
 var shortenAmmoBar = function (ship) {
 	var totalWidth = $('.ammo-bar-container').width();
 	var widthReduction = totalWidth / ship.initialBulletCount;
 	var currentWidth = $('.ammo-bar').width();
 	$('.ammo-bar').width(currentWidth - widthReduction);
+	$('.ammo-count').html(ship.currentBulletCount);
 }
 
-var refillAmmoBar = function () {
+var refillAmmoBar = function (ship) {
 	var totalWidth = $('.ammo-bar-container').width();
 	$('.ammo-bar').width(totalWidth);
+	$('.ammo-count').html(ship.initialBulletCount);
 }

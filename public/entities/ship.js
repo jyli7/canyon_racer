@@ -5,13 +5,13 @@ var Ship = function (level, game) {
 	this.level = level;
 	this.game = game;
 
-	if (game.difficulty === 1) {
+	if (this.game.difficulty === 1) {
 		this.baseSpeed = 220;
 		this.extraSpeed = 250;
-	} else if (game.difficulty === 2) {
+	} else if (this.game.difficulty === 2) {
 		this.baseSpeed = 220;
 		this.extraSpeed = 200;
-	} else if (game.difficulty === 3) {
+	} else if (this.game.difficulty === 3) {
 		this.baseSpeed = 325;
 		this.extraSpeed = 250;
 	}
@@ -29,7 +29,14 @@ var Ship = function (level, game) {
 	this.crashed = false;
 	this.zIndex = 3;
 
-	this.initialBulletCount = 10;
+	if (this.game.difficulty === 1) {
+		this.initialBulletCount = 20;
+	} else if (this.game.difficulty === 2) {
+		this.initialBulletCount = 15;
+	} else {
+		this.initialBulletCount = 10;
+	}
+	
 	this.currentBulletCount = this.initialBulletCount;
 
 	if (this.game.currentLevelNum === 3) {
