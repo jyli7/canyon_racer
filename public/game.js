@@ -168,7 +168,7 @@ var startGame = function (level, difficulty) {
 	// Init the game
 	var game = new Game(level, difficulty);
 
-	// game.theme.play();
+	game.theme.play();
 
 	game.ctx = ctx;
 	game.init(ctx);

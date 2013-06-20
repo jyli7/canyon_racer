@@ -10,15 +10,15 @@ var EnemyShip = function (level, game, xLeft, yTop, height, width, baseXSpeed, b
 	this.width = width || 10;
 
 	if (this.game.difficulty === 1) {
-		this.baseYSpeed = 300 + volatilityFactor(50);
+		this.baseYSpeed = 275 + volatilityFactor(50);
 		this.baseXSpeed = 75 + volatilityFactor(30);
 		this.backwardYSpeed = 75 + volatilityFactor(25);
-		this.intelligence = 20 + volatilityFactor(10);
+		this.intelligence = 15 + volatilityFactor(10);
 	} else if (this.game.difficulty === 2) {
 		this.baseYSpeed = 300 + volatilityFactor(75);
 		this.baseXSpeed = 100 + volatilityFactor(50);
 		this.backwardYSpeed = 75 + volatilityFactor(25);
-		this.intelligence = 30 + volatilityFactor(10);
+		this.intelligence = 35 + volatilityFactor(10);
 	} else if (this.game.difficulty === 3) {
 		this.baseYSpeed = 350 + volatilityFactor(75);
 		this.baseXSpeed = 125 + volatilityFactor(50);

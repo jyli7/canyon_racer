@@ -18,13 +18,13 @@ var AsteroidManager = function (level, game) {
 		this.speedVolatility = 40;
 		this.distanceBetweenAsteroids = 20;
 	} else {
-		this.meanWidth = 40;
-		this.meanHeight = 40;
-		this.widthVolatility = 25;
-		this.heightVolatility = 25;
+		this.meanWidth = 30;
+		this.meanHeight = 30;
+		this.widthVolatility = 20;
+		this.heightVolatility = 20;
 		this.meanSpeed = 60;
 		this.speedVolatility = 40;
-		this.distanceBetweenAsteroids = 18;
+		this.distanceBetweenAsteroids = 15;
 	}
 	
 };
