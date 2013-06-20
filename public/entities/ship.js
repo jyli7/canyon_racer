@@ -79,7 +79,7 @@ Ship.prototype.isOffScreen = function () {
 
 Ship.prototype.initGun = function () {
 	var that = this;
-	this.listener = addEventListener("keypress", this.fireGun.bind(this));
+	addEventListener("keypress", this.fireGun.bind(this));
 	$('.ammo-bar-zone').removeClass('hidden');
 }
 
@@ -91,4 +91,14 @@ Ship.prototype.fireGun = function (e, ship) {
 		this.currentBulletCount -= 1;
 		shortenAmmoBar(this);
 	}
+};
+
+Ship.prototype.refillGun = function () {
+	this.currentBulletCount = this.initialBulletCount;
+	refillAmmoBar(this);
+}
+
+Ship.prototype.justCrashed = function () {
+	this.crashed = true;
+	removeEventListener("keypress", this.fireGun.bind(this));
 }

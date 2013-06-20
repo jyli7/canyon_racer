@@ -101,7 +101,7 @@ var Game = function (level, difficulty) {
 	, loss: function () {
 			setMessage('primary-message', 'You crashed!');
 			setMessage('secondary-message', "Press 'Enter' to play again");
-			this.currentLevelObj.ship.crashed = true;
+			this.currentLevelObj.ship.justCrashed();
 			this.initRefreshOnEnter();
 			this.currentState = 'gameOver';
 		}
@@ -151,7 +151,7 @@ Game.prototype.refresh = function (level, difficulty) {
 	clearInterval(this.loop);
 	this.theme.pause();
 	startGame(level, difficulty);
-	refillAmmoBar(this.currentLevelObj.ship);
+	this.currentLevelObj.ship.refillGun();
 }
 
 var startGame = function (level, difficulty) {
