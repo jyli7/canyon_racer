@@ -83,7 +83,9 @@ var Game = function (level, difficulty) {
 			if (this.currentLevelNum === 3) {
 				setMessage('primary-message', 'Victory!');
 				if (this.difficulty === 3) {
-					console.log('Enter your name');
+					setMessage('secondary-message', "Game totally beaten!");
+					var userName = prompt("Very few people have beaten this on hellish. What name should we add to the Hall of Fame?");
+					notifyServerOfWin(this.difficulty, userName);
 				} else {
 					setMessage('secondary-message', "Press 'Enter' to play harder difficulty");	
 					this.initRefreshOnEnter();
@@ -91,6 +93,7 @@ var Game = function (level, difficulty) {
 					this.difficulty += 1;
 					this.currentLevelObj.ship.baseSpeed *= 2;
 					this.currentState = 'gameOver';
+					notifyServerOfWin(this.difficulty);
 				}
 			} else {
 				setMessage('primary-message', 'You won!');

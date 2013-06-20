@@ -49,6 +49,24 @@ app.post('/started', function (req, res) {
 	});
 });
 
+app.post('/won', function (req, res) {
+	query.exec(function (err, doc) {
+		var difficulty = req.body.difficulty;
+		if (difficulty == 1) {
+			doc.beginnerWinCount++;	
+		} else if (difficulty == 2 ) {
+			doc.normalWinCount++;
+		} else if (difficulty == 3) {
+			doc.hellishWinCount++;
+		}
+		if (req.body.userName) {
+			doc.hellishWinnerNames.push(userName);
+		}
+		doc.save();	
+	});
+});
+
+
 var port = process.env.PORT || 5000;
 app.listen(port, function() {
   console.log("Listening on " + port);

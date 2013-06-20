@@ -64,6 +64,15 @@ var notifyServerOfStart = function (difficulty) {
 	});
 };
 
+var notifyServerOfWin = function (difficulty, userName) {
+	$.ajax({
+	  type: "POST",
+	  url: '../won',
+	  data: {difficulty: difficulty, userName: userName},
+	  success: function () { console.log('posted') }
+	});
+};
+
 var getUserData = function (difficulty) {
 	$.ajax({
 	  type: "GET",
