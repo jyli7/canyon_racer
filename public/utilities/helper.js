@@ -1,6 +1,8 @@
 var TRIANGLE = 0;
 var RECTANGLE = 1;
 
+var globalVars = {};
+
 // Given a bound, returns anything between that bound and -1 * that bound.
 // e.g. give it 100, and it returns something between -100 and 100
 var volatilityFactor = function (bound) {
@@ -14,10 +16,6 @@ var setMessage = function (id, message) {
 var wipeAllMessages = function () {
 	setMessage('primary-message', "");
 	setMessage('secondary-message', "");
-}
-
-var playSound = function (file) {
-	
 }
 
 var mixin = function (obj, mixin) {
@@ -54,4 +52,24 @@ var initDifficultyDisplay = function (difficulty) {
 		text = "Hellish"
 	}
 	$('.difficulty-value').html(text);
+}
+
+
+var notifyServerOfStart = function (difficulty) {
+	$.ajax({
+	  type: "POST",
+	  url: '../started',
+	  data: {difficulty: difficulty},
+	  success: function () { console.log('posted') }
+	});
+};
+
+var getUserData = function (difficulty) {
+	$.ajax({
+	  type: "GET",
+	  url: '../user_data',
+	  success: function (res) {
+	  	globalVars.userData = res;
+	  }
+	});
 }

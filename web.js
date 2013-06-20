@@ -13,6 +13,13 @@ app.use(express.logger());
 
 app.use('/', express.static(__dirname + '/public'));
 
+app.get('/user_data', function (req, res) {
+	var query = db.myInfo.findOne();
+	query.exec(function (err, doc) {
+		res.json(doc);
+	});
+});
+
 app.post('/started', function (req, res) {
 	var query = db.myInfo.findOne();
 	if (!query) {

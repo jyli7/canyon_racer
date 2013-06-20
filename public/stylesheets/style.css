@@ -151,3 +151,13 @@ canvas {
 	font-weight: 200;
 	bottom: 50px;
 }
+
+.completion-counts {
+	position: absolute;
+	bottom: 4%;
+	left: 37%;
+	margin: 0px auto;
+	font-family: 'Lato', sans-serif;
+	font-style: italic;
+	font-size: 16px;
+}
