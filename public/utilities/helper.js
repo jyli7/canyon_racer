@@ -35,6 +35,7 @@ var shortenAmmoBar = function (ship) {
 	var widthReduction = totalWidth / ship.initialBulletCount;
 	var currentWidth = $('.ammo-bar').width();
 	$('.ammo-bar').width(currentWidth - widthReduction);
+	debugger;
 	$('.ammo-count').html(ship.currentBulletCount);
 }
 

@@ -32,9 +32,9 @@ var Ship = function (level, game) {
 	if (this.game.difficulty === 1) {
 		this.initialBulletCount = 20;
 	} else if (this.game.difficulty === 2) {
-		this.initialBulletCount = 15;
-	} else {
 		this.initialBulletCount = 10;
+	} else {
+		this.initialBulletCount = 5;
 	}
 	
 	this.currentBulletCount = this.initialBulletCount;

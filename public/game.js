@@ -81,8 +81,8 @@ var Game = function (level, difficulty) {
 
 	, victory: function () {
 			if (this.currentLevelNum === 3) {
-				setMessage('primary-message', 'Congrats - you beat Canyon Racer!');
-				setMessage('secondary-message', "Press 'Enter' to try the game on a higher difficulty");
+				setMessage('primary-message', 'Victory!');
+				setMessage('secondary-message', "Press 'Enter' to try a harder difficulty");
 				this.initRefreshOnEnter();
 				// TODO: CHANGE THIS TO START SCREEN
 				this.currentLevelNum = 1;
