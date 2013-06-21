@@ -1,8 +1,6 @@
 var TRIANGLE = 0;
 var RECTANGLE = 1;
 
-var globalVars = {};
-
 // Given a bound, returns anything between that bound and -1 * that bound.
 // e.g. give it 100, and it returns something between -100 and 100
 var volatilityFactor = function (bound) {
@@ -78,7 +76,7 @@ var getUserData = function (difficulty) {
 	  type: "GET",
 	  url: '../user_data',
 	  success: function (res) {
-	  	globalVars.userData = res;
+	  	userStats = res;
 	  }
 	});
 }

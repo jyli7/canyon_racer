@@ -154,11 +154,12 @@ canvas {
 
 .completion-counts {
 	position: absolute;
-	bottom: 4%;
-	left: 40%;
+	bottom: 33px;
+	left: 34%;
 	margin: 0px auto;
 	font-family: 'Lato', sans-serif;
 	font-style: italic;
-	font-size: 16px;
+	font-size: 15px;
+	letter-spacing: 5px;
 	color: #E8E8E8;
 }
