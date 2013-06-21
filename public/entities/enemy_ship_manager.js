@@ -7,7 +7,7 @@ var EnemyShipManager = function (level, game) {
 	} else if (this.game.difficulty === 2) {
 		this.distanceBetweenShipBatches = 90;
 	} else if (this.game.difficulty === 3) {
-		this.distanceBetweenShipBatches = 60;
+		this.distanceBetweenShipBatches = 65;
 	}
 	
 };

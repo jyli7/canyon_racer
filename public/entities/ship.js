@@ -12,7 +12,7 @@ var Ship = function (level, game) {
 		this.baseSpeed = 220;
 		this.extraSpeed = 200;
 	} else if (this.game.difficulty === 3) {
-		this.baseSpeed = 325;
+		this.baseSpeed = 300;
 		this.extraSpeed = 250;
 	}
 
@@ -79,6 +79,7 @@ Ship.prototype.isOffScreen = function () {
 
 Ship.prototype.initGun = function () {
 	var that = this;
+	
 	addEventListener("keypress", this.fireGun.bind(this));
 	$('.ammo-bar-zone').removeClass('hidden');
 }

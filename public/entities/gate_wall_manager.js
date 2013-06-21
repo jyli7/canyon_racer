@@ -11,12 +11,12 @@ var GateWallManager = function (level, game) {
 		this.xVolatility = 300;
 		this.maxGapWidth = this.level.ship.width * 15;
 		this.minGapWidth = this.level.ship.width * 10;
-		this.meanYInterval = 1300;
+		this.meanYInterval = 1200;
 	} else if (this.game.difficulty === 3) {
 		this.xVolatility = 400;
-		this.maxGapWidth = this.level.ship.width * 13;
+		this.maxGapWidth = this.level.ship.width * 10;
 		this.minGapWidth = this.level.ship.width * 8;
-		this.meanYInterval = 1400;
+		this.meanYInterval = 1300;
 	}
 	
 	

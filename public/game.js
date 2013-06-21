@@ -2,15 +2,22 @@ var Game = function (level, difficulty) {
 	var that = this;
 	this.difficulty = difficulty;
 
-	if (this.difficulty === 1 || this.difficulty === 2) {
-		this.scrollSpeed = 3.4;
-	} else {
-		this.scrollSpeed = 4;
-	}
-
 	this.currentLevelNum = level;
 	this.currentState = 'countdown';
 	this.theme = new Audio("sounds/" + 'level-' + this.currentLevelNum + '.wav');
+
+	if (this.difficulty === 1 || this.difficulty === 2) {
+		this.scrollSpeed = 3.8;
+	} else if (this.difficulty === 3) {
+		this.scrollSpeed = 5.6;
+	}
+
+	if (this.currentLevelNum === 2) {
+		this.scrollSpeed *= 0.60;
+	}
+	if (this.currentLevelNum === 3) {
+		this.scrollSpeed *= 0.65;
+	}
 	
 	this.countdownInterval = 80;
 	this.levelDisplayLength = this.countdownInterval * 2;

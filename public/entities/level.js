@@ -4,10 +4,10 @@ var Level = function (game, num) {
 	if (num === 1) {
 		if (game.difficulty === 1 || game.difficulty === 2) {
 			this.warmUpLength = 1300;
-			this.length = 6000;
+			this.length = 6500;
 		} else {
 			this.warmUpLength = 2200;
-			this.length = 8000;
+			this.length = 8500;
 		}
 		this.ship = new Ship(this, game);
 		this.canyon = new Canyon(this, game);
