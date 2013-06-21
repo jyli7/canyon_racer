@@ -38,7 +38,7 @@ app.post('/started', function (req, res) {
 	
 	query.exec(function (err, doc) {
 		var difficulty = req.body.difficulty;
-		if (difficulty == 1) {
+		if (difficulty == 1 && doc) {
 			doc.beginnerStartCount++;	
 		} else if (difficulty == 2 ) {
 			doc.normalStartCount++;
