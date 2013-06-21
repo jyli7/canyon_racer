@@ -80,7 +80,8 @@ Ship.prototype.isOffScreen = function () {
 Ship.prototype.initGun = function () {
 	var that = this;
 	
-	addEventListener("keypress", this.fireGun.bind(this));
+	this.fireGunFn = this.fireGun.bind(this);
+	addEventListener("keypress", this.fireGunFn);
 	$('.ammo-bar-zone').removeClass('hidden');
 }
 
@@ -101,5 +102,5 @@ Ship.prototype.refillGun = function () {
 
 Ship.prototype.justCrashed = function () {
 	this.crashed = true;
-	removeEventListener("keypress", this.fireGun.bind(this));
+	removeEventListener("keypress", this.fireGunFn);
 }
