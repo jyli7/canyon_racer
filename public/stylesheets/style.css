@@ -155,7 +155,7 @@ canvas {
 .made-by-msg {
 	position: absolute;
 	bottom: 20px;
-	left: 46%;
+	left: 44%;
 	margin: 0px auto;
 	font-family: 'Lato', sans-serif;
 	font-style: italic;
@@ -179,16 +179,10 @@ canvas {
           transition: color 0.1s linear;
 }
 
-.game-stats-link-wrapper {
-	position: absolute;
-	bottom: 20px;
-	left: 52%;
-	margin: 0px auto;
-	font-family: 'Lato', sans-serif;
-	font-style: italic;
-	font-size: 13px;
-	letter-spacing: 2px;
-	color: #E8E8E8;	
+.volume-icon {
+	position: relative;
+	top: 3px;
+	right: 8px;
 }
 
 #lean_overlay {
@@ -242,5 +236,9 @@ canvas {
 	max-height: 400px;
 	padding: 15px;
 	overflow-y: auto;
+}
 
+.volume-icon {
+	width: 20px;
+	height: 16px;
 }

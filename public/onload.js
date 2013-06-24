@@ -11,4 +11,14 @@ window.onload = function () {
 		startGame(1, difficulty);
 	});
 
+	$('.volume-toggle').on('click', function () {
+		var $image = $(this).find('img');
+		var src = $image.attr('src');
+		if (src === 'images/volume-icon.png') {
+			$image.attr('src', 'images/volume-icon-off.png');
+		} else {
+			$image.attr('src', 'images/volume-icon.png');
+		}
+	});
+
 }
