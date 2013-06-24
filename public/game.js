@@ -8,13 +8,13 @@ var Game = function (level, difficulty) {
 	this.theme = new Audio("sounds/" + 'level-' + this.currentLevelNum + '.wav');
 
 	if (this.difficulty === 1 || this.difficulty === 2) {
-		this.scrollSpeed = 4.2;
+		this.scrollSpeed = 4.4;
 	} else if (this.difficulty === 3) {
 		this.scrollSpeed = 5.9;
 	}
 
 	if (this.currentLevelNum === 2) {
-		this.scrollSpeed *= 0.60;
+		this.scrollSpeed *= 0.58;
 	}
 	if (this.currentLevelNum === 3) {
 		this.scrollSpeed *= 0.62;
