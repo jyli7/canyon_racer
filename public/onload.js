@@ -4,7 +4,7 @@ window.onload = function () {
 	$('.difficulty-link').on('click', function () {
 		var difficulty = parseInt($(this).data('difficulty'));
 		notifyServerOfStart(difficulty);
-		startGame(3, difficulty);
+		startGame(1, difficulty);
 	});
 
 	// TODO: Figure out how to display the user stats, if at all.
