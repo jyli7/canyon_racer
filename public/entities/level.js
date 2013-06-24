@@ -44,7 +44,7 @@ var Level = function (game, num) {
 			this.length = 8000;
 			this.warmUpLength = 1600;
 		} else {
-			this.length = 8600;
+			this.length = 2000;
 			this.warmUpLength = 1600;
 		}
 		
