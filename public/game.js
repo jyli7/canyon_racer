@@ -172,8 +172,12 @@ Game.prototype.refresh = function (level, difficulty) {
 }
 
 var startGame = function (level, difficulty) {
-	// Hide the start screen
+	// Hide what's necessary
 	$('.hidden-upon-start').addClass('hidden');
+
+	// Unhide what's necessary
+	$('.hidden-initially').removeClass('hidden');
+
 	wipeAllMessages();
 
 	// Set up the canvas
