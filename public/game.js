@@ -10,7 +10,7 @@ var Game = function (level, difficulty) {
 	if (this.difficulty === 1 || this.difficulty === 2) {
 		this.scrollSpeed = 4.4;
 	} else if (this.difficulty === 3) {
-		this.scrollSpeed = 5.9;
+		this.scrollSpeed = 6;
 	}
 
 	if (this.currentLevelNum === 2) {
