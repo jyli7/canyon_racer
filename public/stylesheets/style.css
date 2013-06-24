@@ -155,7 +155,7 @@ canvas {
 .made-by-msg {
 	position: absolute;
 	bottom: 20px;
-	left: 46%;
+	left: 40%;
 	margin: 0px auto;
 	font-family: 'Lato', sans-serif;
 	font-style: italic;
@@ -164,17 +164,29 @@ canvas {
 	color: #E8E8E8;
 }
 
-.made-by-msg a {
+.made-by-msg a, .game-stats-link a  {
 	color: #E8E8E8;
 	font-style: normal;
 	text-decoration: none;
 }
 
-.made-by-msg a:hover {
+.made-by-msg a:hover, .game-stats-link a:hover {
 	color: #939393;
 	-webkit-transition: color 0.1s linear;
      -moz-transition: color 0.1s linear;
       -ms-transition: color 0.1s linear;
        -o-transition: color 0.1s linear;
           transition: color 0.1s linear;
+}
+
+.game-stats-link {
+	position: absolute;
+	bottom: 20px;
+	left: 52%;
+	margin: 0px auto;
+	font-family: 'Lato', sans-serif;
+	font-style: italic;
+	font-size: 13px;
+	letter-spacing: 2px;
+	color: #E8E8E8;	
 }
