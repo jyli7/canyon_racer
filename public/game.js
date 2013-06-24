@@ -4,10 +4,11 @@ var Game = function (level, difficulty) {
 
 	this.currentLevelNum = level;
 	this.currentState = 'countdown';
+
 	this.theme = new Audio("sounds/" + 'level-' + this.currentLevelNum + '.wav');
 
 	if (this.difficulty === 1 || this.difficulty === 2) {
-		this.scrollSpeed = 3.8;
+		this.scrollSpeed = 4.2;
 	} else if (this.difficulty === 3) {
 		this.scrollSpeed = 5.9;
 	}

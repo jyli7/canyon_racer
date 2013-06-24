@@ -1,5 +1,7 @@
 body {
 	margin: 0px;
+	background-color: black;
+	color: white;
 }
 
 .canvas-container {
@@ -9,7 +11,8 @@ body {
 }
 
 canvas {
-	border: 1px solid black;
+	background-color: white;
+	border: 2px solid #dedede;
 	display: inline;
 	margin-top: 35px;
 }
@@ -86,7 +89,7 @@ canvas {
 .ammo-bar {
 	height: 100%;
 	width: 100%;
-	background-color: #800000;
+	background-color: white;
 }
 
 .title-message-container {
