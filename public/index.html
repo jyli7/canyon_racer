@@ -8,6 +8,7 @@
 	head.js("utilities/helper.js"
 		  , "utilities/mixins.js"
 		  , "utilities/jquery.min.js"
+		  , "utilities/jquery.leanModal.min.js"
 		  , "modules/user_input.js"
 		  , "modules/zone_checker.js"
 		  , "entities/ship.js"
@@ -45,8 +46,10 @@
 			</div>
 		</div>
 	</div>
-	<div class="made-by-msg hidden-upon-start">Made by <a href="http://www.jylcreations.com">Jimmy Li</a>&nbsp; | </div>
-	<div class="hidden-upon-start game-stats-link">View <a href="#"> Game Stats</a></div>
+	<div class="made-by-msg hidden-upon-start">Made by <a href="http://www.jylcreations.com" target="_blank">Jimmy Li</a></div>
+	
+	<!-- Do not display modal 
+	<div class="hidden-upon-start game-stats-link-wrapper">View <a href="#stats" name="stats" rel="leanModal" class="game-stats-link"> Game Stats</a></div> -->
 	
 	<div id="countdown" class="primary-message"></div>
 	<div class="message-container">
@@ -65,4 +68,24 @@
 	<div class="difficulty-display">
 		Difficulty: <span class="difficulty-value"></span>
 	</div>
+
+	<!--
+	<div id="stats" class="modal">
+		<div class="modal-header">
+			Hall of Fame
+		</div>
+		<div class="modal-body">
+			<ul class="hellish-winners">
+			</ul>
+			<div class="completion-stats">
+				<span class="beginner-start-count"></span>
+				<span class="beginner-win-count"></span>
+				<span class="normal-start-count"></span>
+				<span class="normal-win-count"></span>
+				<span class="hellish-start-count"></span>
+				<span class="hellish-win-count"></span>
+			</div>
+		</div>
+		<a href="#" class="modal-close"></a>
+	</div> -->
 </body>

@@ -155,7 +155,7 @@ canvas {
 .made-by-msg {
 	position: absolute;
 	bottom: 20px;
-	left: 40%;
+	left: 46%;
 	margin: 0px auto;
 	font-family: 'Lato', sans-serif;
 	font-style: italic;
@@ -164,13 +164,13 @@ canvas {
 	color: #E8E8E8;
 }
 
-.made-by-msg a, .game-stats-link a  {
+.made-by-msg a, .game-stats-link-wrapper a  {
 	color: #E8E8E8;
 	font-style: normal;
 	text-decoration: none;
 }
 
-.made-by-msg a:hover, .game-stats-link a:hover {
+.made-by-msg a:hover, .game-stats-link-wrapper a:hover {
 	color: #939393;
 	-webkit-transition: color 0.1s linear;
      -moz-transition: color 0.1s linear;
@@ -179,7 +179,7 @@ canvas {
           transition: color 0.1s linear;
 }
 
-.game-stats-link {
+.game-stats-link-wrapper {
 	position: absolute;
 	bottom: 20px;
 	left: 52%;
@@ -189,4 +189,58 @@ canvas {
 	font-size: 13px;
 	letter-spacing: 2px;
 	color: #E8E8E8;	
+}
+
+#lean_overlay {
+    position: fixed;
+    z-index:100;
+    top: 0px;
+    left: 0px;
+    height:100%;
+    width:100%;
+    background: #000;
+    display: none;
+}
+
+#stats {
+	/*-webkit-transition: opacity 0.3s linear, top 0.3s ease-out;
+	-moz-transition: opacity 0.3s linear, top 0.3s ease-out;
+	-o-transition: opacity 0.3s linear, top 0.3s ease-out;
+	transition: opacity 0.3s linear, top 0.3s ease-out;*/
+
+}
+
+.modal {
+	display: none;
+	color: #F9F9F9;
+	background-color: white;
+	margin-left: 0px;
+	width: 500px;
+	
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+
+	webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+	-moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+	box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+
+	color: #333333;
+}
+
+.modal-header {
+	padding: 13px 15px;
+	line-height: 20px;
+	font-size: 24px;
+	border-bottom: 1px solid #eee;
+	font-weight: bold;
+	text-align: center;
+}
+
+.modal-body {
+	position: relative;
+	max-height: 400px;
+	padding: 15px;
+	overflow-y: auto;
+
 }

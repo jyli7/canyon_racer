@@ -1,5 +1,6 @@
 var TRIANGLE = 0;
 var RECTANGLE = 1;
+var userStats = {};
 
 // Given a bound, returns anything between that bound and -1 * that bound.
 // e.g. give it 100, and it returns something between -100 and 100
@@ -77,6 +78,18 @@ var getUserData = function (difficulty) {
 	  url: '../user_data',
 	  success: function (res) {
 	  	userStats = res;
+
+	  	// DO NOT SHOW USER STATS
+		// $('.beginner-start-count').html(userStats.beginnerStartCount);
+		// $('.beginner-win-count').html(userStats.beginnerWinCount);
+		// $('.normal-start-count').html(userStats.normalStartCount);
+		// $('.normal-win-count').html(userStats.normalWinCount);
+		// $('.hellish-start-count').html(userStats.hellishStartCount);
+		// $('.hellish-win-count').html(userStats.hellishWinCount);
+
+		// userStats.hellishWinnerNames.forEach(function (name) {
+		// 	$('.hellish-winners').append('<li>' + name + '</li>');
+		// });
 	  }
 	});
 }

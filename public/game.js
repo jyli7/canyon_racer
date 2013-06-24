@@ -91,7 +91,7 @@ var Game = function (level, difficulty) {
 				setMessage('primary-message', 'Victory!');
 				if (this.difficulty === 3) {
 					setMessage('secondary-message', "Game totally beaten!");
-					var userName = prompt("Very few people have beaten this on hellish. What name should we add to the Hall of Fame?");
+					var userName = prompt("Very few people have beaten this on hellish. We want to remember you. What is your name?");
 					notifyServerOfWin(this.difficulty, userName);
 					this.currentState = 'gameOver';
 				} else {
