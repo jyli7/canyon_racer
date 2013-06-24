@@ -24,14 +24,14 @@ var AsteroidManager = function (level, game) {
 		this.heightVolatility = 20;
 		this.meanSpeed = 60;
 		this.speedVolatility = 40;
-		this.distanceBetweenAsteroids = 15;
+		this.distanceBetweenAsteroids = 13;
 	}
 	
 };
 
 AsteroidManager.prototype.init = function (ctx) {
 	var asteroids = [];
-	for (var y = -this.level.warmUpLength * 1.25; y >= this.level.victoryZone.yBottom * 1.1; y -= this.distanceBetweenAsteroids) {
+	for (var y = -this.level.warmUpLength * 1.25; y >= this.level.victoryZone.yBottom * 1.05; y -= this.distanceBetweenAsteroids) {
 		var x = canvas.width / 2 + volatilityFactor(canvas.width / 2);
 		var width = this.meanWidth + volatilityFactor(this.widthVolatility);
 		var height = this.meanHeight + volatilityFactor(this.heightVolatility);

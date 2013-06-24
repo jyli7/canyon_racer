@@ -41,10 +41,10 @@ var Level = function (game, num) {
 	// LEVEL 3
 	} else if (num === 3) {
 		if (game.difficulty === 1 || game.difficulty === 2) {
-			this.length = 8000;
+			this.length = 8600;
 			this.warmUpLength = 1600;
 		} else {
-			this.length = 9600;
+			this.length = 10000;
 			this.warmUpLength = 1600;
 		}
 		
