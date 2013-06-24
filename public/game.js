@@ -16,7 +16,7 @@ var Game = function (level, difficulty) {
 		this.scrollSpeed *= 0.60;
 	}
 	if (this.currentLevelNum === 3) {
-		this.scrollSpeed *= 0.65;
+		this.scrollSpeed *= 0.64;
 	}
 	
 	this.countdownInterval = 80;
@@ -92,7 +92,7 @@ var Game = function (level, difficulty) {
 				if (this.difficulty === 3) {
 					setMessage('secondary-message', "Game totally beaten!");
 					var userName = prompt("Very few people have beaten this on hellish. What name should we add to the Hall of Fame?");
-					notifyServerOfWin(this.difficulty);
+					notifyServerOfWin(this.difficulty, userName);
 					this.currentState = 'gameOver';
 				} else {
 					setMessage('secondary-message', "Press 'Enter' to play harder difficulty");	

@@ -40,9 +40,9 @@ app.post('/started', function (req, res) {
 		var difficulty = req.body.difficulty;
 		if (difficulty == 1 && doc) {
 			doc.beginnerStartCount++;	
-		} else if (difficulty == 2 ) {
+		} else if (difficulty == 2 && doc) {
 			doc.normalStartCount++;
-		} else if (difficulty == 3) {
+		} else if (difficulty == 3 && doc) {
 			doc.hellishStartCount++;
 		}
 		doc.save();	
@@ -60,11 +60,17 @@ app.post('/won', function (req, res) {
 		} else if (difficulty == 3) {
 			doc.hellishWinCount++;
 		}
+
+		// Add user name to winners array if completed hellish
 		if (req.body.userName) {
-			doc.hellishWinnerNames = doc.hellishWinnerNames || [];
-			doc.hellishWinnerNames = doc.hellishWinnerNames.push(req.body.userName);
+			db.myInfo.findOneAndUpdate(
+			   { _id: doc._id },
+			   { $push: { hellishWinnerNames: req.body.userName } },
+			   function(err, doc) { if (err) { console.log('An error occurred: ' + err); }}
+			)
 		}
-		doc.save();	
+
+		doc.save();
 	});
 });
 
