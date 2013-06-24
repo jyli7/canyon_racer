@@ -20,7 +20,7 @@ var Game = function (level, difficulty) {
 		this.scrollSpeed *= 0.62;
 	}
 	
-	this.countdownInterval = 80;
+	this.countdownInterval = 65;
 	this.levelDisplayLength = this.countdownInterval * 2;
 	this.countdownTicker = 0;
 	this.countdownCount = 3;
