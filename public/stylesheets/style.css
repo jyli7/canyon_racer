@@ -82,7 +82,7 @@ canvas {
 
 .ammo-bar-container {
 	border: 1px solid black;
-	width: 80px;
+	width: 82px;
 	height: 20px;
 }
 
@@ -152,7 +152,7 @@ canvas {
 	left: 84%;
 	font-family: 'Lato', sans-serif;
 	font-weight: 200;
-	bottom: 50px;
+	bottom: 41px;
 	letter-spacing: 2px;
 	font-size: 14px;
 }
