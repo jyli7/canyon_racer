@@ -11,13 +11,21 @@ window.onload = function () {
 		startGame(1, difficulty);
 	});
 
-	$('.volume-toggle').on('click', function () {
+	$('.volume-toggle').on('click', function (e) {
+		e.preventDefault();
 		var $image = $(this).find('img');
 		var src = $image.attr('src');
+
+		// Turn sounds off
 		if (src === 'images/volume-icon.png') {
 			$image.attr('src', 'images/volume-icon-off.png');
+			playSounds = false;
+
+		// Turn sounds off
 		} else {
+			playSounds = true;
 			$image.attr('src', 'images/volume-icon.png');
+
 		}
 	});
 

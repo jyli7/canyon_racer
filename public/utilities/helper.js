@@ -1,7 +1,3 @@
-var TRIANGLE = 0;
-var RECTANGLE = 1;
-var userStats = {};
-
 // Given a bound, returns anything between that bound and -1 * that bound.
 // e.g. give it 100, and it returns something between -100 and 100
 var volatilityFactor = function (bound) {
