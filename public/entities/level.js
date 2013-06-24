@@ -4,7 +4,7 @@ var Level = function (game, num) {
 	if (num === 1) {
 		if (game.difficulty === 1 || game.difficulty === 2) {
 			this.warmUpLength = 1300;
-			this.length = 6500;
+			this.length = 8000;
 		} else {
 			this.warmUpLength = 2200;
 			this.length = 8500;
@@ -44,7 +44,7 @@ var Level = function (game, num) {
 			this.length = 8000;
 			this.warmUpLength = 1600;
 		} else {
-			this.length = 8600;
+			this.length = 9600;
 			this.warmUpLength = 1600;
 		}
 		

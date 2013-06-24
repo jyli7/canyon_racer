@@ -9,14 +9,14 @@ var Game = function (level, difficulty) {
 	if (this.difficulty === 1 || this.difficulty === 2) {
 		this.scrollSpeed = 3.8;
 	} else if (this.difficulty === 3) {
-		this.scrollSpeed = 5.6;
+		this.scrollSpeed = 5.9;
 	}
 
 	if (this.currentLevelNum === 2) {
 		this.scrollSpeed *= 0.60;
 	}
 	if (this.currentLevelNum === 3) {
-		this.scrollSpeed *= 0.64;
+		this.scrollSpeed *= 0.62;
 	}
 	
 	this.countdownInterval = 80;

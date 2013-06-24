@@ -8,12 +8,12 @@ var SafeZoneManager = function (level, game) {
 	this.warmUpX = canvas.width * 0.05;
 
 	if (game.difficulty === 1) {
-		this.maxWidth = this.level.ship.width * 8;
-		this.minWidth = this.level.ship.width * 4;
-
-	} else if (game.difficulty === 2) {
 		this.maxWidth = this.level.ship.width * 6;
 		this.minWidth = this.level.ship.width * 3;
+
+	} else if (game.difficulty === 2) {
+		this.maxWidth = this.level.ship.width * 5;
+		this.minWidth = this.level.ship.width * 2.5;
 
 	} else if (game.difficulty === 3) {
 		this.maxWidth = this.level.ship.width * 3;
