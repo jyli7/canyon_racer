@@ -10,14 +10,7 @@ var Game = function (level, difficulty) {
 	if (this.difficulty === 1 || this.difficulty === 2) {
 		this.scrollSpeed = 220;
 	} else if (this.difficulty === 3) {
-		this.scrollSpeed = 220;
-	}
-
-	if (this.currentLevelNum === 2) {
-		this.scrollSpeed *= 0.58;
-	}
-	if (this.currentLevelNum === 3) {
-		this.scrollSpeed *= 0.62;
+		this.scrollSpeed = 300;
 	}
 	
 	this.countdownInterval = 65;
@@ -134,15 +127,18 @@ Game.prototype.update = function (delta) {
 	this.currentLevelObj.entities.forEach (function (entity) { entity.update(delta); });
 };
 
+Game.prototype.distanceToTranslate = function () {
+	return this.scrollSpeed * this.loopTimeElapsed || 0;
+}
+
 Game.prototype.draw = function (ctx) {
 	var that = this;
 	this.ctx.clearRect(0, -this.translatedDistance, canvas.width, canvas.height);
 
-	var distanceToTranslate = this.scrollSpeed * this.loopTimeElapsed;
+	var distanceToTranslate = this.distanceToTranslate();
 	this.ctx.translate(0, distanceToTranslate);
 	this.translatedDistance += distanceToTranslate;
 
-	debugger;
 	this.currentLevelObj.entities.forEach (function (entity) { entity.draw(that.ctx); });
 }
 
