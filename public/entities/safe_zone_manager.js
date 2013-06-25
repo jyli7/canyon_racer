@@ -5,6 +5,8 @@ var SafeZoneManager = function (level, game) {
 
 	this.warmUpWidth = canvas.width*0.9;
 	this.warmUpHeight = canvas.height * 0.5;
+	this.aestheticWidth = canvas.width * 0.05;
+	this.aestheticHeight = canvas.height * 0.03;
 	this.warmUpX = canvas.width * 0.05;
 
 	if (game.difficulty === 1) {
@@ -60,6 +62,14 @@ SafeZoneManager.prototype.initWarmUpZones = function (ctx) {
 	}
 }
 
+SafeZoneManager.prototype.initAestheticZones = function (ctx) {
+	this.level.safeZones = this.level.safeZones || [];
+	for (var y = canvas.height; y >= -this.level.warmUpLength * 0.9; y -= this.warmUpHeight) {
+		this.level.safeZones.push(new SafeZone(this.level, this.game, 0, y, this.aestheticWidth, this.aestheticHeight));
+		this.level.safeZones.push(new SafeZone(this.level, this.game, canvas.width - this.aestheticWidth, y, this.aestheticWidth, this.aestheticHeight));
+	}
+}
+
 SafeZoneManager.prototype.getPhase = function (y) {
 	// If we've traversed 7/10 of the canyon, we're in phase 2
 	if (y <= -this.level.canyon.length * 0.7) {
@@ -103,5 +113,6 @@ SafeZoneManager.prototype.initAllOtherZones = function (ctx) {
 
 SafeZoneManager.prototype.init = function (ctx) {
 	this.initWarmUpZones(ctx);
+	this.initAestheticZones(ctx);
 	this.initAllOtherZones(ctx);
 }
