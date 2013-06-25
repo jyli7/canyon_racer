@@ -54,6 +54,7 @@ Ship.prototype.draw = function (ctx) {
 };
 
 Ship.prototype.update = function (elapsedTime) {
+	console.log(this.bottomRightY());
 	if (elapsedTime && this.game.currentState === 'countdown' || 
 		this.game.currentState === 'playing' || 
 		(this.game.currentState === 'gameOver' && !this.crashed)) {

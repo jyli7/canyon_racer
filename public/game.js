@@ -8,9 +8,9 @@ var Game = function (level, difficulty) {
 	this.theme = new Audio("sounds/" + 'level-' + this.currentLevelNum + '.wav');
 
 	if (this.difficulty === 1 || this.difficulty === 2) {
-		this.scrollSpeed = 4.4;
+		this.scrollSpeed = 220;
 	} else if (this.difficulty === 3) {
-		this.scrollSpeed = 6;
+		this.scrollSpeed = 220;
 	}
 
 	if (this.currentLevelNum === 2) {
@@ -138,9 +138,11 @@ Game.prototype.draw = function (ctx) {
 	var that = this;
 	this.ctx.clearRect(0, -this.translatedDistance, canvas.width, canvas.height);
 
-	this.ctx.translate(0, this.scrollSpeed);
-	this.translatedDistance += this.scrollSpeed;
+	var distanceToTranslate = this.scrollSpeed * this.loopTimeElapsed;
+	this.ctx.translate(0, distanceToTranslate);
+	this.translatedDistance += distanceToTranslate;
 
+	debugger;
 	this.currentLevelObj.entities.forEach (function (entity) { entity.draw(that.ctx); });
 }
 
