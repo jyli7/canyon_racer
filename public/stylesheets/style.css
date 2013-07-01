@@ -66,8 +66,8 @@ canvas {
 
 .ammo-bar-zone {
 	position: absolute;
-	top: 30px;
-	right: 120px;
+	top: 60px;
+	left: 83%;
 }
 
 .ammo-label {
@@ -82,7 +82,7 @@ canvas {
 
 .ammo-bar-container {
 	border: 1px solid black;
-	width: 82px;
+	width: 80px;
 	height: 20px;
 }
 
@@ -149,10 +149,10 @@ canvas {
 .difficulty-display {
 	font-style: italic;
 	position: absolute;
-	left: 84%;
+	left: 83%;
+	top: 33px;
 	font-family: 'Lato', sans-serif;
 	font-weight: 200;
-	bottom: 41px;
 	letter-spacing: 2px;
 	font-size: 14px;
 }

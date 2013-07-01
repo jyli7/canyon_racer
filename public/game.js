@@ -32,7 +32,7 @@ var Game = function (level, difficulty) {
 				if (this.currentLevelNum === 3) {
 					setMessage('secondary-message', "Press 'F' to fire! (Limited ammo)");
 				} else {
-					setMessage('secondary-message', 'Use all of the arrow keys');
+					setMessage('secondary-message', 'Use arrow keys (Spacebar to pause)');
 				}
 				
 			}
