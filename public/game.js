@@ -8,7 +8,7 @@ var Game = function (level, difficulty) {
 	this.isPaused = false;
 	this.initPauseOnSpacebar();
 
-	this.theme = new Audio("sounds/" + 'level-' + this.currentLevelNum + '.wav');
+	this.theme = themes[this.currentLevelNum];
 
 	if (this.difficulty === 1 || this.difficulty === 2) {
 		this.scrollSpeed = 220;
