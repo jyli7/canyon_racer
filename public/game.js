@@ -183,7 +183,9 @@ Game.prototype.initPauseOnSpacebar = function () {
 Game.prototype.refresh = function (level, difficulty) {
 	wipeAllMessages();
 	clearInterval(this.loop);
-	this.theme.pause();
+
+	// Rewind theme to beginning
+	this.theme.currentTime = 0;
 	startGame(level, difficulty);
 	this.currentLevelObj.ship.refillGun();
 }
