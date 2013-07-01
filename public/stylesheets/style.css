@@ -247,3 +247,15 @@ canvas {
 	width: 20px;
 	height: 16px;
 }
+
+.pause-blanket {
+	background-color: black;
+	opacity: 0.4;
+	width: 100%;
+	height: 100%;
+	z-index: 10;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+
+}

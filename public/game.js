@@ -1,9 +1,12 @@
 var Game = function (level, difficulty) {
 	var that = this;
 	this.difficulty = difficulty;
+	this.userInput = new UserInput();
 
 	this.currentLevelNum = level;
 	this.currentState = 'countdown';
+	this.isPaused = false;
+	this.initPauseOnSpacebar();
 
 	this.theme = new Audio("sounds/" + 'level-' + this.currentLevelNum + '.wav');
 
@@ -159,7 +162,22 @@ Game.prototype.initRefreshOnEnter = function () {
 			removeEventListener("keypress", startGameOnEnter);
 		}
 	}
-	this.listener = addEventListener("keypress", startGameOnEnter);
+	addEventListener("keypress", startGameOnEnter);
+}
+
+Game.prototype.initPauseOnSpacebar = function () {
+	var that = this;
+	addEventListener("keypress", function (e) {
+		if (e.keyCode == 32 && (that.currentState === 'countdown' || that.currentState === 'playing')) {
+			if (that.isPaused) {
+				that.isPaused = false;
+				$('.pause-blanket').addClass('hidden');
+			} else {
+				that.isPaused = true;
+				$('.pause-blanket').removeClass('hidden');
+			}
+		}
+	});
 }
 
 Game.prototype.refresh = function (level, difficulty) {
@@ -198,13 +216,14 @@ var startGame = function (level, difficulty) {
 
 	// MAIN GAME LOOP
 	game.loop = setInterval(function () {
-		var nextState = game.states[game.currentState].call(game);
-
-		// if nextState is returned, update current state
-		if (nextState !== undefined) {
-			game.currentState = nextState;
+		if (!game.isPaused) {
+			var nextState = game.states[game.currentState].call(game);
+			// if nextState is returned, update current state
+			if (nextState !== undefined) {
+				game.currentState = nextState;
+			}
 		}
-		
+
 		var now = Date.now();
 		game.loopTimeElapsed = (now - then) / 1000;
 		then = now;

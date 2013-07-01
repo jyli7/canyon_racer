@@ -15,17 +15,18 @@ window.onload = function () {
 		e.preventDefault();
 		var $image = $(this).find('img');
 		var src = $image.attr('src');
+		var yoshiSound = new Audio("sounds/yoshi.mp3");
 
 		// Turn sounds off
 		if (src === 'images/volume-icon.png') {
 			$image.attr('src', 'images/volume-icon-off.png');
 			playSounds = false;
 
-		// Turn sounds off
+		// Turn sounds on
 		} else {
 			playSounds = true;
+			yoshiSound.play();
 			$image.attr('src', 'images/volume-icon.png');
-
 		}
 	});
 
