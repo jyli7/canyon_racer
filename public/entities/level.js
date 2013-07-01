@@ -1,5 +1,4 @@
 var Level = function (game, num) {
-
 	// LEVEL 1
 	if (num === 1) {
 		if (game.difficulty === 1 || game.difficulty === 2) {
