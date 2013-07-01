@@ -41,6 +41,8 @@ var Ship = function (level, game) {
 
 	if (this.game.currentLevelNum === 3) {
 		this.initGun();	
+	} else {
+		this.removeGun();
 	}
 };
 
@@ -83,6 +85,11 @@ Ship.prototype.initGun = function () {
 	this.fireGunFn = this.fireGun.bind(this);
 	addEventListener("keypress", this.fireGunFn);
 	$('.ammo-bar-zone').removeClass('hidden');
+}
+
+Ship.prototype.removeGun = function () {
+	removeEventListener("keypress", this.fireGunFn);
+	$('.ammo-bar-zone').addClass('hidden');
 }
 
 Ship.prototype.fireGun = function (e, ship) {
