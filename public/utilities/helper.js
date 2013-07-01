@@ -19,11 +19,6 @@ var mixin = function (obj, mixin) {
 	}
 }
 
-var initThemes = function () {
-
-	
-}
-
 var setUpAmmoBar = function (ship) {
 	$('.ammo-count').html(ship.initialBulletCount);
 }
