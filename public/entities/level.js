@@ -31,12 +31,14 @@ var Level = function (game, num) {
 
 		this.ship = new Ship(this, game);
 		this.victoryZone = new VictoryZone(this, game, -1 * (this.length + canvas.height * 0.4));
+		this.treeManager = new TreeManager(this, game);
+		this.treeManager.init(game.ctx);
 		this.gateWallManager = new GateWallManager(this, game);
 		this.gateWallManager.init(game.ctx);
 		this.enemyShipManager = new EnemyShipManager(this, game);
 		this.enemyShipManager.init(game.ctx);
 
-		this.entities = [this.ship, this.enemyShipManager].concat(this.gateWalls).concat(this.enemyShips);
+		this.entities = [this.ship, this.enemyShipManager].concat(this.gateWalls).concat(this.enemyShips).concat(this.trees);
 
 	// LEVEL 3
 	} else if (num === 3) {
@@ -50,9 +52,11 @@ var Level = function (game, num) {
 		
 		this.ship = new Ship(this, game);
 		this.victoryZone = new VictoryZone(this, game, -1 * (this.length + canvas.height * 0.4));
+		this.treeManager = new TreeManager(this, game);
+		this.treeManager.init(game.ctx);
 		this.asteroidManager = new AsteroidManager(this, game);
 		this.asteroidManager.init(game.ctx);
-		this.entities = [this.victoryZone, this.ship].concat(this.asteroids);
+		this.entities = [this.victoryZone, this.ship].concat(this.asteroids).concat(this.trees);
 	}
 
 	this.entities.sort(function (a, b) {
