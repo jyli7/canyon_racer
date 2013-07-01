@@ -12,8 +12,8 @@ var Ship = function (level, game) {
 		this.baseSpeed = 220;
 		this.extraSpeed = 200;
 	} else if (this.game.difficulty === 3) {
-		this.baseSpeed = 300;
-		this.extraSpeed = 250;
+		this.baseSpeed = 320;
+		this.extraSpeed = 260;
 	}
 
 	// xMid is the x coord of the middle of the triangle

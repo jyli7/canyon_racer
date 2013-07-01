@@ -13,7 +13,7 @@ var Game = function (level, difficulty) {
 	if (this.difficulty === 1 || this.difficulty === 2) {
 		this.scrollSpeed = 220;
 	} else if (this.difficulty === 3) {
-		this.scrollSpeed = 300;
+		this.scrollSpeed = 320;
 	}
 	
 	this.countdownInterval = 65;
