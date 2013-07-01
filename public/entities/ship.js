@@ -86,7 +86,7 @@ Ship.prototype.initGun = function () {
 }
 
 Ship.prototype.fireGun = function (e, ship) {
-	if (e.keyCode == 102 && this.currentBulletCount > 0) {
+	if ((e.keyCode == 102 || e.keyCode == 70) && this.currentBulletCount > 0) {
 		this.level.bullets = this.level.bullets || [];
 		var bullet = new Bullet(this.level, this.game, this.xMid, this.yTop);
 		this.level.addObj(bullet, bullet.objType);
