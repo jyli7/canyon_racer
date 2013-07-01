@@ -172,9 +172,11 @@ Game.prototype.initPauseOnSpacebar = function () {
 			if (that.isPaused) {
 				that.isPaused = false;
 				$('.pause-blanket').addClass('hidden');
+				that.theme.play();
 			} else {
 				that.isPaused = true;
 				$('.pause-blanket').removeClass('hidden');
+				that.theme.pause();
 			}
 		}
 	});

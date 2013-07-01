@@ -20,7 +20,7 @@ var mixin = function (obj, mixin) {
 }
 
 var initThemes = function () {
-	
+
 	
 }
 
@@ -79,18 +79,6 @@ var getUserData = function (difficulty) {
 	  url: '../user_data',
 	  success: function (res) {
 	  	userStats = res;
-
-	  	// DO NOT SHOW USER STATS
-		// $('.beginner-start-count').html(userStats.beginnerStartCount);
-		// $('.beginner-win-count').html(userStats.beginnerWinCount);
-		// $('.normal-start-count').html(userStats.normalStartCount);
-		// $('.normal-win-count').html(userStats.normalWinCount);
-		// $('.hellish-start-count').html(userStats.hellishStartCount);
-		// $('.hellish-win-count').html(userStats.hellishWinCount);
-
-		// userStats.hellishWinnerNames.forEach(function (name) {
-		// 	$('.hellish-winners').append('<li>' + name + '</li>');
-		// });
 	  }
 	});
 }
