@@ -187,6 +187,8 @@ Game.prototype.refresh = function (level, difficulty) {
 	clearInterval(this.loop);
 
 	// Rewind theme to beginning
+	this.theme.pause();
+	this.theme = themes[this.currentLevelNum];
 	this.theme.currentTime = 0;
 	startGame(level, difficulty);
 	this.currentLevelObj.ship.refillGun();
