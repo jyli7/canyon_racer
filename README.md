@@ -1,4 +1,5 @@
 Canyon Racer
 ============
 
-Canyon flying game.
+www.playcanyonracer.com
+
