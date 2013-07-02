@@ -186,10 +186,11 @@ Game.prototype.refresh = function (level, difficulty) {
 	wipeAllMessages();
 	clearInterval(this.loop);
 
-	// Rewind theme to beginning
+	// Pause theme, reassign theme, rewind theme to beginning
 	this.theme.pause();
 	this.theme = themes[this.currentLevelNum];
 	this.theme.currentTime = 0;
+
 	startGame(level, difficulty);
 	this.currentLevelObj.ship.refillGun();
 }
